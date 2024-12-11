@@ -11,6 +11,7 @@ router.post('/', async (req, res) => {
     const newUser = await User.create({ username, password, first_name, last_name, telephone });
     res.status(201).json(newUser); 
   } catch (error) {
+    console.log('Error details:', error);
     res.status(500).json({ error: 'Error when user creation' });
   }
 });
@@ -37,6 +38,7 @@ router.get('/:id', async (req, res) => {
     }
     res.status(200).json(user);
   } catch (error) {
+    console.log('Error details:', error);
     res.status(500).json({ error: 'Error when specific user recuperation' });
   }
 });
@@ -59,6 +61,7 @@ router.put('/:id', async (req, res) => {
     await user.save();  // save changes
     res.status(200).json(user);  // return update user
   } catch (error) {
+    console.log('Error details:', error);
     res.status(500).json({ error: 'Error when user update' });
   }
 });
