@@ -40,20 +40,20 @@ const Product = sequelize.define('Product', {
     type: DataTypes.INTEGER,
   },
   created_at: {
-    type: DataTypes.TIMESTAMP,
+    type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
   modified_at: {
-    type: DataTypes.TIMESTAMP,
+    type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
     onUpdate: DataTypes.NOW,
   },
   deleted_at: {
-    type: DataTypes.TIMESTAMP,
+    type: DataTypes.DATE,
   },
 }, {
   tableName: 'product',
-  timestamps: false,
+  timestamps: true, 
 });
 
 module.exports = Product;
