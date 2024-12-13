@@ -1,0 +1,33 @@
+@use './_variables.scss' as *;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: $primary-color;
+  
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  
+    .navigation ul {
+      display: flex;
+      list-style: none;
+      gap: 1rem;
+  
+      li a {
+        text-decoration: none;
+        color: white;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
