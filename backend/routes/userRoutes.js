@@ -6,9 +6,9 @@ const router = express.Router();
 // **CRUD - Create**
 
 router.post('/', async (req, res) => {
-  const { username, password, first_name, last_name, telephone } = req.body;
+  const { password, first_name, last_name, telephone, email } = req.body;
   try {
-    const newUser = await User.create({ username, password, first_name, last_name, telephone });
+    const newUser = await User.create({ email, password, first_name, last_name, telephone });
     res.status(201).json(newUser); 
   } catch (error) {
     console.log('Error details:', error);
@@ -47,13 +47,13 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { username, password, first_name, last_name, telephone } = req.body;
+  const { email,  password, first_name, last_name, telephone } = req.body;
   try {
     const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    user.username = username;
+    user.email = email;
     user.password = password;
     user.first_name = first_name;
     user.last_name = last_name;
