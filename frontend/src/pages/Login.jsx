@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ const Login = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const { setIsAuthenticated } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({
@@ -20,10 +24,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/auth/login", formData);
-      // Enregistre le token dans les cookies ou dans le localStorage
+      // Enregistre le token dans les cookies
       document.cookie = `token=${response.data.token}; path=/`;
+      setIsAuthenticated(true); // Met à jour l'état global
       setErrorMessage("");
       alert("Connexion réussie !");
+      navigate("/"); // Redirige vers la page d'accueil
     } catch (error) {
       setErrorMessage("Erreur lors de la connexion. Veuillez vérifier vos identifiants.");
     }

@@ -1,20 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/Header.scss';
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    setIsAuthenticated(false);
+    alert("Déconnexion réussie !");
+  };
+
   return (
-    <header className="header">
-      <div className="logo">
-        <Link to="/">L'Atelier Jesmarite</Link>
-      </div>
-      <nav className="navigation">
-        <ul>
-          <li><Link to="/">Accueil</Link></li>
-          <li><Link to="/products">Produits</Link></li>
-          <li><Link to="/signup">Compte</Link></li>
-        </ul>
-      </nav>
+    <header>
+      <h1>Atelier de Jesmarite</h1>
+      {isAuthenticated ? (
+        <button onClick={handleLogout}>Se déconnecter</button>
+      ) : (
+        <div>
+          <a href="/login">Se connecter</a>
+          <a href="/signup">S'inscrire</a>
+        </div>
+      )}
     </header>
   );
 };
