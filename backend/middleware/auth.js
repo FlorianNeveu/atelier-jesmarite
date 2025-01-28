@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+require("dotenv").config();
 
 const verifyToken = async (req, res, next) => {
     const { token } = req.cookies;
@@ -9,8 +10,8 @@ const verifyToken = async (req, res, next) => {
     }
 
     try {
-        const decodedToken = jwt.verify(token, "secret");
-        const user = await User.findById(decodedToken.id);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findByPk(decodedToken.id);
         if (!user) {
             return res.status(401).json({ error: "Unauthorized" });
         }

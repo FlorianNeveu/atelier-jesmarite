@@ -8,17 +8,25 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // Pour s'inscrire
 const register = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { first_name, last_name, email, password, telephone } = req.body; 
 
   try {
+
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "Cet email est déjà utilisé." });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
       password: hashedPassword,
+      telephone
     });
 
+    const { password: _, ...userWithoutPassword } = user.toJSON();
     res.status(201).json({ message: "Utilisateur enregistré avec succès", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -39,9 +47,11 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: "Mot de passe incorrect" });
     }
-
+    
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1h" });
 
+    const { password: _, ...userWithoutPassword } = user.toJSON();
+    
     res
       .cookie("token", token, {
         httpOnly: true,
@@ -58,7 +68,6 @@ const logout = (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Déconnexion réussie" });
 };
-
 
 const getAll = async (req, res) => {
   const users = await User.find();

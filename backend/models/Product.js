@@ -18,6 +18,10 @@ const Product = sequelize.define('Product', {
   SKU: {
     type: DataTypes.STRING(255),
   },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   barcode: {
     type: DataTypes.INTEGER,
   },
@@ -55,5 +59,8 @@ const Product = sequelize.define('Product', {
   tableName: 'product',
   timestamps: true, 
 });
+
+Product.belongsTo(ProductCategory, { foreignKey: 'category_id', as: 'category' });
+
 
 module.exports = Product;

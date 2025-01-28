@@ -7,9 +7,9 @@ const router = express.Router();
 // **CRUD - Create**
 
 router.post('/', async (req, res) => {
-  const { name, description, price, quantity, category_id } = req.body;
+  const { name, description, price, quantity, category_id, image } = req.body;
   try {
-    const newProduct = await Product.create({ name, description, price, quantity, category_id });
+    const newProduct = await Product.create({ name, description, price, quantity, category_id, image });
     res.status(201).json(newProduct);
   } catch (error) {
     res.status(500).json({ error: 'Error when product creation' });
@@ -21,10 +21,14 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const products = await Product.findAll({
-      include: ProductCategory,
+      include: {
+        model: ProductCategory,
+        as: 'category',
+      }
     });
     res.status(200).json(products);
   } catch (error) {
+    console.error('Erreur lors de la récupération des produits :', error);
     res.status(500).json({ error: 'Error when retrived all products' });
   }
 });
@@ -35,7 +39,10 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const product = await Product.findByPk(id, {
-      include: ProductCategory,
+      include: {
+        model: ProductCategory,
+        as: 'category',
+      }
     });
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
@@ -50,21 +57,27 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, quantity, category_id } = req.body;
+  const { name, description, price, quantity, category_id, image } = req.body;
+
   try {
     const product = await Product.findByPk(id);
     if (!product) {
-      return res.status(404).json({ error: 'Product not find for update' });
+      return res.status(404).json({ error: 'Product not found' });
     }
-    product.name = name;
-    product.description = description;
-    product.price = price;
-    product.quantity = quantity;
-    product.category_id = category_id;
-    await product.save();  // save changes
-    res.status(200).json(product);  // update product
+
+    // Mise à jour des champs
+    if (name) product.name = name;
+    if (description) product.description = description;
+    if (price) product.price = price;
+    if (quantity) product.quantity = quantity;
+    if (category_id) product.category_id = category_id;
+    if (image) product.image = image;
+
+    await product.save(); // Sauvegarde des modifications
+    res.status(200).json({ message: 'Produit mis à jour avec succès', product });
   } catch (error) {
-    res.status(500).json({ error: 'Error when product update' });
+    console.error('Erreur lors de la mise à jour du produit :', error);
+    res.status(500).json({ error: 'Error when updating product' });
   }
 });
 
