@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const ProductCategory = require('./ProductCategory');  // Pour la relation avec product_category
+const ProductCategory = require('./ProductCategory');
 
 const Product = sequelize.define('Product', {
   id: {
@@ -22,9 +22,6 @@ const Product = sequelize.define('Product', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  barcode: {
-    type: DataTypes.INTEGER,
-  },
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
@@ -33,34 +30,10 @@ const Product = sequelize.define('Product', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  category_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: ProductCategory,
-      key: 'id',
-    },
-  },
-  inventory_id: {
-    type: DataTypes.INTEGER,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  modified_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-    onUpdate: DataTypes.NOW,
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-  },
 }, {
   tableName: 'product',
   timestamps: true, 
 });
-
-Product.belongsTo(ProductCategory, { foreignKey: 'category_id', as: 'category' });
 
 
 module.exports = Product;

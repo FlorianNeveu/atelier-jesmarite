@@ -14,6 +14,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  const { user_id } = req.body;
+
+  try {
+    // Vérifier si une session existe déjà pour cet utilisateur (s'il est connecté)
+    let session;
+    if (user_id) {
+      session = await ShoppingSession.findOne({ where: { user_id } });
+    }
+
+    // Si aucune session trouvée, en créer une nouvelle
+    if (!session) {
+      session = await ShoppingSession.create({ user_id: user_id || null }); // null pour un invité
+    }
+
+    res.status(201).json(session);
+  } catch (error) {
+    console.error("❌ Erreur lors de la création de la session :", error);
+    res.status(500).json({ error: 'Error when creating shopping session' });
+  }
+});
+
 // **CRUD - Read (All Sessions)**
 router.get('/', async (req, res) => {
   try {

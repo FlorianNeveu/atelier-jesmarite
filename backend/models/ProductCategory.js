@@ -18,4 +18,5 @@ const ProductCategory = sequelize.define('ProductCategory', {
   tableName: 'product_category',
 });
 
+
 module.exports = ProductCategory;

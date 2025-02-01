@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
@@ -24,12 +24,23 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/auth/login", formData);
-      // Enregistre le token dans les cookies
-      document.cookie = `token=${response.data.token}; path=/`;
-      setIsAuthenticated(true); // Met à jour l'état global
+      const { user, token } = response.data;
+
+      // Stocke le token et l'ID utilisateur
+      document.cookie = `token=${token}; path=/`;
+      localStorage.setItem("userId", user.id);
+
+      // Met à jour la session avec le user_id
+      const sessionId = localStorage.getItem("sessionId");
+      if (sessionId) {
+        await axiosInstance.put(`/sessions/${sessionId}`, { user_id: user.id });
+        console.log("🔄 Session mise à jour avec user_id :", user.id);
+      }
+
+      setIsAuthenticated(true);
       setErrorMessage("");
       alert("Connexion réussie !");
-      navigate("/"); // Redirige vers la page d'accueil
+      navigate("/");
     } catch (error) {
       setErrorMessage("Erreur lors de la connexion. Veuillez vérifier vos identifiants.");
     }

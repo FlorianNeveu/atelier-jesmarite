@@ -30,11 +30,15 @@ const UserAddress = sequelize.define('UserAddress', {
   mobile: {
     type: DataTypes.STRING,
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: 'id',
+    },
+  },
 }, {
   tableName: 'user_address',
 });
-
-UserAddress.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(UserAddress, { foreignKey: 'user_id' });
 
 module.exports = UserAddress;
