@@ -25,8 +25,16 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
+const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite.vercel.app'];
+
 app.use(cors({
-  origin: 'http://localhost:5173, atelier-jesmarite-g9n05n06v-florian-neveus-projects.vercel.app', 
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,              
 }));
 
