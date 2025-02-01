@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./User');
 
 const OrderDetails = sequelize.define('OrderDetails', {
   id: {
@@ -11,11 +10,15 @@ const OrderDetails = sequelize.define('OrderDetails', {
   total: {
     type: DataTypes.DECIMAL(10, 2),
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'User', // Utilise une chaîne de caractères pour référencer le modèle User
+      key: 'id',
+    },
+  },
 }, {
   tableName: 'order_details',
 });
-
-OrderDetails.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(OrderDetails, { foreignKey: 'user_id' });
 
 module.exports = OrderDetails;

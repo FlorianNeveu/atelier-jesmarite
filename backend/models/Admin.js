@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./User');
 
 const Admin = sequelize.define('Admin', {
   id: {
@@ -11,11 +10,15 @@ const Admin = sequelize.define('Admin', {
   permissions: {
     type: DataTypes.STRING,
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'User', // Utilise une chaîne de caractères pour référencer le modèle User
+      key: 'id',
+    },
+  },
 }, {
   tableName: 'admin',
 });
-
-Admin.belongsTo(User, { foreignKey: 'user_id' });
-User.hasOne(Admin, { foreignKey: 'user_id' });
 
 module.exports = Admin;

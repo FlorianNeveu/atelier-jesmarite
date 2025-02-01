@@ -8,11 +8,12 @@ const ShoppingSession = sequelize.define('ShoppingSession', {
     primaryKey: true,
     autoIncrement: true,
   },
+  total: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0.00,
+  }
 }, {
   tableName: 'shopping_session',
 });
-
-ShoppingSession.belongsTo(User, { foreignKey: 'user_id' });
-User.hasOne(ShoppingSession, { foreignKey: 'user_id' });
 
 module.exports = ShoppingSession;

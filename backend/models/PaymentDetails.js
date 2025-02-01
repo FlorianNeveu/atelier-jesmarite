@@ -18,6 +18,4 @@ const PaymentDetails = sequelize.define('PaymentDetails', {
   tableName: 'payment_details',
 });
 
-PaymentDetails.belongsTo(OrderDetails, { foreignKey: 'order_id' });
-
 module.exports = PaymentDetails;

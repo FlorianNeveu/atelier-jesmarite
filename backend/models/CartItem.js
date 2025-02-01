@@ -17,7 +17,4 @@ const CartItem = sequelize.define('CartItem', {
   tableName: 'cart_item',
 });
 
-CartItem.belongsTo(Product, { foreignKey: 'product_id' });
-CartItem.belongsTo(ShoppingSession, { foreignKey: 'session_id' });
-
 module.exports = CartItem;

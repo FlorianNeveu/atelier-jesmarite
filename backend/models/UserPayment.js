@@ -18,11 +18,15 @@ const UserPayment = sequelize.define('UserPayment', {
   account_token: {
     type: DataTypes.STRING,
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: 'id',
+    },
+  },
 }, {
   tableName: 'user_payment',
 });
-
-UserPayment.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(UserPayment, { foreignKey: 'user_id' });
 
 module.exports = UserPayment;

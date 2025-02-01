@@ -5,10 +5,10 @@ const User = sequelize.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    unique: "email_unique_constraint",
     validate: {
-      isEmail: true
-    }
+      isEmail: true,
+    },
   },
   password: {
     type: DataTypes.STRING,
@@ -30,6 +30,7 @@ const User = sequelize.define('User', {
 }, {
   tableName: 'user',
   timestamps: true,
+  freezeTableName: true,
 });
 
 module.exports = User;
