@@ -13,7 +13,7 @@ const Admin = sequelize.define('Admin', {
   user_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'User', // Utilise une chaîne de caractères pour référencer le modèle User
+      model: 'user', // Utilise une chaîne de caractères pour référencer le modèle User
       key: 'id',
     },
   },
