@@ -3,7 +3,7 @@ import axiosInstance from "../axiosConfig";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const API_URL = process.env.API_URL
+  const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
   useEffect(() => {
     const fetchProducts = async () => {
