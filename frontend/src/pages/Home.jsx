@@ -3,6 +3,7 @@ import axiosInstance from "../axiosConfig";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const API_URL = process.env.API_URL
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -39,7 +40,7 @@ const Home = () => {
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <h2>{product.name}</h2>
-            <img src={`http://localhost:3001${product.image}`} alt={product.name} />
+            <img src={`${API_URL}${product.image}`} alt={product.name} />
             <p>{product.description}</p>
             <p>{product.price} €</p>
             <button onClick={() => handleAddToCart(product.id)}>Ajouter au panier</button>
