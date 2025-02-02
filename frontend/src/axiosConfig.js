@@ -1,11 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
+
+const API_URL = process.env.API_URL || 'https://ton-backend.railway.app'; 
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001", 
-  timeout: 5000, 
+  baseURL: API_URL, 
+  timeout: 5000,      
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json', 
   },
 });
 
 export default axiosInstance;
+

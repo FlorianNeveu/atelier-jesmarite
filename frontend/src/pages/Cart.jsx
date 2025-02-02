@@ -4,6 +4,7 @@ import axiosInstance from "../axiosConfig";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const sessionId = localStorage.getItem("sessionId");
+  const API_URL = process.env.API_URL;
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -36,7 +37,7 @@ const Cart = () => {
           {cartItems.map((item, index) => (
             <li key={index}>
               <h2>{item.Product?.name}</h2>
-              <img src={`http://localhost:3001${item.Product?.image}`} alt={item.Product?.name} />
+              <img src={`${API_URL}${item.Product?.image}`} alt={item.Product?.name} />
               <p>Quantité : {item.quantity}</p>
               <p>Prix unitaire : {item.Product?.price} €</p>
               <p>Total : {item.quantity * item.Product?.price} €</p>
