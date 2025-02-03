@@ -1,4 +1,4 @@
-@use './_variables.scss' as *; 
+@use './_variables.scss' as *;  // Assure-toi que les variables sont importées depuis _variables.scss
 
 .header {
   position: sticky;
@@ -8,8 +8,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: $primary-color;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+  background-color: $primary-color;  // Utilise une couleur pastel rose ici
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  // Légère ombre pour un effet de profondeur
   
   .logo {
     font-size: 1.5rem;
@@ -20,12 +20,13 @@
     }
   }
 
+  /* Navigation : mobile first */
   .navigation {
     display: flex;
     gap: 1rem;
-    
+
     @media (max-width: 768px) {
-      display: none;  
+      display: none;  // Masquer la navigation sur mobile par défaut
       flex-direction: column;
       position: absolute;
       top: 50px;
@@ -40,10 +41,14 @@
         display: flex;
       }
 
+      li {
+        list-style: none;  // Supprimer les puces de la liste
+        margin-bottom: 10px;
+      }
+
       a {
         text-decoration: none;
         color: white;
-        margin-bottom: 10px;
       }
 
       button {
@@ -51,28 +56,42 @@
         color: white;
         border: none;
         cursor: pointer;
-        margin-top: 10px;
         &:hover {
           text-decoration: underline;
         }
       }
     }
-    
+
     @media (min-width: 769px) {
       display: flex;
-      gap: 1rem;  
-    }
-    
-    li a {
-      text-decoration: none;
-      color: white;
-      &:hover {
-        text-decoration: underline;
+      gap: 1rem;  // Affichage du menu en ligne sur desktop
+      flex-direction: row;
+
+      li {
+        list-style: none;  // Supprimer les puces sur desktop également
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      button {
+        background-color: transparent;
+        color: white;
+        border: none;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
 
-
+  /* Styles pour le menu hamburger */
   .hamburger {
     display: block;
     cursor: pointer;
@@ -86,7 +105,7 @@
     }
 
     @media (min-width: 769px) {
-      display: none;  
+      display: none;  // Masquer le hamburger sur les écrans plus larges
     }
   }
 }
