@@ -1,26 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
-  // Vérifier si l'utilisateur est admin au moment du chargement du Header
   useEffect(() => {
-    const role = localStorage.getItem('role'); // Récupère le rôle depuis le localStorage
+    const role = localStorage.getItem('role');
     if (role === 'admin') {
-      setIsAdmin(true); // Si l'utilisateur est admin, mettre à jour l'état
+      setIsAdmin(true);
     }
   }, [isAuthenticated]);
 
   const handleLogout = () => {
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    Cookies.remove('token');
     setIsAuthenticated(false);
-    localStorage.removeItem('role');  // Enlever aussi le rôle du localStorage
+    localStorage.removeItem('role');
     alert("Déconnexion réussie !");
-    navigate('/');  // Rediriger vers la page d'accueil après la déconnexion
+    navigate('/');
   };
 
   return (
@@ -29,7 +29,7 @@ const Header = () => {
       {isAuthenticated ? (
         <div>
           {isAdmin && (
-            <button onClick={() => navigate("/dashboard")}>Dashboard</button> // Lien vers le Dashboard
+            <button onClick={() => navigate("/dashboard")}>Dashboard</button>
           )}
           <button onClick={handleLogout}>Se déconnecter</button>
         </div>
