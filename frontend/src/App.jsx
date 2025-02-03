@@ -16,6 +16,7 @@ import './styles/App.scss';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const initializeSession = async () => {
     let sessionId = localStorage.getItem("sessionId");
@@ -33,30 +34,33 @@ const App = () => {
     }
   };
 
-
   const checkAdminStatus = () => {
     const token = Cookies.get('token');
     
     if (token) {
       try {
         const decoded = jwtDecode(token);
+        setIsAuthenticated(true);
         setIsAdmin(decoded.role === 'admin');
       } catch (error) {
         console.error("Erreur de décodage du token :", error);
+        setIsAuthenticated(false);
         setIsAdmin(false);
       }
     } else {
+      setIsAuthenticated(false);
       setIsAdmin(false);
     }
   };
 
   useEffect(() => {
+    // Vérifie la session et le rôle admin à chaque chargement
     initializeSession();
     checkAdminStatus();
 
-
+    // Vérification régulière si nécessaire (par exemple, toutes les 5 secondes)
     const interval = setInterval(checkAdminStatus, 5000);
-    return () => clearInterval(interval);
+    return () => clearInterval(interval);  // Nettoyage de l'intervalle lorsque le composant se démonte
   }, []);
 
   return (
@@ -70,6 +74,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
+          {/* Si l'utilisateur est admin, affiche le Dashboard sinon redirige vers Home */}
           <Route 
             path="/dashboard" 
             element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} 
