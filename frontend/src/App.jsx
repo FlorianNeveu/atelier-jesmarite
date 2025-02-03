@@ -44,6 +44,8 @@ const App = () => {
         setIsAdmin(decoded.role === "admin"); 
         if (decoded.role === "admin") {
           console.log("L'utilisateur est un administrateur.");
+        } else {
+          console.log("L'utilisateur n'est pas un administrateur.");
         }
       } catch (error) {
         console.error("Erreur de décodage du token :", error);
