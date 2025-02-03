@@ -25,11 +25,7 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = [
-  'http://localhost:5173', 
-  'https://atelier-jesmarite-production.up.railway.app', 
-  'https://atelier-jesmarite.vercel.app'
-];
+const allowedOrigins = 'https://atelier-jesmarite-production.up.railway.app';
 
 app.use(cors({
   origin: function(origin, callback) {
