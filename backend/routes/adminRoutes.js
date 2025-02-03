@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken, isAdmin } = require('./auth'); // Assure-toi d'importer les bons middlewares
-const Product = require('../models/Product'); // Assure-toi que ton modèle Product est bien défini
-const Admin = require('../models/Admin');  // Si tu veux aussi gérer des admins, assure-toi que ce modèle existe
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+const Product = require('../models/Product'); 
+const Admin = require('../models/Admin');  
 
-// Appliquer le middleware de vérification de token et de rôle admin à toutes les routes suivantes
-router.use(verifyToken);   // Vérifie que l'utilisateur est authentifié
-router.use(isAdmin);       // Vérifie que l'utilisateur est un administrateur
+router.use(verifyToken);
+router.use(isAdmin); 
 
 // **CRUD - Create (Créer un produit)**
 router.post('/products', async (req, res) => {
