@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { Link } from 'react-router-dom';
 import "../styles/Header.scss"; 
 
 const Header = () => {
