@@ -1,0 +1,57 @@
+.home {
+    padding: 20px;
+    text-align: center;
+  
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+  
+    .product-list {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr; /* Par défaut, une seule colonne (mobile-first) */
+  
+      .product-card {
+        background: #f8f8f8;
+        padding: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+  
+        img {
+          width: 100%;
+          max-width: 200px;
+          height: auto;
+          margin-bottom: 15px;
+        }
+  
+        p {
+          font-size: 1rem;
+          color: #555;
+        }
+      }
+    }
+  
+    @media (min-width: 768px) {
+      .product-list {
+        grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur les tablettes */
+      }
+    }
+  
+    @media (min-width: 1024px) {
+      .product-list {
+        grid-template-columns: repeat(4, 1fr); /* 4 colonnes sur les desktops */
+      }
+    }
+  }  
