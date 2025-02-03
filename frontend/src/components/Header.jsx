@@ -20,11 +20,16 @@ const Header = () => {
   }, [isAuthenticated]);
 
   
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post('/auth/logout');
+    } catch (error) {
+      console.error("Erreur déconnexion:", error);
+    }
     Cookies.remove('token');
     localStorage.removeItem('role');
-    axiosInstance.post('/auth/logout');
     setIsAuthenticated(false);
+    setIsAdmin(false);
     navigate('/', { replace: true });
   };
 
