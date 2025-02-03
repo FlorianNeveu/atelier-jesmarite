@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: API_URL,
   timeout: 10000,
   withCredentials: true,
   headers: {

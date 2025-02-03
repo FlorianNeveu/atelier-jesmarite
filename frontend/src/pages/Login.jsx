@@ -25,6 +25,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/auth/login", formData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         withCredentials: true
       });
       console.log("Réponse complète du serveur :", response); // Debug
