@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// Récupération de la clé secrète depuis les variables d'environnement
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Pour s'inscrire
