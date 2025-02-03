@@ -11,38 +11,53 @@ import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import Dashboard from './pages/Dashboard';
 import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
 import './styles/App.scss';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    const initializeSession = async () => {
-      let sessionId = localStorage.getItem("sessionId");
+  // Logique existante pour l'initialisation de la session
+  const initializeSession = async () => {
+    let sessionId = localStorage.getItem("sessionId");
 
-      if (!sessionId) {
-        try {
-          const user_id = localStorage.getItem("userId") || null;
-          const response = await axiosInstance.post("/sessions", { user_id });
-          sessionId = response.data.id; 
-          localStorage.setItem("sessionId", sessionId);
-
-
-          const userResponse = await axiosInstance.get("/users/me");
-          if (userResponse.data.role === 'admin') {
-            setIsAdmin(true);
-          }
-
-          console.log("Nouvelle session créée :", sessionId);
-        } catch (error) {
-          console.error("Erreur lors de la création de la session :", error);
-        }
-      } else {
-        console.log("Session existante :", sessionId);
+    if (!sessionId) {
+      try {
+        const user_id = localStorage.getItem("userId") || null;
+        const response = await axiosInstance.post("/sessions", { user_id });
+        sessionId = response.data.id;
+        localStorage.setItem("sessionId", sessionId);
+        console.log("Nouvelle session créée :", sessionId);
+      } catch (error) {
+        console.error("Erreur lors de la création de la session :", error);
       }
-    };
+    }
+  };
 
+
+  const checkAdminStatus = () => {
+    const token = Cookies.get('token');
+    
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setIsAdmin(decoded.role === 'admin');
+      } catch (error) {
+        console.error("Erreur de décodage du token :", error);
+        setIsAdmin(false);
+      }
+    } else {
+      setIsAdmin(false);
+    }
+  };
+
+  useEffect(() => {
     initializeSession();
+    checkAdminStatus();
+
+
+    const interval = setInterval(checkAdminStatus, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -56,7 +71,10 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
-          {isAdmin && <Route path="/dashboard" element={<Dashboard />} />}
+          <Route 
+            path="/dashboard" 
+            element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} 
+          />
         </Routes>
       </main>
       <Footer />
