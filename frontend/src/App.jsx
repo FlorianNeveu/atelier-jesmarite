@@ -36,15 +36,15 @@ const App = () => {
 
   const checkAdminStatus = () => {
     const token = Cookies.get('token');
-    
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setIsAuthenticated(true);
-        setIsAdmin(decoded.role === 'admin');
+        setIsAdmin(decoded.role === "admin"); 
       } catch (error) {
         console.error("Erreur de décodage du token :", error);
-        setIsAuthenticated(false);
+        setIsAuthenticated(false); 
         setIsAdmin(false);
       }
     } else {
@@ -54,12 +54,11 @@ const App = () => {
   };
 
   useEffect(() => {
-
     initializeSession();
-    checkAdminStatus();
+    checkAdminStatus(); 
 
-    const interval = setInterval(checkAdminStatus, 5000);
-    return () => clearInterval(interval);  
+    const interval = setInterval(checkAdminStatus, 5000); 
+    return () => clearInterval(interval); 
   }, []);
 
   return (
