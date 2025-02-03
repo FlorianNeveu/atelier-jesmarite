@@ -1,4 +1,4 @@
-@use './_variables.scss' as *;  // Assure-toi que les variables sont importées depuis _variables.scss
+@use './_variables.scss' as *;
 
 .header {
   position: sticky;
@@ -8,8 +8,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: $primary-color;  // Utilise une couleur pastel rose ici
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  // Légère ombre pour un effet de profondeur
+  background-color: $primary-color;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   
   .logo {
     font-size: 1.5rem;
@@ -20,13 +20,12 @@
     }
   }
 
-  /* Navigation : mobile first */
   .navigation {
     display: flex;
     gap: 1rem;
 
     @media (max-width: 768px) {
-      display: none;  // Masquer la navigation sur mobile par défaut
+      display: none;
       flex-direction: column;
       position: absolute;
       top: 50px;
@@ -42,7 +41,7 @@
       }
 
       li {
-        list-style: none;  // Supprimer les puces de la liste
+        list-style: none;
         margin-bottom: 10px;
       }
 
@@ -64,11 +63,12 @@
 
     @media (min-width: 769px) {
       display: flex;
-      gap: 1rem;  // Affichage du menu en ligne sur desktop
-      flex-direction: row;
+      gap: 1rem;
+      flex-direction: row; 
+      align-items: center;
 
       li {
-        list-style: none;  // Supprimer les puces sur desktop également
+        list-style: none;
       }
 
       a {
@@ -91,7 +91,6 @@
     }
   }
 
-  /* Styles pour le menu hamburger */
   .hamburger {
     display: block;
     cursor: pointer;
@@ -105,7 +104,7 @@
     }
 
     @media (min-width: 769px) {
-      display: none;  // Masquer le hamburger sur les écrans plus larges
+      display: none;
     }
   }
 }
