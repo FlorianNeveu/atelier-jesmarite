@@ -35,7 +35,7 @@ const App = () => {
   };
 
   const checkAdminStatus = () => {
-    const token = Cookies.get('token');
+    const token = Cookies.get();
     console.log("Token récupéré :", token);
 
     if (token) {
