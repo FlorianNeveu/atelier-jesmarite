@@ -14,7 +14,6 @@ import './styles/App.scss';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const initializeSession = async () => {
