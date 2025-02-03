@@ -29,14 +29,23 @@ const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-prod
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true); 
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error('Blocked by CORS'));
     }
   },
   credentials: true,
+  exposedHeaders: ['set-cookie'], // Ajout crucial
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-ID']
 }));
+
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Private-Network', 'true');
+  res.header('Permissions-Policy', 'interest-cohort=()');
+  next();
+});
 
 
 app.use(express.json()); 

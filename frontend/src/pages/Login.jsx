@@ -40,9 +40,6 @@ const Login = () => {
         throw new Error("Réponse serveur invalide");
       }
       
-      if (token.split('.').length !== 3) {
-        throw new Error("Format de token invalide");
-      }
   
       // Mise à jour de session
       const sessionId = localStorage.getItem("sessionId");
