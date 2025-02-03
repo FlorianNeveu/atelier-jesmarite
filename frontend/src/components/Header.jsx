@@ -29,6 +29,7 @@ const Header = () => {
     }
     Cookies.remove('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
     setIsAuthenticated(false);
     setIsAdmin(false);
     navigate('/', { replace: true });
