@@ -42,6 +42,9 @@ const App = () => {
         const decoded = jwtDecode(token);
         setIsAuthenticated(true);
         setIsAdmin(decoded.role === "admin"); 
+        if (decoded.role === "admin") {
+          console.log("L'utilisateur est un administrateur.");
+        }
       } catch (error) {
         console.error("Erreur de décodage du token :", error);
         setIsAuthenticated(false); 
