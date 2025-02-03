@@ -17,7 +17,6 @@ import './styles/App.scss';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Logique existante pour l'initialisation de la session
   const initializeSession = async () => {
     let sessionId = localStorage.getItem("sessionId");
 
