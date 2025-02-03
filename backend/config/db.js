@@ -1,13 +1,13 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config(); // Import environment variables
+require('dotenv').config();
 
-// Utiliser l'URL complète de la base de données dans Sequelize
+
 const sequelize = new Sequelize(process.env.DB_URL, {
     dialect: 'mysql',
-    logging: false, // Désactive les logs SQL si besoin
+    logging: false,
     dialectOptions: {
         ssl: {
-            rejectUnauthorized: false // Si nécessaire pour une connexion sécurisée
+            rejectUnauthorized: false
         }
     }
 });

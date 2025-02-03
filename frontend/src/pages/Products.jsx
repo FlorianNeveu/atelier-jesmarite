@@ -23,18 +23,18 @@ const Products = () => {
   }, []);
 
   const handleAddToCart = async (productId) => {
-    const sessionId = localStorage.getItem("sessionId"); 
-        // Set loading to false once the fetch is complete
-
     try {
-      await axiosInstance.post("/carts", {
+      const response = await axiosInstance.post("/carts", {
         product_id: productId,
-        quantity: 1,
-        session_id: sessionId,
+        quantity: 1
       });
-      alert("Produit ajouté au panier !");
+      
+      if (response.status === 201) {
+        alert("Produit ajouté au panier !");
+      }
     } catch (error) {
-      console.error("Erreur lors de l'ajout au panier :", error);
+      console.error("Erreur détaillée :", error.response?.data || error);
+      alert(`Échec de l'ajout : ${error.response?.data?.message || 'Erreur serveur'}`);
     }
   };
 
