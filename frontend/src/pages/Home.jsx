@@ -15,9 +15,8 @@ const Home = () => {
         const response = await axiosInstance.get("/products");
         setProducts(response.data);
 
-        // Choisir 2 produits aléatoires pour mobile et 4 pour desktop
-        const selectedProducts = response.data.sort(() => Math.random() - 0.5); // Mélange les produits
-        setRandomProducts(selectedProducts.slice(0, window.innerWidth <= 768 ? 2 : 4)); // 2 produits sur mobile, 4 sur desktop
+        const selectedProducts = response.data.sort(() => Math.random() - 0.5); 
+        setRandomProducts(selectedProducts.slice(0, window.innerWidth <= 768 ? 2 : 4));
       } catch (error) {
         console.error("Erreur lors de la récupération des produits :", error);
       }
