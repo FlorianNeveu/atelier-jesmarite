@@ -75,8 +75,14 @@ const login = async (req, res) => {
 
 // Pour se déconnecter
 const logout = (req, res) => {
-  res.clearCookie("token");
-  res.json({ message: "Déconnexion réussie" });
+  res.clearCookie('token', {
+    domain: '.railway.app',
+    path: '/',
+    secure: true,
+    sameSite: 'None'
+  });
+  
+  res.status(200).json({ message: 'Déconnexion réussie' });
 };
 
 const getAll = async (req, res) => {
