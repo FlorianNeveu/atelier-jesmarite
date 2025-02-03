@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import Dashboard from './pages/Dashboard';
+import { jwtDecode } from 'jwt-decode';
 import './styles/App.scss';
 
 const App = () => {

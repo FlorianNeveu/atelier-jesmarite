@@ -47,7 +47,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Mot de passe incorrect" });
     }
     
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1h" });
 
     const { password: _, ...userWithoutPassword } = user.toJSON();
     
