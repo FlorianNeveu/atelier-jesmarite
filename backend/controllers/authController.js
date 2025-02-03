@@ -56,6 +56,7 @@ const login = async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
+        domain: '.atelier-jesmarite.vercel.app',
       })
       .json({ message: "Connexion réussie", user });
   } catch (error) {
