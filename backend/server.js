@@ -25,42 +25,18 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = [
-  'https://atelier-jesmarite.vercel.app',
-  'https://atelier-jesmarite-production.up.railway.app'
-];
+const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app'];
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true); 
     } else {
-      callback(new Error('Blocked by CORS'));
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-Session-ID',
-    'X-Requested-With'
-  ],
-  exposedHeaders: [
-    'set-cookie',
-    'Content-Length',
-    'ETag'
-  ]
 }));
-
-app.options('*', cors());
-
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', allowedOrigins.join(', '));
-  res.header('Access-Control-Allow-Credentials', 'true');
-  next();
-});
 
 
 app.use(express.json()); 
