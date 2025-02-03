@@ -55,7 +55,7 @@ const login = async (req, res) => {
       httpOnly: true,
       secure: true, 
       sameSite: 'None',
-      domain: '.railway.app',
+      domain: '.vercel.app',
       maxAge: 86400000,
       path: '/'
     });
