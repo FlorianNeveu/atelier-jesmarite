@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
@@ -11,19 +13,29 @@ const Dashboard = () => {
 
   useEffect(() => {
     const checkAdmin = async () => {
+      const token = Cookies.get('token'); 
+
+      if (!token) {
+        navigate('/login'); 
+        return;
+      }
+
       try {
-        const response = await axiosInstance.get('/users/me');
-        if (response.data.role !== 'admin') {
-          navigate('/');
+      
+        const decoded = jwtDecode(token);
+        if (decoded.role !== 'admin') {
+          navigate('/'); 
         } else {
           fetchProducts();
         }
       } catch (error) {
+        console.error("Erreur lors de la vérification du token:", error);
         navigate('/login');
       } finally {
         setLoading(false);
       }
     };
+
     checkAdmin();
   }, [navigate]);
 
