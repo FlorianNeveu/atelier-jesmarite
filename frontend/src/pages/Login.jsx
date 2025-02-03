@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const [formData, setFormData] = useState({

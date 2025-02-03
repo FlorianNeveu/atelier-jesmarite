@@ -5,10 +5,12 @@ const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  timeout: 5000,
+  timeout: 10000,
+  withCredentials: true, // Ajout crucial
   headers: {
     'Content-Type': 'application/json',
-  },
+    'Accept': 'application/json'
+  }
 });
 
 axiosInstance.interceptors.request.use((config) => {
