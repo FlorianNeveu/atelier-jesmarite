@@ -25,7 +25,10 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = 'https://atelier-jesmarite-production.up.railway.app';
+const allowedOrigins = [
+  'https://atelier-jesmarite.vercel.app',
+  'https://atelier-jesmarite-production.up.railway.app'
+];
 
 app.use(cors({
   origin: function(origin, callback) {
@@ -36,14 +39,26 @@ app.use(cors({
     }
   },
   credentials: true,
-  exposedHeaders: ['set-cookie'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-ID']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Session-ID',
+    'X-Requested-With'
+  ],
+  exposedHeaders: [
+    'set-cookie',
+    'Content-Length',
+    'ETag'
+  ]
 }));
+
+app.options('*', cors());
 
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Private-Network', 'true');
-  res.header('Permissions-Policy', 'interest-cohort=()');
+  res.header('Access-Control-Allow-Origin', allowedOrigins.join(', '));
+  res.header('Access-Control-Allow-Credentials', 'true');
   next();
 });
 
