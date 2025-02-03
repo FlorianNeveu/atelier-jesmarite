@@ -8,6 +8,7 @@ import Products from './pages/Products';
 import Signup from './pages/Signup';
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import ProductPage from "./pages/ProductPage";
 import './styles/App.scss';
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/products/:productId" element={<ProductPage />} />
         </Routes>
       </main>
       <Footer />
