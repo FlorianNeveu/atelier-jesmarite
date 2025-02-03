@@ -41,9 +41,9 @@ const Products = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="products">
+    <div>
       <h1>Tous nos produits</h1>
-      <div className="product-list">
+      <div>
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <h2>{product.name}</h2>

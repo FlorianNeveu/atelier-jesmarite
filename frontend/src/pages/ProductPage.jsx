@@ -24,6 +24,21 @@ const ProductPage = () => {
     fetchProduct();
   }, [productId]);
 
+  const handleAddToCart = async (productId) => {
+    const sessionId = localStorage.getItem("sessionId");
+
+    try {
+      await axiosInstance.post("/carts", {
+        product_id: productId,
+        quantity: 1,
+        session_id: sessionId,
+      });
+      alert("Produit ajouté au panier !");
+    } catch (error) {
+      console.error("Erreur lors de l'ajout au panier :", error);
+    }
+  };
+
   if (loading) return <div>Chargement...</div>;
   if (error) return <div>{error}</div>;
   if (!product) return <div>Aucun produit trouvé.</div>;
@@ -34,7 +49,7 @@ const ProductPage = () => {
       <img src={`${API_URL}${product.image}`} alt={product.name} />
       <p>{product.description}</p>
       <p>{product.price} €</p>
-      <button>Ajouter au panier</button>
+      <button onClick={() => handleAddToCart(product.id)}>Ajouter au panier</button>
     </div>
   );
 };
