@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Link } from 'react-router-dom';
 import axiosInstance from "../axiosConfig";
+import { jwtDecode } from 'jwt-decode';
 import "../styles/Header.scss"; 
 
 const Header = () => {
@@ -14,11 +15,27 @@ const Header = () => {
 
   
   useEffect(() => {
-    const role = localStorage.getItem('role');
-    if (role === 'admin') {
-      setIsAdmin(true);
-    }
-  }, [isAuthenticated]);
+    const checkAdminStatus = () => {
+      const token = Cookies.get("token");
+
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          setIsAuthenticated(true);  
+          setIsAdmin(decoded.role === "admin");
+        } catch (error) {
+          console.error("Erreur lors du décodage du token:", error);
+          setIsAuthenticated(false); 
+          setIsAdmin(false); 
+        }
+      } else {
+        setIsAuthenticated(false); 
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminStatus(); 
+  }, [setIsAuthenticated]);
 
   
   const handleLogout = async () => {

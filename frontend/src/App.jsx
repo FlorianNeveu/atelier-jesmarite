@@ -54,13 +54,12 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Vérifie la session et le rôle admin à chaque chargement
+
     initializeSession();
     checkAdminStatus();
 
-    // Vérification régulière si nécessaire (par exemple, toutes les 5 secondes)
     const interval = setInterval(checkAdminStatus, 5000);
-    return () => clearInterval(interval);  // Nettoyage de l'intervalle lorsque le composant se démonte
+    return () => clearInterval(interval);  
   }, []);
 
   return (
@@ -74,7 +73,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
-          {/* Si l'utilisateur est admin, affiche le Dashboard sinon redirige vers Home */}
           <Route 
             path="/dashboard" 
             element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} 
