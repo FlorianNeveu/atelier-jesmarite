@@ -53,11 +53,13 @@ const login = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user.toJSON();
     
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 86400000 // 24h en ms
-    });
+    httpOnly: true,
+    secure: true,
+    sameSite: 'none',
+    domain: '.railway.app',
+    maxAge: 86400000
+  })
+  .json({ user });
 
     res.status(200).json({ 
       user: { 

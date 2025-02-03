@@ -4,12 +4,13 @@ import Cookies from 'js-cookie';
 const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
 const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 10000,
-  withCredentials: true, // Ajout crucial
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'Access-Control-Allow-Origin': 'https://atelier-jesmarite.vercel.app'
   }
 });
 

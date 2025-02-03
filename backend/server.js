@@ -25,11 +25,16 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-app.use(cors({
-  origin: 'https://atelier-jesmarite.vercel.app',
+const corsOptions = {
+  origin: [
+    'https://atelier-jesmarite.vercel.app',
+    'https://atelier-jesmarite-production.up.railway.app'
+  ],
   credentials: true,
-  exposedHeaders: ['set-cookie']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Session-ID']
+};
+
+app.use(cors(corsOptions));
 
 
 app.use(express.json()); 
