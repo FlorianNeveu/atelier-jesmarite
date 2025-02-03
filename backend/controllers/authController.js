@@ -56,10 +56,16 @@ const login = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000 // 1 jour
+      maxAge: 86400000 // 24h en ms
     });
 
-    res.json({ user: { id: user.id, email: user.email, role: user.role } });
+    res.status(200).json({ 
+      user: { 
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
+    });
     
   } catch (error) {
     res.status(500).json({ error: error.message });

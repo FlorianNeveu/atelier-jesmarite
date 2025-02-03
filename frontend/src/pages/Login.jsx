@@ -24,7 +24,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/auth/login", formData);
+      const response = await axiosInstance.post("/auth/login", formData, {
+        withCredentials: true
+      });
       console.log("Réponse complète du serveur :", response); // Debug
       
       const { user, token } = response.data;
