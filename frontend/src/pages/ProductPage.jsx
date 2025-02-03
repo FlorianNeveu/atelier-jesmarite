@@ -7,6 +7,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -30,11 +31,7 @@ const ProductPage = () => {
   return (
     <div>
       <h1>{product.name}</h1>
-      <img 
-        src={product.image} 
-        alt={product.name} 
-
-      />
+      <img src={`${API_URL}${product.image}`} alt={product.name} />
       <p>{product.description}</p>
       <p>{product.price} €</p>
       <button>Ajouter au panier</button>
