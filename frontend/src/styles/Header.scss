@@ -1,33 +1,92 @@
-@use './_variables.scss' as *;
+@use './_variables.scss' as *; 
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: $primary-color;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: $primary-color; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
   
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  .navigation {
+    display: flex;
+    gap: 1rem;
+    
+    @media (max-width: 768px) {
+      display: none; 
+      flex-direction: column;
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      background-color: $primary-color;
+      padding: 1rem;
+      width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      
+      &.open {
+        display: flex;
+      }
+      
       a {
         text-decoration: none;
         color: white;
+        margin-bottom: 10px;
       }
-    }
-  
-    .navigation ul {
-      display: flex;
-      list-style: none;
-      gap: 1rem;
-  
-      li a {
-        text-decoration: none;
+
+      button {
+        background-color: transparent;
         color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
         &:hover {
           text-decoration: underline;
         }
       }
     }
+    
+    @media (min-width: 769px) {
+      display: flex;
+      gap: 1rem;  
+    }
+    
+    li a {
+      text-decoration: none;
+      color: white;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
-  
+
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+    span {
+      display: block;
+      width: 25px;
+      height: 4px;
+      background-color: white;
+      margin: 5px auto;
+      transition: 0.3s;
+    }
+
+    @media (min-width: 769px) {
+      display: none; 
+    }
+  }
+}

@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import "../styles/Header.scss";
+import "../styles/Header.scss"; 
 
 const Header = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const role = localStorage.getItem('role');
     if (role === 'admin') {
@@ -16,30 +18,49 @@ const Header = () => {
     }
   }, [isAuthenticated]);
 
+  
   const handleLogout = () => {
-    Cookies.remove('token');
+    Cookies.remove('token'); 
     setIsAuthenticated(false);
-    localStorage.removeItem('role');
+    localStorage.removeItem('role'); 
     alert("Déconnexion réussie !");
-    navigate('/');
+    navigate('/'); 
+  };
+
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <header>
-      <h1>Atelier de Jesmarite</h1>
-      {isAuthenticated ? (
-        <div>
-          {isAdmin && (
-            <button onClick={() => navigate("/dashboard")}>Dashboard</button>
-          )}
-          <button onClick={handleLogout}>Se déconnecter</button>
-        </div>
-      ) : (
-        <div>
-          <a href="/login">Se connecter</a>
-          <a href="/signup">S'inscrire</a>
-        </div>
-      )}
+    <header className="header">
+      <div className="logo">
+        <a href="/">Atelier de Jesmarite</a> {/* Lien vers la page d'accueil */}
+      </div>
+      
+      {/* Menu Hamburger pour mobile */}
+      <div className="hamburger" onClick={toggleMenu}>
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+      </div>
+
+      
+      <nav className={`navigation ${isMenuOpen ? "open" : ""}`}>
+        {isAuthenticated ? (
+          <div>
+            {isAdmin && (
+              <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+            )}
+            <button onClick={handleLogout}>Se déconnecter</button>
+          </div>
+        ) : (
+          <div>
+            <a href="/login">Se connecter</a>
+            <a href="/signup">S'inscrire</a>
+          </div>
+        )}
+      </nav>
     </header>
   );
 };
