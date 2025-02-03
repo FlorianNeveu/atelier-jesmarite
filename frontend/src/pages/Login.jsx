@@ -31,8 +31,7 @@ const Login = () => {
         },
         withCredentials: true
       });
-      console.log("Réponse complète du serveur :", response); // Debug
-      
+
       const { user } = response.data;
   
       // Validation de la réponse
@@ -40,7 +39,7 @@ const Login = () => {
         throw new Error("Réponse serveur invalide");
       }
       
-  
+      localStorage.setItem("userId", user.id);
       // Mise à jour de session
       const sessionId = localStorage.getItem("sessionId");
       if (sessionId) {
