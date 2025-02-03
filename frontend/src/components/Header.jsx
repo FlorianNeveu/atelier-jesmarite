@@ -20,11 +20,11 @@ const Header = () => {
 
   
   const handleLogout = () => {
-    Cookies.remove('token'); 
-    setIsAuthenticated(false);
+    Cookies.remove('token');
     localStorage.removeItem('role');
-    alert("Déconnexion réussie !");
-    navigate('/');
+    axiosInstance.post('/auth/logout');
+    setIsAuthenticated(false);
+    navigate('/', { replace: true });
   };
 
   
@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <a href="/">Atelier de Jesmarite</a> 
+        <Link to="/">Atelier de Jesmarite</Link>
       </div>
       
       
