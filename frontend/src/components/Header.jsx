@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import "../styles/Header.scss"; 
+import "../styles/Header.scss";
 
 const Header = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -20,14 +20,14 @@ const Header = () => {
 
   
   const handleLogout = () => {
-    Cookies.remove('token'); 
+    Cookies.remove('token');
     setIsAuthenticated(false);
-    localStorage.removeItem('role'); 
+    localStorage.removeItem('role');
     alert("Déconnexion réussie !");
     navigate('/'); 
   };
 
-
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">
-        <a href="/">Atelier de Jesmarite</a> {/* Lien vers la page d'accueil */}
+        <a href="/">Atelier de Jesmarite</a>
       </div>
       
       {/* Menu Hamburger pour mobile */}
@@ -45,20 +45,31 @@ const Header = () => {
         <span className="bar"></span>
       </div>
 
-      
+      {/* Navigation */}
       <nav className={`navigation ${isMenuOpen ? "open" : ""}`}>
         {isAuthenticated ? (
-          <div>
+          <ul>
             {isAdmin && (
-              <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+              <li>
+                <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+              </li> 
             )}
-            <button onClick={handleLogout}>Se déconnecter</button>
-          </div>
+            <li>
+              <button onClick={handleLogout}>Se déconnecter</button>
+            </li> 
+          </ul>
         ) : (
-          <div>
-            <a href="/login">Se connecter</a>
-            <a href="/signup">S'inscrire</a>
-          </div>
+          <ul>
+            <li>
+              <a href="/login">Se connecter</a> 
+            </li>
+            <li>
+              <a href="/signup">S'inscrire</a> 
+            </li>
+            <li>
+              <a href="products">Produits</a> 
+            </li>
+          </ul>
         )}
       </nav>
     </header>
