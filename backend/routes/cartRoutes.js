@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
 });
 
 // **Récupérer un article du panier par ID**
-router.get('/:id', async (req, res) => {
+/*router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const cartItem = await CartItem.findByPk(id, {
@@ -55,11 +55,12 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Error when retrieving cart item' });
   }
-});
+});*/
 
 // Récupérer les articles du panier pour une session donnée
 router.get('/:session_id', async (req, res) => {
   const { session_id } = req.params;
+  console.log(`requete pour le panier de la session : ${session_id}`);
   try {
     const cartItems = await CartItem.findAll({
       where: { session_id },
