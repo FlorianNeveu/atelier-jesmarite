@@ -34,19 +34,17 @@ router.post('/', upload.single('image'), async (req, res) => {
   const { name, description, price, quantity, category_id } = req.body;
   let imageUrl = null;
 
-  
   if (req.file) {
     try {
-      const result = await cloudinary.uploader.upload_stream(
-        { folder: "products" },
-        (error, result) => {
-          if (error) {
-            return res.status(500).json({ error: 'Erreur de téléchargement vers Cloudinary' });
-          }
-          imageUrl = result.secure_url;
-        }
-      );
-      req.file.stream.pipe(result);
+      // Conversion du buffer en base64
+      const b64 = Buffer.from(req.file.buffer).toString("base64");
+      const dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+      
+      // Upload vers Cloudinary
+      const result = await cloudinary.uploader.upload(dataURI, {
+        folder: "products"
+      });
+      imageUrl = result.secure_url;
     } catch (error) {
       return res.status(500).json({ error: 'Erreur lors du téléchargement de l\'image' });
     }
@@ -111,19 +109,15 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   const { name, description, price, quantity, category_id } = req.body;
   let imageUrl = null;
 
-  // Si une nouvelle image est envoyée, la télécharger via Cloudinary
   if (req.file) {
     try {
-      const result = await cloudinary.uploader.upload_stream(
-        { folder: "products" }, // Optionnel : pour organiser les images dans un dossier
-        (error, result) => {
-          if (error) {
-            return res.status(500).json({ error: 'Erreur de téléchargement vers Cloudinary' });
-          }
-          imageUrl = result.secure_url; // URL de l'image
-        }
-      );
-      req.file.stream.pipe(result);
+      const b64 = Buffer.from(req.file.buffer).toString("base64");
+      const dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+      
+      const result = await cloudinary.uploader.upload(dataURI, {
+        folder: "products"
+      });
+      imageUrl = result.secure_url;
     } catch (error) {
       return res.status(500).json({ error: 'Erreur lors du téléchargement de l\'image' });
     }
