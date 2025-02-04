@@ -44,7 +44,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Tableau de bord Admin</h1>
+      <h1>Tableau de bord Admin:</h1>
       <button onClick={() => navigate('/add-product')}>Ajouter un produit</button>
 
       <h2>Liste des produits</h2>
