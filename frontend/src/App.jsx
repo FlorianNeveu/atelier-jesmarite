@@ -37,26 +37,17 @@ const App = () => {
     }
   };
 
-  const checkAdminStatus = () => {
-    const token = Cookies.get('token');
-    console.log("Token récupéré :", token);
-
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
+  const checkAdminStatus = async () => {
+    try {
+      const response = await axiosInstance.get('/auth/me', { withCredentials: true }); // Appelle /auth/me pour récupérer l'utilisateur
+      if (response.data.user) {
         setIsAuthenticated(true);
-        setIsAdmin(decoded.role === "admin"); 
-        if (decoded.role === "admin") {
-          console.log("L'utilisateur est un administrateur.");
-        } else {
-          console.log("L'utilisateur n'est pas un administrateur.");
-        }
-      } catch (error) {
-        console.error("Erreur de décodage du token :", error);
-        setIsAuthenticated(false); 
+        setIsAdmin(response.data.user.role === 'admin'); // Vérifie si l'utilisateur est un admin
+      } else {
+        setIsAuthenticated(false);
         setIsAdmin(false);
       }
-    } else {
+    } catch (error) {
       setIsAuthenticated(false);
       setIsAdmin(false);
     }
@@ -81,9 +72,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
+          <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} />
           <Route path="/edit-product/:productId" element={<EditProduct />} />
           <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       </main>
       <Footer />

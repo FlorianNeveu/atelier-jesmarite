@@ -73,6 +73,14 @@ const login = async (req, res) => {
   }
 };
 
+const me = async (req, res) => {
+  const user = req.user;
+
+  res.status(200).json({
+    user: { id: user.id, role: user.role, email: user.email } 
+  });
+};
+
 // Pour se déconnecter
 const logout = (req, res) => {
   res.clearCookie('token', {
@@ -90,4 +98,4 @@ const getAll = async (req, res) => {
   res.json(users);
 }
 
-module.exports = { register, login, logout, getAll };
+module.exports = { register, login, logout, getAll, me };

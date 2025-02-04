@@ -14,28 +14,25 @@ const Header = () => {
   const navigate = useNavigate();
 
   
-  useEffect(() => {
-    const checkAdminStatus = () => {
-      const token = Cookies.get("token");
-
-      if (token) {
-        try {
-          const decoded = jwtDecode(token);
-          setIsAuthenticated(true);  
-          setIsAdmin(decoded.role === "admin");
-        } catch (error) {
-          console.error("Erreur lors du décodage du token:", error);
-          setIsAuthenticated(false); 
-          setIsAdmin(false); 
-        }
+  const checkAdminStatus = async () => {
+    try {
+      const response = await axiosInstance.get('/auth/me', { withCredentials: true }); // Appelle /auth/me pour récupérer l'utilisateur
+      if (response.data.user) {
+        setIsAuthenticated(true);
+        setIsAdmin(response.data.user.role === 'admin'); // Vérifie si l'utilisateur est un admin
       } else {
-        setIsAuthenticated(false); 
+        setIsAuthenticated(false);
         setIsAdmin(false);
       }
-    };
+    } catch (error) {
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+    }
+  };
 
-    checkAdminStatus(); 
-  }, [setIsAuthenticated]);
+  useEffect(() => {
+    checkAdminStatus();
+  }, []);
 
   
   const handleLogout = async () => {
@@ -74,6 +71,7 @@ const Header = () => {
       <nav className={`navigation ${isMenuOpen ? "open" : ""}`}>
         {isAuthenticated ? (
           <ul>
+            {isAdmin && <li><Link to="/dashboard">Dashboard</Link></li>}
             <li>
               <button onClick={handleLogout}>Se déconnecter</button>
             </li> 
@@ -91,9 +89,6 @@ const Header = () => {
             </li>
             <li>
               <Link to="/products">Produits</Link>
-            </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
             </li>
           </ul>
         )}

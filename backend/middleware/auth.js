@@ -6,14 +6,14 @@ const verifyToken = async (req, res, next) => {
     const token = req.cookies.token;
 
     if (!token) {
-        return res.status(401).json({ error: "Unauthorized" });
+        return res.status(401).json({ error: "Pas de token" });
     }
 
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findByPk(decodedToken.id);
         if (!user) {
-            return res.status(401).json({ error: "Unauthorized" });
+            return res.status(401).json({ error: "Utilisateur non trouvé" });
         }
 
         req.user = user;
