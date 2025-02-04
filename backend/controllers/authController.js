@@ -73,31 +73,6 @@ const login = async (req, res) => {
   }
 };
 
-const me = async (req, res) => {
-  const token = req.cookies.token;
-  
-  if (!token) {
-    return res.status(401).json({ user: null }); 
-  }
-
-
-  jwt.verify(token, JWT_SECRET, async (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ user: null });
-    }
-
-
-    const user = await User.findOne({ where: { id: decoded.id } });  
-    if (!user) {
-      return res.status(404).json({ user: null }); 
-    }
-
-    res.status(200).json({
-      user: { id: user.id, role: user.role, email: user.email }  
-    });
-  });
-};
-
 // Pour se déconnecter
 const logout = (req, res) => {
   res.clearCookie('token', {
