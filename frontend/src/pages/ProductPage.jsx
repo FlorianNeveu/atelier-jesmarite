@@ -46,7 +46,7 @@ const ProductPage = () => {
   return (
     <div>
       <h1>{product.name}</h1>
-      <img src={`${API_URL}${product.image}`} alt={product.name} />
+      <img src={`${product.image}`} alt={product.name} />
       <p>{product.description}</p>
       <p>{product.price} €</p>
       <button onClick={() => handleAddToCart(product.id)}>Ajouter au panier</button>
