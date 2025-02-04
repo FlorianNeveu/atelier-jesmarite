@@ -48,7 +48,7 @@ const Products = () => {
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <h2>{product.name}</h2>
-            <img src={`${API_URL}${product.image}`} alt={product.name} />
+            <img src={`${API_URL}/assets/${product.image}`} alt={product.name} />
             <p>{product.description}</p>
             <p>Prix : {product.price} €</p>
             <button onClick={() => handleAddToCart(product.id)}>Ajouter au panier</button>

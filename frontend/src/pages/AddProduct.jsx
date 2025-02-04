@@ -45,7 +45,7 @@ const AddProduct = () => {
     try {
       await axiosInstance.post("/products", formData, {
         headers: {
-          "Content-Type": "application/json", 
+          "Content-Type": "multipart/form-data", 
         },
       });
       navigate("/dashboard");

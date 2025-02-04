@@ -4,10 +4,23 @@ const ProductCategory = require('../models/ProductCategory');  // Because we hav
 
 const router = express.Router();
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/assets/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
 // **CRUD - Create**
 
-router.post('/', async (req, res) => {
-  const { name, description, price, quantity, category_id, image } = req.body;
+router.post('/', upload.single('image'), async (req, res) => {
+  const { name, description, price, quantity, category_id } = req.body;
+  const image = req.file ? `/assets/${req.file.filename}` : null;
+
   try {
     const newProduct = await Product.create({ name, description, price, quantity, category_id, image });
     res.status(201).json(newProduct);

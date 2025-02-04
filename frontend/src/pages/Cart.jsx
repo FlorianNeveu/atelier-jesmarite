@@ -37,7 +37,7 @@ const Cart = () => {
           {cartItems.map((item, index) => (
             <li key={index}>
               <h2>{item.Product?.name}</h2>
-              <img src={`${API_URL}${item.Product?.image}`} alt={item.Product?.name} />
+              <img src={`${API_URL}/assets/${item.Product?.image}`} alt={item.Product?.name} />
               <p>Quantité : {item.quantity}</p>
               <p>Prix unitaire : {item.Product?.price} €</p>
               <p>Total : {item.quantity * item.Product?.price} €</p>

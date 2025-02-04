@@ -56,7 +56,7 @@ const Home = () => {
         {randomProducts.map((product) => (
           <div key={product.id} className="product-card" onClick={() => handleProductClick(product.id)}>
             <h2>{product.name}</h2>
-            <img src={`${API_URL}${product.image}`} alt={product.name} />
+            <img src={`${API_URL}/assets/${product.image}`} alt={product.name} />
             <p>{product.description}</p>
             <p>{product.price} €</p>
           </div>
