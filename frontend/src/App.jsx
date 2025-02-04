@@ -73,8 +73,8 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} />
-          <Route path="/edit-product/:productId" element={<EditProduct />} />
-          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="//edit-product/:productId" element={isAdmin ? <EditProduct /> : <Navigate to="/" replace />} />
+          <Route path="/add-product" element={isAdmin ? <AddProduct /> : <Navigate to="/" replace />} />
         </Routes>
       </main>
       <Footer />

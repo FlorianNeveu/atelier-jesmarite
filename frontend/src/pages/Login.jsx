@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import Cookies from 'js-cookie';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +11,7 @@ const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated, setIsAdmin } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({
@@ -48,6 +47,8 @@ const Login = () => {
       }
   
       setIsAuthenticated(true);
+      setIsAdmin(user.role === "admin");
+      
       navigate("/");
   
     } catch (error) {

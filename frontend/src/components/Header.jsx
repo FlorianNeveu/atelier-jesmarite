@@ -4,12 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Link } from 'react-router-dom';
 import axiosInstance from "../axiosConfig";
-import { jwtDecode } from 'jwt-decode';
 import "../styles/Header.scss"; 
 
 const Header = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { isAuthenticated, setIsAuthenticated, isAdmin, setIsAdmin } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const navigate = useNavigate();
 
