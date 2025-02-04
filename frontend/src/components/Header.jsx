@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import { Link } from 'react-router-dom';
 import axiosInstance from "../axiosConfig";
-import { jwtDecode } from 'jwt-decode';
 import "../styles/Header.scss"; 
 
 const Header = () => {
@@ -13,31 +11,31 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const navigate = useNavigate();
 
-  
-  useEffect(() => {
-    const checkAdminStatus = () => {
-      const token = Cookies.get("token");
+  // Vérification de l'authentification de l'utilisateur
+  const checkAuthStatus = async () => {
+    try {
+      const response = await axiosInstance.get('/auth/me', { withCredentials: true });
 
-      if (token) {
-        try {
-          const decoded = jwtDecode(token);
-          setIsAuthenticated(true);  
-          setIsAdmin(decoded.role === "admin");
-        } catch (error) {
-          console.error("Erreur lors du décodage du token:", error);
-          setIsAuthenticated(false); 
-          setIsAdmin(false); 
-        }
+      if (response.data.user) {
+        setIsAuthenticated(true);
+        setIsAdmin(response.data.user.role === 'admin');
       } else {
-        setIsAuthenticated(false); 
+        setIsAuthenticated(false);
         setIsAdmin(false);
       }
-    };
+    } catch (error) {
+      console.error('Erreur lors de la vérification de l\'authentification', error);
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+    }
+  };
 
-    checkAdminStatus(); 
-  }, [setIsAuthenticated]);
+  // Appelle checkAuthStatus dès que le composant est monté
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);  // On appelle une seule fois au montage du composant
 
-  
+  // Déconnexion de l'utilisateur
   const handleLogout = async () => {
     try {
       await axiosInstance.post('/auth/logout');
@@ -52,7 +50,7 @@ const Header = () => {
     navigate('/', { replace: true });
   };
 
-  
+  // Gestion de l'affichage du menu hamburger
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -62,8 +60,7 @@ const Header = () => {
       <div className="logo">
         <Link to="/">Atelier de Jesmarite</Link>
       </div>
-      
-      
+
       <div className="hamburger" onClick={toggleMenu}>
         <span className="bar"></span>
         <span className="bar"></span>
@@ -100,7 +97,6 @@ const Header = () => {
           </ul>
         )}
       </nav>
-
     </header>
   );
 };
