@@ -74,11 +74,6 @@ const Header = () => {
       <nav className={`navigation ${isMenuOpen ? "open" : ""}`}>
         {isAuthenticated ? (
           <ul>
-            {isAdmin && (
-              <li>
-                <button onClick={() => navigate("/dashboard")}>Dashboard</button>
-              </li> 
-            )}
             <li>
               <button onClick={handleLogout}>Se déconnecter</button>
             </li> 
@@ -96,6 +91,9 @@ const Header = () => {
             </li>
             <li>
               <Link to="/products">Produits</Link>
+            </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
             </li>
           </ul>
         )}

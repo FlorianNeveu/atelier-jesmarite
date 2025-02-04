@@ -52,7 +52,7 @@ const login = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user.toJSON();
     
     res.cookie('token', token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true, 
       sameSite: 'None',
       domain: '.railway.app',
