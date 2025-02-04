@@ -53,7 +53,7 @@ const login = async (req, res) => {
     
     res.cookie('token', token, {
       httpOnly: false,
-      secure: false, 
+      secure: 'production', 
       sameSite: 'None',
       domain: '.vercel.app',
       maxAge: 86400000,
