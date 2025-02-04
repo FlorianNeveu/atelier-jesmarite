@@ -6,7 +6,7 @@ import "../styles/Home.scss";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [randomProducts, setRandomProducts] = useState([]);
-  const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
+  const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
+const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
+
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
