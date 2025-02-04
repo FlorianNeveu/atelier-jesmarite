@@ -7,7 +7,9 @@ const AddProduct = () => {
     name: "",
     description: "",
     price: "",
-    image: null,
+    quantity: "",
+    category_id: "", 
+    image: null, 
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,23 +26,26 @@ const AddProduct = () => {
   const handleImageChange = (e) => {
     setProduct({
       ...product,
-      image: e.target.files[0],  // Récupère l'image sélectionnée
+      image: e.target.files[0], 
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("description", product.description);
     formData.append("price", product.price);
-    formData.append("image", product.image);  // Ajoute l'image dans le FormData
+    formData.append("quantity", product.quantity);
+    formData.append("category_id", product.category_id);
+    if (product.image) formData.append("image", product.image);
 
     try {
       await axiosInstance.post("/products", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",  // Spécifie que l'on envoie des données de type "multipart/form-data"
+          "Content-Type": "application/json", 
         },
       });
       navigate("/dashboard");
@@ -84,6 +89,28 @@ const AddProduct = () => {
             id="price"
             name="price"
             value={product.price}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="quantity">Quantité</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value={product.quantity}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="category_id">Catégorie</label>
+          <input
+            type="text"
+            id="category_id"
+            name="category_id"
+            value={product.category_id}
             onChange={handleChange}
             required
           />
