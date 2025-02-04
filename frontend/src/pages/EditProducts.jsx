@@ -32,19 +32,20 @@ const EditProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("description", product.description);
     formData.append("price", product.price);
     formData.append("quantity", product.quantity);
     formData.append("category_id", product.category_id);
-    if (newImage) formData.append("image", newImage);  // Si une nouvelle image est ajoutée
-
+  
+    if (newImage) formData.append("image", newImage); 
+  
     try {
       await axiosInstance.put(`/products/${productId}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",  // Important pour envoyer des fichiers
+          "Content-Type": "multipart/form-data",
         },
       });
       navigate('/dashboard'); 

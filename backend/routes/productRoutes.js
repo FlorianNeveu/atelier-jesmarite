@@ -1,33 +1,69 @@
+const cloudinary = require('cloudinary').v2;
 const express = require('express');
 const Product = require('../models/Product');
 const ProductCategory = require('../models/ProductCategory');  // Because we have a product category
 const multer = require('multer');
 const path = require('path');
 
-const router = express.Router();
-
-const storage = multer.diskStorage({
+// Commentaire sur multer classique
+/*const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/assets/');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   }
+});*/
+
+// Multer + Cloudinary
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+const router = express.Router();
 
 // **CRUD - Create**
 
 router.post('/', upload.single('image'), async (req, res) => {
   const { name, description, price, quantity, category_id } = req.body;
-  const image = req.file ? `/assets/${req.file.filename}` : null;
+  let imageUrl = null;
+
+  
+  if (req.file) {
+    try {
+      const result = await cloudinary.uploader.upload_stream(
+        { folder: "products" },
+        (error, result) => {
+          if (error) {
+            return res.status(500).json({ error: 'Erreur de téléchargement vers Cloudinary' });
+          }
+          imageUrl = result.secure_url;
+        }
+      );
+      req.file.stream.pipe(result);
+    } catch (error) {
+      return res.status(500).json({ error: 'Erreur lors du téléchargement de l\'image' });
+    }
+  }
 
   try {
-    const newProduct = await Product.create({ name, description, price, quantity, category_id, image });
+    const newProduct = await Product.create({
+      name,
+      description,
+      price,
+      quantity,
+      category_id,
+      image: imageUrl
+    });
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(500).json({ error: 'Error when product creation' });
+    res.status(500).json({ error: 'Erreur lors de la création du produit' });
   }
 });
 
@@ -73,7 +109,25 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   const { id } = req.params;
   const { name, description, price, quantity, category_id } = req.body;
-  const image = req.file ? `/assets/${req.file.filename}` : null; // Si une nouvelle image est téléchargée, on prend le chemin du fichier
+  let imageUrl = null;
+
+  // Si une nouvelle image est envoyée, la télécharger via Cloudinary
+  if (req.file) {
+    try {
+      const result = await cloudinary.uploader.upload_stream(
+        { folder: "products" }, // Optionnel : pour organiser les images dans un dossier
+        (error, result) => {
+          if (error) {
+            return res.status(500).json({ error: 'Erreur de téléchargement vers Cloudinary' });
+          }
+          imageUrl = result.secure_url; // URL de l'image
+        }
+      );
+      req.file.stream.pipe(result);
+    } catch (error) {
+      return res.status(500).json({ error: 'Erreur lors du téléchargement de l\'image' });
+    }
+  }
 
   try {
     const product = await Product.findByPk(id);
@@ -87,7 +141,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     product.price = price || product.price;
     product.quantity = quantity || product.quantity;
     product.category_id = category_id || product.category_id;
-    if (image) product.image = image;  // Si une nouvelle image est fournie, on la met à jour
+    if (imageUrl) product.image = imageUrl;  // Si une nouvelle image est fournie, on la met à jour
 
     await product.save();
     res.status(200).json({ message: 'Produit mis à jour avec succès', product });
