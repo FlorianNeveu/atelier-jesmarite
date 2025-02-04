@@ -70,29 +70,29 @@ router.get('/:id', async (req, res) => {
 
 // **CRUD - Update**
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', upload.single('image'), async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, quantity, category_id, image } = req.body;
+  const { name, description, price, quantity, category_id } = req.body;
+  const image = req.file ? `/assets/${req.file.filename}` : null; // Si une nouvelle image est téléchargée, on prend le chemin du fichier
 
   try {
     const product = await Product.findByPk(id);
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: 'Produit non trouvé' });
     }
 
-    // Mise à jour des champs
-    if (name) product.name = name;
-    if (description) product.description = description;
-    if (price) product.price = price;
-    if (quantity) product.quantity = quantity;
-    if (category_id) product.category_id = category_id;
-    if (image) product.image = image;
+    // Mise à jour des champs du produit
+    product.name = name || product.name;
+    product.description = description || product.description;
+    product.price = price || product.price;
+    product.quantity = quantity || product.quantity;
+    product.category_id = category_id || product.category_id;
+    if (image) product.image = image;  // Si une nouvelle image est fournie, on la met à jour
 
-    await product.save(); // Sauvegarde des modifications
+    await product.save();
     res.status(200).json({ message: 'Produit mis à jour avec succès', product });
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du produit :', error);
-    res.status(500).json({ error: 'Error when updating product' });
+    res.status(500).json({ error: 'Erreur lors de la mise à jour du produit' });
   }
 });
 
