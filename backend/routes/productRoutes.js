@@ -1,6 +1,8 @@
 const express = require('express');
 const Product = require('../models/Product');
 const ProductCategory = require('../models/ProductCategory');  // Because we have a product category
+const multer = require('multer');
+const path = require('path');
 
 const router = express.Router();
 
