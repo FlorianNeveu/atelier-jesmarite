@@ -10,8 +10,11 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import Dashboard from './pages/Dashboard';
+import EditProduct from './pages/EditProducts';
+import AddProduct from './pages/AddProduct';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
+
 import './styles/App.scss';
 
 const App = () => {
@@ -78,10 +81,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
-          <Route 
-            path="/dashboard" 
-            element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} 
-          />
+          <Route path="/edit-product/:productId" element={<EditProduct />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
       </main>
       <Footer />

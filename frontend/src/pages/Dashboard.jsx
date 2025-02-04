@@ -12,31 +12,9 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      const token = Cookies.get('token'); 
-
-      if (!token) {
-        navigate('/login'); 
-        return;
-      }
-
-      try {
-      
-        const decoded = jwtDecode(token);
-        if (decoded.role !== 'admin') {
-          navigate('/'); 
-        } else {
-          fetchProducts();
-        }
-      } catch (error) {
-        console.error("Erreur lors de la vérification du token:", error);
-        navigate('/login');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAdmin();
+  
+    fetchProducts(); 
+    setLoading(false); 
   }, [navigate]);
 
   const fetchProducts = async () => {
