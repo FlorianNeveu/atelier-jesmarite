@@ -51,7 +51,14 @@ const login = async (req, res) => {
 
     const { password: _, ...userWithoutPassword } = user.toJSON();
     
-    res.cookie('token', token)
+    res.cookie('token', token, {
+      httpOnly: false,
+      secure: false, 
+      sameSite: 'None',
+      domain: '.vercel.app',
+      maxAge: 86400000,
+      path: '/'
+    });
 
     res.status(200).json({ 
       user: { 
