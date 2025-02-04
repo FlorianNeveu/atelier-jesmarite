@@ -4,7 +4,7 @@ import axiosInstance from "../axiosConfig";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const sessionId = localStorage.getItem("sessionId");
-  const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
+  const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
   useEffect(() => {
     const fetchCartItems = async () => {

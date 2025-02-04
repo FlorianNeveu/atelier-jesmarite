@@ -7,7 +7,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const API_URL = process.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
+  const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
   useEffect(() => {
     const fetchProduct = async () => {
