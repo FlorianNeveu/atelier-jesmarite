@@ -52,7 +52,6 @@ const login = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user.toJSON();
     
     res.cookie('token', token, {
-      secure: true, 
       sameSite: 'None',
       domain: '.railway.app',
       maxAge: 86400000,
