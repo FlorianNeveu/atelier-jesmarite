@@ -10,61 +10,33 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import ProductPage from "./pages/ProductPage";
 import Dashboard from './pages/Dashboard';
-import { jwtDecode } from 'jwt-decode';
-import Cookies from 'js-cookie';
 import './styles/App.scss';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const initializeSession = async () => {
-    let sessionId = localStorage.getItem("sessionId");
-
-    if (!sessionId) {
-      try {
-        const user_id = localStorage.getItem("userId") || null;
-        const response = await axiosInstance.post("/sessions", { user_id });
-        sessionId = response.data.id;
-        localStorage.setItem("sessionId", sessionId);
-        console.log("Nouvelle session créée :", sessionId);
-      } catch (error) {
-        console.error("Erreur lors de la création de la session :", error);
-      }
-    }
-  };
-
-  const checkAdminStatus = () => {
-    const token = Cookies.get('token');
-    console.log("Token récupéré :", token);
-
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
+  // Vérifie si l'utilisateur est connecté et récupère son rôle
+  const checkAuthStatus = async () => {
+    try {
+      const response = await axiosInstance.get('/auth/me', { withCredentials: true });
+      
+      if (response.data.user) {
         setIsAuthenticated(true);
-        setIsAdmin(decoded.role === "admin"); 
-        if (decoded.role === "admin") {
-          console.log("L'utilisateur est un administrateur.");
-        } else {
-          console.log("L'utilisateur n'est pas un administrateur.");
-        }
-      } catch (error) {
-        console.error("Erreur de décodage du token :", error);
-        setIsAuthenticated(false); 
+        setIsAdmin(response.data.user.role === 'admin');
+      } else {
+        setIsAuthenticated(false);
         setIsAdmin(false);
       }
-    } else {
+    } catch (error) {
+      console.error('Erreur lors de la vérification de l\'authentification', error);
       setIsAuthenticated(false);
       setIsAdmin(false);
     }
   };
 
   useEffect(() => {
-    initializeSession();
-    checkAdminStatus(); 
-
-    const interval = setInterval(checkAdminStatus, 5000); 
-    return () => clearInterval(interval); 
+    checkAuthStatus();  // Vérifie l'authentification au chargement du composant
   }, []);
 
   return (
@@ -78,6 +50,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
+          
+          {/* Affiche le Dashboard uniquement si l'utilisateur est un admin */}
           <Route 
             path="/dashboard" 
             element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} 
