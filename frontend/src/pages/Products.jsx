@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
+import "../styles/Products.scss";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -41,9 +42,9 @@ const Products = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div className="products">
       <h1>Tous nos produits</h1>
-      <div>
+      <div className="product-list">
         {products.map((product) => (
           <div key={product.id} className="product-card">
             <h2>{product.name}</h2>

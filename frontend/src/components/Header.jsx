@@ -82,18 +82,25 @@ const Header = () => {
             <li>
               <button onClick={handleLogout}>Se déconnecter</button>
             </li> 
+            <li>
+              <Link to="/products">Produits</Link>
+            </li>
           </ul>
         ) : (
           <ul>
             <li>
-              <a href="/login">Se connecter</a> 
+              <Link to="/login">Se connecter</Link> 
             </li>
             <li>
-              <a href="/signup">S'inscrire</a> 
+              <Link to="/signup">S'inscrire</Link> 
+            </li>
+            <li>
+              <Link to="/products">Produits</Link>
             </li>
           </ul>
         )}
       </nav>
+
     </header>
   );
 };

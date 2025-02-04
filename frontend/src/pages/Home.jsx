@@ -44,6 +44,10 @@ const Home = () => {
     navigate(`/products/${productId}`); // Redirige vers la page produit
   };
 
+  const handleViewAllProducts = () => {
+    navigate("/products");
+  };
+
   return (
     <div className="home">
       <h1>Bienvenue sur l'Atelier de Jesmarite</h1>
@@ -58,6 +62,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+      <button className="view-all-btn"onClick={handleViewAllProducts}>Voir tous</button>
     </div>
   );
 };
