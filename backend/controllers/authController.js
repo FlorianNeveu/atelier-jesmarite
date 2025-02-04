@@ -55,7 +55,6 @@ const login = async (req, res) => {
       httpOnly: false,
       secure: 'production', 
       sameSite: 'None',
-      domain: '.vercel.app',
       maxAge: 86400000,
       path: '/'
     });
