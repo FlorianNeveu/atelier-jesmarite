@@ -11,6 +11,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.use('/assets', express.static(path.join(__dirname, 'public', 'assets')));
+
 require("./models/associations");
 
 const userRoutes = require('./routes/userRoutes');
