@@ -115,4 +115,4 @@ const getAll = async (req, res) => {
   res.json(users);
 }
 
-module.exports = { register, login, logout, getAll };
+module.exports = { register, login, logout, getAll, me };
