@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Access-Control-Allow-Origin': 'https://atelier-jesmarite.vercel.app'
   }
 });
 
