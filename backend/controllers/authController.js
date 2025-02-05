@@ -55,7 +55,7 @@ const login = async (req, res) => {
       httpOnly: true,
       secure: true, 
       sameSite: 'None',
-      domain: '.railway.app',
+      domain: '.vercel.app',
       maxAge: 86400000,
       path: '/'
     });
@@ -84,7 +84,7 @@ const me = async (req, res) => {
 // Pour se déconnecter
 const logout = (req, res) => {
   res.clearCookie('token', {
-    domain: '.railway.app',
+    domain: '.vercel.app',
     path: '/',
     secure: true,
     sameSite: 'None'
