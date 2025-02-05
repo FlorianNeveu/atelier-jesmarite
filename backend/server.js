@@ -32,24 +32,18 @@ const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-prod
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('https://checkout.stripe.com')) {
-      callback(null, true);
+    if (!origin || allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('https://checkout.stripe.com/')) {
+      callback(null, true); 
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'OPTIONS'],  // Autoriser les méthodes nécessaires
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Si tu as des en-têtes personnalisés
-  credentials: true,  // Si tu utilises des cookies ou sessions
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Gérer le préflight pour la route /create-checkout-session
-app.options('/create-checkout-session', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Ou le domaine spécifique si nécessaire
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Méthodes autorisées
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // En-têtes autorisés
-  res.status(204).end(); // Répondre avec un statut OK pour le préflight
-});
+app.options('/create-checkout-session', cors());
 
 
 app.use(express.json()); 
