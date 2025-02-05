@@ -67,6 +67,25 @@ router.post('/', upload.single('image'), async (req, res) => {
 
 // **CRUD - Read (All Products)**
 
+router.get('/category/:categoryId', async (req, res) => {
+  const { categoryId } = req.params;
+  try {
+    const products = await Product.findAll({
+      where: {
+        category_id: categoryId,
+      },
+      include: {
+        model: ProductCategory,
+        as: 'category',
+        attributes: ['id', 'name', 'description'],
+      }
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des produits de la catégorie' });
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const products = await Product.findAll({

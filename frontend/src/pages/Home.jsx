@@ -41,15 +41,39 @@ const Home = () => {
   };
 
   const handleProductClick = (productId) => {
-    navigate(`/products/${productId}`); // Redirige vers la page produit
+    navigate(`/products/${productId}`); 
   };
 
   const handleViewAllProducts = () => {
     navigate("/products");
   };
 
+  const handleLearnMore = () => {
+    navigate("/about"); 
+  };
+
+  const handleInstagramClick = () => {
+    window.open("https://www.instagram.com/l_atelier_de_jesmarite/", "_blank");
+  }
+
+  const handleCollectionsClick = () => {
+    navigate("/collections");
+  }
+
   return (
     <div className="home">
+
+      <div style={{ backgroundImage: `url('https://example.com/your-image.jpg')` }}>
+        <div>
+          <h2 onClick={handleCollectionsClick} className="hero-text">
+            Découvrez nos collections
+          </h2>
+          <button onClick={handleInstagramClick} className="instagram-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo" />
+          </button>
+        </div>
+      </div>
+
       <h1>Bienvenue sur l'Atelier de Jesmarite</h1>
       <h2>Découvrez notre sélection</h2>
       <div className="product-list">
@@ -63,6 +87,15 @@ const Home = () => {
         ))}
       </div>
       <button className="view-all-btn"onClick={handleViewAllProducts}>Voir tous</button>
+      <div className="intro-block">
+        <h3>Découvrez L'Atelier de Jesmarite</h3>
+        <p>
+          La Jesmonite est un matériau innovant et écologique, utilisé pour créer des œuvres
+          d'art et des objets décoratifs. Sa flexibilité et sa rapidité de prise en font un
+          choix idéal pour des créations personnalisées et uniques.
+        </p>
+        <button className="learn-more-btn" onClick={handleLearnMore}>En savoir plus</button>
+      </div>
     </div>
   );
 };

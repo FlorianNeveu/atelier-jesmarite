@@ -12,11 +12,14 @@ import ProductPage from "./pages/ProductPage";
 import Dashboard from './pages/Dashboard';
 import EditProduct from './pages/EditProducts';
 import AddProduct from './pages/AddProduct';
-import { jwtDecode } from 'jwt-decode';
-import Cookies from 'js-cookie';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import Contact from './pages/Contact';
+import About from './pages/About';
+import Collections from "./pages/Collections";
+import CollectionsDetail from './pages/CollectionsDetail';
 
 import './styles/App.scss';
-import Checkout from './pages/Checkout';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -78,7 +81,12 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/collections/:categoryId" element={<CollectionsDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} />
           <Route path="//edit-product/:productId" element={isAdmin ? <EditProduct /> : <Navigate to="/" replace />} />
           <Route path="/add-product" element={isAdmin ? <AddProduct /> : <Navigate to="/" replace />} />
