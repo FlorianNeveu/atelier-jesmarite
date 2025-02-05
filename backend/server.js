@@ -32,7 +32,7 @@ const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-prod
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('https://checkout.stripe.com/')) {
+    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('https://checkout.stripe.com/')) {
       callback(null, true); 
     } else {
       callback(new Error('Not allowed by CORS'));

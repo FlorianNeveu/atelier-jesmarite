@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../axiosConfig"; // Assure-toi d'utiliser l'instance d'axios
+import axiosInstance from "../axiosConfig";
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const sessionId = localStorage.getItem("sessionId"); // Récupérer le sessionId dans localStorage
+  const sessionId = localStorage.getItem("sessionId"); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,11 +36,10 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     try {
-      // Envoie les éléments du panier au backend pour créer la session de paiement
       const response = await axiosInstance.post('/create-checkout-session', { cartItems });
+      console.log("Stripe checkout URL:", response.data.url);
 
-      // Stripe redirige automatiquement l'utilisateur vers la page de paiement
-      window.location.href = response.data.url; // Rediriger vers l'URL de la session Stripe
+      window.location.href = response.data.url;
     } catch (error) {
       console.error("Erreur lors de la création de la session Stripe :", error);
     }
@@ -55,7 +54,7 @@ const Cart = () => {
         <ul>
           {cartItems.map((item, index) => (
             <li key={index}>
-              {/* Vérifie que item.Product existe avant d'afficher ses informations */}
+    
               {item.Product ? (
                 <>
                   <h2>{item.Product.name}</h2>
