@@ -34,6 +34,8 @@ app.use(cors({
   origin: function(origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true); 
+    } else if (origin && origin.startsWith('https://checkout.stripe.com/c/pay/cs_test_')) {
+      callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }

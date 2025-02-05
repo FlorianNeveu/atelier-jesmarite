@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import axiosInstance from '../axiosConfig'; // Pour récupérer les éléments du panier
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../axiosConfig';
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
+  const sessionId = localStorage.getItem('sessionId');
   const navigate = useNavigate();
 
   useEffect(() => {
     // Récupérer les éléments du panier depuis l'API
     const fetchCartItems = async () => {
       try {
-        const response = await axiosInstance.get('/carts');
+        const response = await axiosInstance.get(`/carts/${sessionId}`);
         setCartItems(response.data);  // Met à jour les éléments du panier
       } catch (error) {
         console.error("Erreur lors de la récupération du panier :", error);
@@ -19,7 +20,16 @@ const Checkout = () => {
     fetchCartItems();
   }, []);
 
-  // Fonction pour gérer le paiement et la redirection vers Stripe Checkout
+  // Calcul du montant total, avec vérification de l'existence de 'Product'
+  const calculateTotalAmount = () => {
+    return cartItems.reduce((total, item) => {
+      if (item.Product && item.Product.price) {
+        return total + (item.quantity * item.Product.price);
+      }
+      return total; // Si Product ou price n'existent pas, on ne l'ajoute pas
+    }, 0);
+  };
+
   const handleCheckout = async () => {
     try {
       // Envoie les éléments du panier au backend pour créer la session de paiement
@@ -41,13 +51,23 @@ const Checkout = () => {
           <ul>
             {cartItems.map((item, index) => (
               <li key={index}>
-                <h2>{item.Product.name}</h2>
-                <p>Quantité : {item.quantity}</p>
-                <p>Prix : {item.Product.price} €</p>
+                {/* Vérifie que item.Product existe avant d'afficher ses informations */}
+                {item.Product ? (
+                  <>
+                    <h2>{item.Product.name}</h2>
+                    <p>Quantité : {item.quantity}</p>
+                    <p>Prix : {item.Product.price} €</p>
+                  </>
+                ) : (
+                  <p>Produit indisponible</p>
+                )}
               </li>
             ))}
           </ul>
-          <button onClick={handleCheckout}>Passer au paiement</button>
+          <div>
+            <h3>Total : {calculateTotalAmount()} €</h3>
+            <button onClick={handleCheckout}>Passer au paiement</button>
+          </div>
         </div>
       ) : (
         <p>Votre panier est vide.</p>
