@@ -61,8 +61,6 @@ const App = () => {
     initializeSession();
     checkAdminStatus();
 
-    const interval = setInterval(checkAdminStatus, 5000); 
-    return () => clearInterval(interval); 
   }, []);
 
   if (isLoading) {
