@@ -28,7 +28,7 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'https://atelier-jesmarite-production.up.railway.app/create-checkout-session', 'https://atelier-jesmarite.vercel.app/create-checkout-session'];
+const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'https://atelier-jesmarite-production.up.railway.app/create-checkout-session', 'https://atelier-jesmarite.vercel.app/create-checkout-session', 'https://checkout.stripe.com'];
 
 app.use(cors({
   origin: function(origin, callback) {
