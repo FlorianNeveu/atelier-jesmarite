@@ -52,6 +52,10 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -70,26 +74,26 @@ const Header = () => {
         {isAuthenticated ? (
           <ul>
             <li>
-              <Link to="/products">Produits</Link>
+            <Link to="/products" onClick={closeMenu}>Produits</Link>
             </li>
-            {isAdmin && <li><Link to="/dashboard">Dashboard</Link></li>} 
+            {isAdmin && <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>} 
             <li>
-              <button onClick={handleLogout}>Se déconnecter</button>
+            <button onClick={() => {handleLogout();closeMenu();}}>Se déconnecter</button>
             </li>
           </ul>
         ) : (
           <ul>
             <li>
-              <Link to="/about">A propos</Link> 
+            <Link to="/about" onClick={closeMenu}>A propos</Link> 
             </li>
             <li>
-              <Link to="/login">Se connecter</Link> 
+            <Link to="/login" onClick={closeMenu}>Se connecter</Link>
             </li>
             <li>
-              <Link to="/products">Produits</Link>
+            <Link to="/products" onClick={closeMenu}>Produits</Link>
             </li>
             <li>
-              <Link to="/cart">panier</Link> 
+            <Link to="/cart" onClick={closeMenu}>panier</Link>
             </li>
           </ul>
         )}
