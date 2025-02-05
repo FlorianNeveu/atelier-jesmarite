@@ -28,7 +28,7 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app/create-checkout-session'];
+const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'https://atelier-jesmarite-production.up.railway.app/create-checkout-session', 'https://atelier-jesmarite.vercel.app/create-checkout-session'];
 
 app.use(cors({
   origin: function(origin, callback) {
@@ -47,12 +47,12 @@ app.use(cookieParser());
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-const YOUR_DOMAIN = 'http://localhost:5173';
+const YOUR_DOMAIN = 'https://atelier-jesmarite.vercel.app';
 
 app.post('/create-checkout-session', async (req, res) => {
-  const { cartItems } = req.body; // Tu reçois les éléments du panier
+  const { cartItems } = req.body; 
 
-  // Crée une session de paiement avec les produits du panier
+  
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -61,9 +61,9 @@ app.post('/create-checkout-session', async (req, res) => {
           currency: 'eur',
           product_data: {
             name: item.Product.name,
-            images: [item.Product.image], // Utilise l'URL de l'image du produit
+            images: [item.Product.image], 
           },
-          unit_amount: item.Product.price * 100, // Montant en cents
+          unit_amount: item.Product.price * 100, 
         },
         quantity: item.quantity,
       })),
@@ -72,7 +72,6 @@ app.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${YOUR_DOMAIN}/cancel`,
     });
 
-    // Redirige vers la page Stripe Checkout
     res.redirect(303, session.url);
   } catch (error) {
     console.error('Erreur lors de la création de la session de paiement :', error);
