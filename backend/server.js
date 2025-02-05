@@ -74,7 +74,7 @@ app.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${YOUR_DOMAIN}/cancel`,
     });
 
-    res.redirect(303, session.url);
+    res.json({ url: session.url });
   } catch (error) {
     console.error('Erreur lors de la création de la session de paiement :', error);
     res.status(500).json({ error: 'Erreur lors de la création de la session de paiement' });
