@@ -28,14 +28,12 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'http://localhost:5173'];
+const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app/create-checkout-session'];
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('https://checkout.stripe.com/')) {
       callback(null, true); 
-    } else if (origin && origin.startsWith('https://checkout.stripe.com/c/pay/cs_test_')) {
-      callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
