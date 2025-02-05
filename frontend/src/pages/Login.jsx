@@ -50,6 +50,7 @@ const Login = () => {
       setIsAdmin(user.role === "admin");
       
       navigate("/");
+      window.location.reload();
   
     } catch (error) {
       console.error("Erreur technique :", {
@@ -88,6 +89,8 @@ const Login = () => {
         <button type="submit">Se connecter</button>
       </form>
       {errorMessage && <p className="error">{errorMessage}</p>}
+
+      <p>Vous n'avez pas de compte ? <a href="/signup">Créer un compte</a></p>
     </div>
   );
 };

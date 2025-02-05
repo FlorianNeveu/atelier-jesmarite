@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import "../styles/Footer.scss";
 
 const Footer = () => {
   return (
@@ -14,7 +15,7 @@ const Footer = () => {
             <Link to="/terms-of-service">Conditions générales de vente</Link>
           </li>
           <li>
-            <Link to="/about">À propos</Link> 
+            <Link to="/about">À propos</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>
@@ -26,5 +27,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
 
 

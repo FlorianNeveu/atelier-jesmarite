@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import "../styles/Home.scss";
+import "../styles/index.scss";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -14,31 +16,27 @@ const Home = () => {
       try {
         const response = await axiosInstance.get("/products");
         setProducts(response.data);
-
-        const selectedProducts = response.data.sort(() => Math.random() - 0.5); 
-        setRandomProducts(selectedProducts.slice(0, window.innerWidth <= 768 ? 2 : 4));
+  
+        const updateProducts = () => {
+          const selectedProducts = [...response.data].sort(() => Math.random() - 0.5);
+          const getProductsPerView = () => {
+            if (window.innerWidth <= 480) return 2;
+            if (window.innerWidth <= 1024) return 3;
+            return 4;
+          };
+          setRandomProducts(selectedProducts.slice(0, getProductsPerView()));
+        };
+  
+        updateProducts();
+        window.addEventListener('resize', updateProducts);
+        return () => window.removeEventListener('resize', updateProducts);
       } catch (error) {
         console.error("Erreur lors de la récupération des produits :", error);
       }
     };
-
+  
     fetchProducts();
   }, []);
-
-  const handleAddToCart = async (productId) => {
-    const sessionId = localStorage.getItem("sessionId");
-
-    try {
-      await axiosInstance.post("/carts", {
-        product_id: productId,
-        quantity: 1,
-        session_id: sessionId,
-      });
-      alert("Produit ajouté au panier !");
-    } catch (error) {
-      console.error("Erreur lors de l'ajout au panier :", error);
-    }
-  };
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`); 
@@ -63,27 +61,31 @@ const Home = () => {
   return (
     <div className="home">
 
-      <div style={{ backgroundImage: `url('https://example.com/your-image.jpg')` }}>
-        <div>
-          <h2 onClick={handleCollectionsClick} className="hero-text">
-            Découvrez nos collections
-          </h2>
-          <button onClick={handleInstagramClick} className="instagram-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo" />
+      <div className="top-section">
+        <div className="top-content">
+          <Link className="top-title-link" to="/collections"><h2 className="top-title">Nos Collections</h2></Link>
+          <button onClick={handleCollectionsClick} className="explore-btn">
+            Explorer
           </button>
         </div>
+        <button onClick={handleInstagramClick} className="instagram-btn">
+            <img src="https://res.cloudinary.com/dpqyxkf2g/image/upload/v1738793038/instagram_wb4syz.png" alt="Instagram" />
+          </button>
       </div>
 
       <h1>Bienvenue sur l'Atelier de Jesmarite</h1>
       <h2>Découvrez notre sélection</h2>
       <div className="product-list">
         {randomProducts.map((product) => (
-          <div key={product.id} className="product-card" onClick={() => handleProductClick(product.id)}>
-            <h2>{product.name}</h2>
+        <div key={product.id} className="product-card" onClick={() => handleProductClick(product.id)}>
+          <div className="vault">
             <img src={`${product.image}`} alt={product.name} />
-            <p>{product.description}</p>
-            <p>{product.price} €</p>
           </div>
+          <div className="square-content">
+            <h3>{product.name}</h3>
+            <p className="price">{product.price} €</p>
+          </div>
+        </div>
         ))}
       </div>
       <button className="view-all-btn"onClick={handleViewAllProducts}>Voir tous</button>
@@ -96,6 +98,21 @@ const Home = () => {
         </p>
         <button className="learn-more-btn" onClick={handleLearnMore}>En savoir plus</button>
       </div>
+
+      <div className="contact-section">
+        <h3>Pour une commande personnalisée ou une question ? Contactez-nous</h3>
+        <form action="https://formspree.io/f/florian.neveu@3wa.io" method="POST">
+          <div className="left-column">
+            <input type="text" name="name" placeholder="Votre nom" required />
+            <input type="email" name="email" placeholder="Votre email" required />
+          </div>
+          <div className="right-column">
+            <textarea name="message" placeholder="Votre message" rows="5" required></textarea>
+            <button type="submit">Envoyer</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   );
 };

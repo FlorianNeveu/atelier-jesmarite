@@ -69,24 +69,27 @@ const Header = () => {
       <nav className={`navigation ${isMenuOpen ? "open" : ""}`}>
         {isAuthenticated ? (
           <ul>
-            {isAdmin && <li><Link to="/dashboard">Dashboard</Link></li>}
-            <li>
-              <button onClick={handleLogout}>Se déconnecter</button>
-            </li> 
             <li>
               <Link to="/products">Produits</Link>
+            </li>
+            {isAdmin && <li><Link to="/dashboard">Dashboard</Link></li>} 
+            <li>
+              <button onClick={handleLogout}>Se déconnecter</button>
             </li>
           </ul>
         ) : (
           <ul>
             <li>
+              <Link to="/about">A propos</Link> 
+            </li>
+            <li>
               <Link to="/login">Se connecter</Link> 
             </li>
             <li>
-              <Link to="/signup">S'inscrire</Link> 
+              <Link to="/products">Produits</Link>
             </li>
             <li>
-              <Link to="/products">Produits</Link>
+              <Link to="/cart">panier</Link> 
             </li>
           </ul>
         )}
