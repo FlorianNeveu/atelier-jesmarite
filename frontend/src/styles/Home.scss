@@ -1,8 +1,10 @@
 @use './_variables.scss' as *;
+@use 'sass:color';
 
 .home {
   padding: 20px;
   text-align: center;
+  background-color: #EFE2D9;
 
   h1 {
     font-size: 2rem;
@@ -20,7 +22,7 @@
     grid-template-columns: 1fr;
 
     .product-card {
-      background: #f8f8f8;
+      background: $primary-color;
       padding: 15px;
       border-radius: 8px;
       cursor: pointer;
@@ -59,7 +61,7 @@
     text-align: center;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: color.scale($primary-color, $lightness: -10%);
     }
 
     @media (min-width: 768px) {

@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const sequelize = require('./config/db');
 const cors = require('cors');
 const path = require('path');
+const Stripe = require('stripe')
 
 
 dotenv.config();
@@ -43,6 +44,25 @@ app.use(cors({
 
 app.use(express.json()); 
 app.use(cookieParser()); 
+
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+app.post('/create-payment-intent', async (req, res) => {
+  const { amount, currency, metadata } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency, 
+      metadata, 
+    });
+
+    res.status(200).json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error('Erreur lors de la création du paiement :', error);
+    res.status(500).json({ error: 'Erreur lors de la création du paiement' });
+  }
+});
 
 
 app.use('/users', userRoutes);

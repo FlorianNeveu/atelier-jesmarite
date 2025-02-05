@@ -16,6 +16,7 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 
 import './styles/App.scss';
+import Checkout from './pages/Checkout';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -79,6 +80,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/products/:productId" element={<ProductPage />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} />
           <Route path="//edit-product/:productId" element={isAdmin ? <EditProduct /> : <Navigate to="/" replace />} />
           <Route path="/add-product" element={isAdmin ? <AddProduct /> : <Navigate to="/" replace />} />

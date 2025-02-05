@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const sessionId = localStorage.getItem("sessionId");
   const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -27,6 +29,19 @@ const Cart = () => {
     fetchCartItems();
   }, [sessionId]);
 
+  const calculateTotalAmount = () => {
+    return cartItems.reduce((total, item) => {
+      if (item.Product && item.Product.price) {
+        return total + (item.quantity * item.Product.price);
+      }
+      return total;
+    }, 0);
+  };
+
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
+
   return (
     <div className="cart">
       <h1>Votre Panier</h1>
@@ -45,8 +60,14 @@ const Cart = () => {
           ))}
         </ul>
       )}
-    </div>
-  );
-};
+          {cartItems.length > 0 && (
+              <div>
+                <h3>Total : {calculateTotalAmount()} €</h3>
+                <button onClick={handleCheckout}>Passer au paiement</button>
+              </div>
+            )}
+          </div>
+        );
+      };
 
 export default Cart;

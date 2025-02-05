@@ -15,7 +15,7 @@ const Dashboard = () => {
   
     fetchProducts(); 
     setLoading(false); 
-  }, [navigate]);
+  }, []);
 
   const fetchProducts = async () => {
     try {
