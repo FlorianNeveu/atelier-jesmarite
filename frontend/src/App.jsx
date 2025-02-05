@@ -20,6 +20,7 @@ import './styles/App.scss';
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const initializeSession = async () => {
     let sessionId = localStorage.getItem("sessionId");
@@ -50,16 +51,22 @@ const App = () => {
     } catch (error) {
       setIsAuthenticated(false);
       setIsAdmin(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     initializeSession();
-    checkAdminStatus(); 
+    checkAdminStatus();
 
     const interval = setInterval(checkAdminStatus, 5000); 
     return () => clearInterval(interval); 
   }, []);
+
+  if (isLoading) {
+    return <p>Chargement...</p>;
+  }
 
   return (
     <Router>
