@@ -18,6 +18,8 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Collections from "./pages/Collections";
 import CollectionsDetail from './pages/CollectionsDetail';
+import AddCategory from './pages/AddCategory';
+import EditCategory from './pages/EditCategory';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -86,8 +88,10 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <Navigate to="/" replace />} />
-          <Route path="//edit-product/:productId" element={isAdmin ? <EditProduct /> : <Navigate to="/" replace />} />
+          <Route path="/edit-product/:productId" element={isAdmin ? <EditProduct /> : <Navigate to="/" replace />} />
           <Route path="/add-product" element={isAdmin ? <AddProduct /> : <Navigate to="/" replace />} />
+          <Route path="/add-category" element={isAdmin ? <AddCategory /> : <Navigate to="/" replace />} />
+          <Route path="/edit-category/:categoryId" element={isAdmin ? <EditCategory /> : <Navigate to="/" replace />} />
         </Routes>
       </main>
       <Footer />

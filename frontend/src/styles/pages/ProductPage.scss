@@ -1,0 +1,106 @@
+.product-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f4f4f4;
+  
+    h1 {
+      font-size: 2rem;
+      color: #3A2E2C;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  
+    .product-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+    }
+  
+    .product-description {
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: center;
+      color: #555;
+    }
+  
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #B4604F;
+      margin-bottom: 1.5rem;
+    }
+  
+    button {
+      padding: 1rem 2rem;
+      background-color: #8A9B6E;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #7a8a58;
+      }
+  
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  
+    /* Mobile Styling */
+    @media (max-width: 768px) {
+      .product-page {
+        padding: 1rem;
+  
+        h1 {
+          font-size: 1.5rem;
+        }
+  
+        .product-description {
+          font-size: 0.9rem;
+          margin: 0.5rem;
+        }
+  
+        .product-price {
+          font-size: 1.3rem;
+        }
+  
+        button {
+          font-size: 1rem;
+          padding: 0.8rem 1.5rem;
+        }
+      }
+    }
+  
+    /* Desktop Styling */
+    @media (min-width: 1024px) {
+      .product-page {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+  
+      .product-image {
+        max-width: 500px;
+      }
+  
+      .product-description {
+        font-size: 1.1rem;
+      }
+  
+      .product-price {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  

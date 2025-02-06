@@ -4,34 +4,42 @@ import axiosInstance from '../axiosConfig';
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [deletingId, setDeletingId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-  
-    fetchProducts(); 
-    setLoading(false); 
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([
+          axiosInstance.get('/products'),
+          axiosInstance.get('/categories')
+        ]);
+        setProducts(productsRes.data);
+        setCategories(categoriesRes.data);
+      } catch (error) {
+        setError('Échec du chargement des données');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axiosInstance.get('/products');
-      setProducts(response.data);
-    } catch (error) {
-      setError('Échec du chargement des produits.');
-    }
-  };
-
-  const handleDeleteProduct = async (id) => {
+  const handleDelete = async (type, id) => {
     if (!window.confirm('Confirmer la suppression ?')) return;
     setDeletingId(id);
     try {
-      await axiosInstance.delete(`/products/${id}`);
-      await fetchProducts();
+      await axiosInstance.delete(`/${type}/${id}`);
+      if (type === 'products') {
+        setProducts(prev => prev.filter(item => item.id !== id));
+      } else {
+        setCategories(prev => prev.filter(item => item.id !== id));
+      }
     } catch (error) {
-      setError('Échec de la suppression.');
+      setError(`Échec de la suppression ${type === 'products' ? 'du produit' : 'de la catégorie'}`);
     } finally {
       setDeletingId(null);
     }
@@ -42,44 +50,60 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Tableau de bord Admin:</h1>
-      <button onClick={() => navigate('/add-product')}>Ajouter un produit</button>
+      <h1>Tableau de bord Admin</h1>
 
-      <h2>Liste des produits</h2>
-      <table className="products-table">
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Prix</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+      {/* Section Produits */}
+      <section className="management-section">
+        <div className="section-header">
+          <h2>Produits</h2>
+          <button onClick={() => navigate('/add-product')}>+ Nouveau produit</button>
+        </div>
+        
+        <div className="items-grid">
           {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.name}</td>
-              <td>{product.description}</td>
-              <td>{Number(product.price).toFixed(2)} €</td>
-              <td>
+            <div key={product.id} className="item-card">
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>Prix : {product.price}€</p>
+              <div className="actions">
+                <button onClick={() => navigate(`/edit-product/${product.id}`)}>✏️</button>
                 <button 
-                  aria-label="Modifier"
-                  onClick={() => navigate(`/edit-product/${product.id}`)}
-                >
-                  ✏️
-                </button>
-                <button
-                  aria-label="Supprimer"
+                  onClick={() => handleDelete('products', product.id)}
                   disabled={deletingId === product.id}
-                  onClick={() => handleDeleteProduct(product.id)}
                 >
                   {deletingId === product.id ? '⏳' : '🗑️'}
                 </button>
-              </td>
-            </tr>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </section>
+
+      {/* Section Catégories */}
+      <section className="management-section">
+        <div className="section-header">
+          <h2>Catégories</h2>
+          <button onClick={() => navigate('/add-category')}>+ Nouvelle catégorie</button>
+        </div>
+
+        <div className="items-grid">
+          {categories.map((category) => (
+            <div key={category.id} className="item-card">
+              <h3>{category.name}</h3>
+              <p>{category.description}</p>
+              <div className="actions">
+                <button onClick={() => navigate(`/edit-category/${category.id}`)}>✏️</button>
+                <button 
+                  onClick={() => handleDelete('categories', category.id)}
+                  disabled={deletingId === category.id}
+                >
+                  {deletingId === category.id ? '⏳' : '🗑️'}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

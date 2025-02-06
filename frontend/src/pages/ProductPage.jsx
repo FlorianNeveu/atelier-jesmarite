@@ -44,14 +44,15 @@ const ProductPage = () => {
   if (!product) return <div>Aucun produit trouvé.</div>;
 
   return (
-    <div>
+    <div className="product-page">
       <h1>{product.name}</h1>
-      <img src={`${product.image}`} alt={product.name} />
-      <p>{product.description}</p>
-      <p>{product.price} €</p>
+      <img className="product-image" src={`${product.image}`} alt={product.name} />
+      <p className="product-description">{product.description}</p>
+      <p className="product-price">{product.price} €</p>
       <button onClick={() => handleAddToCart(product.id)}>Ajouter au panier</button>
     </div>
   );
+  
 };
 
 export default ProductPage;
