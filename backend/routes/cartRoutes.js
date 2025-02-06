@@ -69,8 +69,16 @@ router.put('/:session_id/update', async (req, res) => {
   const { session_id } = req.params;
   const { product_id, quantity } = req.body;
 
+  if (typeof quantity !== 'number' || quantity < 1) {
+    return res.status(400).json({ error: 'Quantité invalide (doit être ≥ 1)' });
+  }
+
+  if (!product_id || !session_id) {
+    return res.status(400).json({ error: 'Paramètres manquants' });
+  }
+
   try {
-    let cartItem = await CartItem.findOne({
+    const cartItem = await CartItem.findOne({
       where: { product_id, session_id }
     });
 
@@ -80,10 +88,20 @@ router.put('/:session_id/update', async (req, res) => {
 
     cartItem.quantity = quantity;
     await cartItem.save();
-    res.status(200).json(cartItem);
+
+    const updatedItem = await CartItem.findOne({
+      where: { id: cartItem.id },
+      include: Product
+    });
+
+    res.status(200).json(updatedItem);
+
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de la quantité :", error);
-    res.status(500).json({ error: 'Erreur lors de la mise à jour du panier' });
+    console.error("Erreur lors de la mise à jour :", error);
+    res.status(500).json({ 
+      error: 'Erreur serveur',
+      details: error.message
+    });
   }
 });
 
