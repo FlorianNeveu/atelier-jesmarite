@@ -57,12 +57,13 @@ const AddProduct = () => {
   };
 
   return (
-    <div>
+    <div className="add-product">
       <h1>Ajouter un produit</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nom</label>
           <input
+            className="form-input"
             type="text"
             id="name"
             name="name"
@@ -74,6 +75,7 @@ const AddProduct = () => {
         <div>
           <label htmlFor="description">Description</label>
           <input
+            className="form-input"
             type="text"
             id="description"
             name="description"
@@ -85,6 +87,7 @@ const AddProduct = () => {
         <div>
           <label htmlFor="price">Prix</label>
           <input
+            className="form-input"
             type="number"
             id="price"
             name="price"
@@ -96,6 +99,7 @@ const AddProduct = () => {
         <div>
           <label htmlFor="quantity">Quantité</label>
           <input
+            className="form-input"
             type="number"
             id="quantity"
             name="quantity"
@@ -107,6 +111,7 @@ const AddProduct = () => {
         <div>
           <label htmlFor="category_id">Catégorie</label>
           <input
+            className="form-input"
             type="text"
             id="category_id"
             name="category_id"
@@ -118,6 +123,7 @@ const AddProduct = () => {
         <div>
           <label htmlFor="image">Image</label>
           <input
+            className="form-input"
             type="file"
             id="image"
             name="image"
@@ -125,7 +131,7 @@ const AddProduct = () => {
           />
         </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit" disabled={loading}>
+        <button className="form-button" type="submit" disabled={loading}>
           {loading ? "Chargement..." : "Ajouter le produit"}
         </button>
       </form>

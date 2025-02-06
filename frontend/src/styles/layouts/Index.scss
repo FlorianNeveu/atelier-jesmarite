@@ -1,9 +1,3 @@
-@use '../base/_variables.scss' as *;
-
-body {
-  font-family: Arial, sans-serif;
-  font-size: $font-size-base;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-}
+@forward './Footer.scss';
+@forward './Header.scss';
+@forward './Global.scss';

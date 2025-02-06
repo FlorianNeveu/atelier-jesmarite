@@ -1,0 +1,102 @@
+.edit-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-height: 80vh;
+    background-color: #f4f4f4;
+  
+    h1 {
+      font-size: 2rem;
+      color: #3A2E2C;
+      margin-bottom: 1.5rem;
+    }
+  
+    form {
+      width: 100%;
+      max-width: 500px;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+  
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+  
+        label {
+          font-size: 1rem;
+          color: #3A2E2C;
+        }
+  
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+          padding: 0.75rem;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          font-size: 1rem;
+          background-color: #f9f9f9;
+          transition: border-color 0.3s ease;
+  
+          &:focus {
+            outline: none;
+            border-color: #8A9B6E;
+          }
+        }
+  
+        input[type="file"] {
+          font-size: 1rem;
+        }
+      }
+  
+      button {
+        padding: 1rem;
+        background-color: #8A9B6E;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #7a8a58;
+        }
+  
+        &:disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
+        }
+      }
+    }
+  
+    .error {
+      color: #f44336;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+  
+    /* Responsive design */
+    @media (min-width: 768px) {
+      form {
+        width: 50%;
+        padding: 2.5rem;
+      }
+    }
+  
+    @media (min-width: 1024px) {
+      form {
+        width: 40%;
+        padding: 3rem;
+      }
+    }
+  }
+  

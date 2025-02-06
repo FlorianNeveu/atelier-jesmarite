@@ -79,6 +79,9 @@ const Header = () => {
             <li>
             <button onClick={() => {handleLogout();closeMenu();}}>Se déconnecter</button>
             </li>
+            <li>
+            <Link to="/cart" onClick={closeMenu}>panier</Link>
+            </li>
           </ul>
         ) : (
           <ul>

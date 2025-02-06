@@ -4,8 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
 const CollectionsDetail = () => {
-  const { id } = useParams();
+  const { id, categoryId } = useParams();
   const [products, setProducts] = useState([]);
+  const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -13,6 +14,10 @@ const CollectionsDetail = () => {
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
+
+        const collectionResponse = await axiosInstance.get(`/categories/${categoryId}`);
+        setCollection(collectionResponse.data);
+
         const response = await axiosInstance.get(`/products?category_id=${id}`);
         setProducts(response.data);
         setError(null);
@@ -36,7 +41,7 @@ const CollectionsDetail = () => {
 
   return (
     <div className="collections-detail">
-      <h1>Collection</h1>
+      {collection && <h1>{collection.name}</h1>}
       <div className="product-grid-collection">
         {products.length > 0 ? (
           products.map((product) => (
