@@ -56,20 +56,18 @@ const YOUR_DOMAIN = 'https://atelier-jesmarite.vercel.app';
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const { cartItems, shippingAddress } = req.body;
+    const CLIENT_URL = process.env.CLIENT_URL || 'https://atelier-jesmarite.vercel.app'; // <-- AJOUT CRITIQUE
 
     // Validation des données
     if (!cartItems?.length) throw new Error('Panier vide');
-    if (!shippingAddress?.address_line1 || !shippingAddress?.city || !shippingAddress?.postal_code) {
-      throw new Error('Adresse incomplète');
-    }
-
+    
     const line_items = cartItems.map(item => ({
       price_data: {
         currency: 'eur',
         product_data: {
-          name: item.name,
+          name: item.Product.name, // <-- CORRIGER L'ACCÈS AUX DONNÉES
         },
-        unit_amount: Math.round(item.price * 100),
+        unit_amount: Math.round(item.Product.price * 100), // <-- CORRECTION ICI
       },
       quantity: item.quantity,
     }));
@@ -80,7 +78,7 @@ app.post('/create-checkout-session', async (req, res) => {
       mode: 'payment',
       success_url: `${CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${CLIENT_URL}/cancel`,
-      shipping_address_collection: {
+      shipping_address_collection: { 
         allowed_countries: ['FR'],
       },
     });
