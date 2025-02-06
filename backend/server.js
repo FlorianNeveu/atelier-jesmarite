@@ -118,7 +118,12 @@ app.get('/get-shipping-address/:sessionId', async (req, res) => {
   }
 });
 
-app.get('/verify-payment/:sessionId', async (req, res) => {
+app.get('/verify-payment/', async (req, res) => {
+  const sessionId = req.query.session_id;
+  
+  if (!sessionId) {
+    return res.status(400).json({ error: 'Session ID manquant' });
+  }
   try {
     const session = await stripe.checkout.sessions.retrieve(
       req.params.sessionId,
