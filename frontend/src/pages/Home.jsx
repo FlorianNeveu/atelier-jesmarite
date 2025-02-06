@@ -10,13 +10,18 @@ const Home = () => {
   const [randomProducts, setRandomProducts] = useState([]);
   const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
   const navigate = useNavigate();
+  
+  // Ajout d'un drapeau pour vérifier si les produits sont déjà récupérés
+  const [productsFetched, setProductsFetched] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
+      if (productsFetched) return; // Si les produits ont déjà été récupérés, on ne les récupère pas à nouveau
+      
       try {
         const response = await axiosInstance.get("/products");
         setProducts(response.data);
-  
+
         const updateProducts = () => {
           const selectedProducts = [...response.data].sort(() => Math.random() - 0.5);
           const getProductsPerView = () => {
@@ -26,17 +31,20 @@ const Home = () => {
           };
           setRandomProducts(selectedProducts.slice(0, getProductsPerView()));
         };
-  
+
         updateProducts();
+        setProductsFetched(true);  // Mettre à jour le drapeau pour indiquer que les produits ont été récupérés
+
+        // Écoute de l'événement resize
         window.addEventListener('resize', updateProducts);
         return () => window.removeEventListener('resize', updateProducts);
       } catch (error) {
         console.error("Erreur lors de la récupération des produits :", error);
       }
     };
-  
+
     fetchProducts();
-  }, []);
+  }, [productsFetched]); // Le useEffect se réexécutera seulement si productsFetched change
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`); 
@@ -60,7 +68,6 @@ const Home = () => {
 
   return (
     <div className="home">
-
       <div className="top-section">
         <div className="top-content">
           <Link className="top-title-link" to="/collections"><h2 className="top-title">Nos Collections</h2></Link>
@@ -70,25 +77,26 @@ const Home = () => {
         </div>
         <button onClick={handleInstagramClick} className="instagram-btn">
             <img src="https://res.cloudinary.com/dpqyxkf2g/image/upload/v1738793038/instagram_wb4syz.png" alt="Instagram" />
-          </button>
+        </button>
       </div>
 
       <h1>Bienvenue sur l'Atelier de Jesmarite</h1>
       <h2>Découvrez notre sélection</h2>
       <div className="product-list">
         {randomProducts.map((product) => (
-        <div key={product.id} className="product-card" onClick={() => handleProductClick(product.id)}>
-          <div className="vault">
-            <img src={`${product.image}`} alt={product.name} />
+          <div key={product.id} className="product-card" onClick={() => handleProductClick(product.id)}>
+            <div className="vault">
+              <img src={`${product.image}`} alt={product.name} />
+            </div>
+            <div className="square-content">
+              <h3>{product.name}</h3>
+              <p className="price">{product.price} €</p>
+            </div>
           </div>
-          <div className="square-content">
-            <h3>{product.name}</h3>
-            <p className="price">{product.price} €</p>
-          </div>
-        </div>
         ))}
       </div>
-      <button className="view-all-btn"onClick={handleViewAllProducts}>Voir tous</button>
+      <button className="view-all-btn" onClick={handleViewAllProducts}>Voir tous</button>
+
       <div className="intro-block">
         <h3>Découvrez L'Atelier de Jesmarite</h3>
         <p>
@@ -112,7 +120,6 @@ const Home = () => {
           </div>
         </form>
       </div>
-
     </div>
   );
 };
