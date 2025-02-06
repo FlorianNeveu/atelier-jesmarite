@@ -56,7 +56,7 @@ const YOUR_DOMAIN = 'https://atelier-jesmarite.vercel.app';
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const { cartItems, shippingAddress } = req.body;
-    const CLIENT_URL = process.env.CLIENT_URL || 'https://atelier-jesmarite.vercel.app'; // <-- AJOUT CRITIQUE
+    const CLIENT_URL = process.env.CLIENT_URL || 'https://atelier-jesmarite.vercel.app'; 
 
     // Validation des données
     if (!cartItems?.length) throw new Error('Panier vide');
@@ -65,9 +65,9 @@ app.post('/create-checkout-session', async (req, res) => {
       price_data: {
         currency: 'eur',
         product_data: {
-          name: item.Product.name, // <-- CORRIGER L'ACCÈS AUX DONNÉES
+          name: item.Product.name,
         },
-        unit_amount: Math.round(item.Product.price * 100), // <-- CORRECTION ICI
+        unit_amount: Math.round(item.Product.price * 100),
       },
       quantity: item.quantity,
     }));
@@ -115,6 +115,45 @@ app.get('/get-shipping-address/:sessionId', async (req, res) => {
     res.json(address);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/verify-payment/:sessionId', async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(
+      req.params.sessionId,
+      { expand: ['line_items.data.price.product'] }
+    );
+
+    const order = await Order.findOne({ 
+      where: { stripe_session_id: session.id },
+      include: [Address, OrderItem]
+    });
+
+    if (!order) {
+      return res.status(404).json({ error: 'Commande non trouvée' });
+    }
+
+    res.json({
+      order: {
+        id: order.id,
+        total: order.total_amount,
+        items: order.OrderItems.map(item => ({
+          Product: {
+            id: item.product_id,
+            name: item.Product.name,
+            price: item.price_at_purchase,
+            image: item.Product.image
+          },
+          quantity: item.quantity
+        })),
+        shippingAddress: order.Address
+      }
+    });
+
+  } catch (error) {
+    console.error('Erreur de vérification:', error);
+    res.status(500).json({ error: 'Échec de la vérification' });
   }
 });
 
