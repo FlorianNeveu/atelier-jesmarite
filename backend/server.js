@@ -6,6 +6,8 @@ const cors = require('cors');
 const path = require('path');
 const Stripe = require('stripe')
 
+const router = express.Router();
+
 
 dotenv.config();
 
@@ -52,43 +54,45 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const YOUR_DOMAIN = 'https://atelier-jesmarite.vercel.app';
 
 app.post('/create-checkout-session', async (req, res) => {
-  const { cartItems, shippingAddress } = req.body; 
-
-  
   try {
+    const { cartItems, shippingAddress } = req.body;
+
+    // Validation des données
+    if (!cartItems?.length) throw new Error('Panier vide');
+    if (!shippingAddress?.address_line1 || !shippingAddress?.city || !shippingAddress?.postal_code) {
+      throw new Error('Adresse incomplète');
+    }
+
+    const line_items = cartItems.map(item => ({
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: item.name,
+        },
+        unit_amount: Math.round(item.price * 100),
+      },
+      quantity: item.quantity,
+    }));
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: cartItems.map(item => ({
-        price_data: {
-          currency: 'eur',
-          product_data: {
-            name: item.Product.name,
-            images: [item.Product.image], 
-          },
-          unit_amount: item.Product.price * 100, 
-        },
-        quantity: item.quantity,
-      })),
+      line_items,
       mode: 'payment',
+      success_url: `${CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${CLIENT_URL}/cancel`,
       shipping_address_collection: {
-        allowed_countries: ['FR', 'BE', 'LU'],
+        allowed_countries: ['FR'],
       },
-      metadata: {
-        shippingAddress: JSON.stringify(shippingAddress),
-      },
-      success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${YOUR_DOMAIN}/cancel`,
-    });
-
-    const address = await UserAddress.create({
-      ...shippingAddress,
-      session_id: session.id
     });
 
     res.json({ url: session.url });
+    
   } catch (error) {
-    console.error('Erreur lors de la création de la session de paiement :', error);
-    res.status(500).json({ error: 'Erreur lors de la création de la session de paiement' });
+    console.error('Erreur serveur:', error);
+    res.status(500).json({ 
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 
