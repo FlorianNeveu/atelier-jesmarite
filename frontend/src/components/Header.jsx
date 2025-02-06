@@ -73,7 +73,7 @@ const Header = () => {
         {isAuthenticated ? (
           <ul>
             <li>
-            <Link to="/products" onClick={closeMenu}>Produits</Link>
+            <Link to="/collections" onClick={closeMenu}>Collections</Link>
             </li>
             {isAdmin && <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>} 
             <li>
@@ -92,7 +92,7 @@ const Header = () => {
             <Link to="/login" onClick={closeMenu}>Se connecter</Link>
             </li>
             <li>
-            <Link to="/products" onClick={closeMenu}>Produits</Link>
+            <Link to="/collections" onClick={closeMenu}>Collections</Link>
             </li>
             <li>
             <Link to="/cart" onClick={closeMenu}>panier</Link>

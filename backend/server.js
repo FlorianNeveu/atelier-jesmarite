@@ -118,7 +118,7 @@ app.get('/get-shipping-address/:sessionId', async (req, res) => {
   }
 });
 
-app.get('/verify-payment/', async (req, res) => {
+/*app.get('/verify-payment/', async (req, res) => {
   const sessionId = req.query.session_id;
   
   if (!sessionId) {
@@ -160,7 +160,7 @@ app.get('/verify-payment/', async (req, res) => {
     console.error('Erreur de vérification:', error);
     res.status(500).json({ error: 'Échec de la vérification' });
   }
-});
+});*/
 
 
 app.use('/users', userRoutes);

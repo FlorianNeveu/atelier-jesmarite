@@ -20,6 +20,7 @@ import Collections from "./pages/Collections";
 import CollectionsDetail from './pages/CollectionsDetail';
 import AddCategory from './pages/AddCategory';
 import EditCategory from './pages/EditCategory';
+import Success from './pages/Success';
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -92,6 +93,7 @@ const App = () => {
           <Route path="/add-product" element={isAdmin ? <AddProduct /> : <Navigate to="/" replace />} />
           <Route path="/add-category" element={isAdmin ? <AddCategory /> : <Navigate to="/" replace />} />
           <Route path="/edit-category/:categoryId" element={isAdmin ? <EditCategory /> : <Navigate to="/" replace />} />
+          <Route path="/success" element={<Success />} />
         </Routes>
       </main>
       <Footer />

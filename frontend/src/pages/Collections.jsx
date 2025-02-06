@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
-import { useNavigate } from "react-router-dom";
 
 const Collections = () => {
   const [categories, setCategories] = useState([]);
@@ -18,7 +18,6 @@ const Collections = () => {
 
     fetchCategories();
   }, []);
-
 
   const handleCollectionClick = (categoryId) => {
     navigate(`/collections/${categoryId}`);
@@ -38,6 +37,9 @@ const Collections = () => {
             <p>{category.description}</p>
           </div>
         ))}
+      </div>
+      <div className="view-all-btn-container">
+        <Link to="/products" className="view-all-btn">Voir tous les produits</Link>
       </div>
     </div>
   );

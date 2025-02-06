@@ -1,67 +1,84 @@
-@use '../base/_variables.scss' as *;
+@use '../base/_variables.scss' as vars;
 
 .collections {
-    padding: 2rem;
-    background-color: #f9f9f9;
-    text-align: center;
-  
-    h1 {
-      font-size: 2.5rem;
-      color: #B4604F; 
-      margin-bottom: 20px;
-    }
-  
-    .collections-list {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: 1fr;
-  
-      .category-card {
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        background-color: #EFE2D9;
-  
-        
-        &:nth-child(odd) {
-          background-color: #C8A497;
-        }
-  
-        h2 {
-          font-size: 1.8rem;
-          color: #000;
-          margin-bottom: 10px;
-        }
-  
-        p {
-          font-size: 1rem;
-          color: #555;
-          margin-bottom: 20px;
-        }
-  
+  padding: 2rem;
+  background-color: #f9f9f9;
+  text-align: center;
 
-        &:hover {
-          background-color: #B4604F; 
+  .view-all-btn-container {
+    margin-top: 2rem;  // Ajouter un espacement pour éviter que le bouton chevauche les cartes
+  }
+
+  .view-all-btn {
+    background-color: vars.$primary-color;  // Utilisation de la variable pour la couleur primaire
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #8c2d1f;
+    }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: vars.$primary-color;
+    margin-bottom: 20px;
+  }
+
+  .collections-list {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+
+    .category-card {
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      background-color: #EFE2D9;
+
+      &:nth-child(odd) {
+        background-color: #C8A497;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        color: #000;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 20px;
+      }
+
+      &:hover {
+        background-color: vars.$primary-color;
+        color: white;
+
+        h2 {
           color: white;
-  
-          h2 {
-            color: white;
-          }
         }
-      }
-    }
-  
-    @media (min-width: 480px) {
-      .collections-list {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  
-    @media (min-width: 1024px) {
-      .collections-list {
-        grid-template-columns: repeat(3, 1fr);
       }
     }
   }
-  
+
+  @media (min-width: 480px) {
+    .collections-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collections-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

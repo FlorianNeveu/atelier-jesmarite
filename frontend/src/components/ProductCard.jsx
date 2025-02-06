@@ -1,16 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../axiosConfig';  // Assure-toi d'avoir axiosInstance configuré pour ton API
+import axiosInstance from '../axiosConfig'; 
 
 const ProductCard = ({ product, handleAddToCart }) => {
   const navigate = useNavigate();
 
-  // Fonction pour rediriger vers la page du produit
   const handleProductClick = () => {
     navigate(`/products/${product.id}`);
   };
 
-  // Fonction pour ajouter au panier
+
   const handleAddToCartClick = async () => {
     const sessionId = localStorage.getItem("sessionId");
 

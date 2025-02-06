@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
 const CollectionsDetail = () => {
-  const { id, categoryId } = useParams();
+  const { categoryId } = useParams(); 
   const [products, setProducts] = useState([]);
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,11 +18,12 @@ const CollectionsDetail = () => {
         const collectionResponse = await axiosInstance.get(`/categories/${categoryId}`);
         setCollection(collectionResponse.data);
 
-        const response = await axiosInstance.get(`/products?category_id=${id}`);
+        const response = await axiosInstance.get(`/products/category/${categoryId}`);
         setProducts(response.data);
+
         setError(null);
       } catch (error) {
-        console.error("Erreur lors de la récupération des produits :", error);
+        console.error("Erreur :", error);
         setError("Impossible de charger les produits");
       } finally {
         setLoading(false);
@@ -30,22 +31,24 @@ const CollectionsDetail = () => {
     };
 
     fetchProductsByCategory();
-  }, [id]);
+  }, [categoryId]); 
 
-  const handleProductClick = (productId) => {
-    navigate(`/products/${productId}`);
-  };
-
-  if (loading) return <div className="loading">Chargement en cours...</div>;
+  if (loading) return <div className="loading">Chargement...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="collections-detail">
-      {collection && <h1>{collection.name}</h1>}
+      {collection && (
+        <>
+          <h1>{collection.name}</h1>
+          <p className="collection-description">{collection.description}</p>
+        </>
+      )}
+      
       <div className="product-grid-collection">
         {products.length > 0 ? (
           products.map((product) => (
-            <ProductCard key={product.id} product={product}  />
+            <ProductCard key={product.id} product={product} />
           ))
         ) : (
           <p className="empty-message">Aucun produit dans cette collection</p>
