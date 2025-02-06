@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
 
 const Dashboard = () => {
   const [products, setProducts] = useState([]);

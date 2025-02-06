@@ -1,4 +1,4 @@
-@use './_variables.scss' as *;
+@use '../base/_variables.scss' as *;
 @use 'sass:color';
 
 .home {
@@ -70,12 +70,12 @@
     height: 40px;
   }
 
-  .product-list {
+  .product-list-home {
     display: grid;
     gap: 15px;
     grid-template-columns: repeat(2, 1fr); 
   
-    .product-card {
+    .product-card-home {
       overflow: hidden;
       width: 100%;
       cursor: pointer;
@@ -96,7 +96,7 @@
         }
       }
   
-      .square-content {
+      .square-content-home {
         display: flex;
         flex-direction: column;
         background-color: #C8A497;
@@ -115,13 +115,13 @@
   }
   
   @media (min-width: 480px) {
-    .product-list {
+    .product-list-home {
       grid-template-columns: repeat(3, 1fr);
     }
   }
   
   @media (min-width: 1024px) {
-    .product-list {
+    .product-list-home {
       grid-template-columns: repeat(4, 1fr);
     }
   } 

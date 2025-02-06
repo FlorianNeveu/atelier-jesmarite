@@ -1,0 +1,34 @@
+@use 'sass:color';
+@use '../base/_variables.scss' as *;
+
+.products {
+  padding: 20px;
+  text-align: center;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .product-list {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 768px) {
+    .product-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .product-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .product-card {
+      padding: 20px;
+    }
+  }
+}

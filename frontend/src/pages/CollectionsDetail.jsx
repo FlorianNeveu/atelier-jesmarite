@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useParams, useNavigate } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
 
 const CollectionsDetail = () => {
   const { id } = useParams();
@@ -36,26 +37,10 @@ const CollectionsDetail = () => {
   return (
     <div className="collections-detail">
       <h1>Collection</h1>
-      <div className="product-grid">
+      <div className="product-grid-collection">
         {products.length > 0 ? (
           products.map((product) => (
-            <div
-              key={product.id}
-              className="product-card"
-              onClick={() => handleProductClick(product.id)}
-            >
-              <div className="image-container">
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
-                  loading="lazy"
-                />
-              </div>
-              <div className="product-info">
-                <h3>{product.name}</h3>
-                <p className="price">{product.price} €</p>
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product}  />
           ))
         ) : (
           <p className="empty-message">Aucun produit dans cette collection</p>

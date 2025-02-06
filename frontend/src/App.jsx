@@ -19,8 +19,6 @@ import About from './pages/About';
 import Collections from "./pages/Collections";
 import CollectionsDetail from './pages/CollectionsDetail';
 
-import './styles/App.scss';
-
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);

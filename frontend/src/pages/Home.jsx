@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import "../styles/Home.scss";
-import "../styles/index.scss";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -82,13 +80,13 @@ const Home = () => {
 
       <h1>Bienvenue sur l'Atelier de Jesmarite</h1>
       <h2>Découvrez notre sélection</h2>
-      <div className="product-list">
+      <div className="product-list-home">
         {randomProducts.map((product) => (
-          <div key={product.id} className="product-card" onClick={() => handleProductClick(product.id)}>
+          <div key={product.id} className="product-card-home" onClick={() => handleProductClick(product.id)}>
             <div className="vault">
               <img src={`${product.image}`} alt={product.name} />
             </div>
-            <div className="square-content">
+            <div className="square-content-home">
               <h3>{product.name}</h3>
               <p className="price">{product.price} €</p>
             </div>
