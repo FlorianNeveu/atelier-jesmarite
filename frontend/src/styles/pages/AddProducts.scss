@@ -36,7 +36,8 @@
   
         input[type="text"],
         input[type="number"],
-        input[type="file"] {
+        input[type="file"],
+        textarea {
           padding: 0.75rem;
           border: 1px solid #ddd;
           border-radius: 8px;

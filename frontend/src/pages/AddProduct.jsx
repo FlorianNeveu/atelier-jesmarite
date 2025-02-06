@@ -63,7 +63,6 @@ const AddProduct = () => {
         <div>
           <label htmlFor="name">Nom</label>
           <input
-            className="form-input"
             type="text"
             id="name"
             name="name"
@@ -74,20 +73,18 @@ const AddProduct = () => {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <input
-            className="form-input"
-            type="text"
+          <textarea
             id="description"
             name="description"
             value={product.description}
             onChange={handleChange}
             required
+            rows="4"
           />
         </div>
         <div>
           <label htmlFor="price">Prix</label>
           <input
-            className="form-input"
             type="number"
             id="price"
             name="price"
@@ -99,7 +96,6 @@ const AddProduct = () => {
         <div>
           <label htmlFor="quantity">Quantité</label>
           <input
-            className="form-input"
             type="number"
             id="quantity"
             name="quantity"
@@ -111,7 +107,6 @@ const AddProduct = () => {
         <div>
           <label htmlFor="category_id">Catégorie</label>
           <input
-            className="form-input"
             type="text"
             id="category_id"
             name="category_id"
@@ -123,7 +118,6 @@ const AddProduct = () => {
         <div>
           <label htmlFor="image">Image</label>
           <input
-            className="form-input"
             type="file"
             id="image"
             name="image"

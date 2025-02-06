@@ -73,12 +73,13 @@ const EditProduct = () => {
         </div>
         <div>
           <label htmlFor="description">Description</label>
-          <input
+          <textarea
             type="text"
             id="description"
             value={product?.description || ''}
             onChange={(e) => setProduct({ ...product, description: e.target.value })}
             required
+            rows="4"
           />
         </div>
         <div>
