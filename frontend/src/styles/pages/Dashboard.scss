@@ -1,127 +1,121 @@
-/* Styles globaux pour le tableau de bord */
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-  
-    h1 {
-      font-size: 2rem;
-      color: #3A2E2C;
-      margin-bottom: 1rem;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3a2e2c;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .management-section {
+    margin-bottom: 3rem;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        font-size: 1.6rem;
+        color: #2a3d34;
+      }
+
+      .add-button {
+        padding: 0.5rem 1rem;
+        background-color: #8a9b6e;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #7a8a58;
+        }
+      }
     }
-  
-    button {
-      padding: 0.75rem 1.5rem;
-      background-color: #8A9B6E;
-      color: white;
-      border: none;
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .item-card {
+      background-color: white;
+      padding: 1rem;
       border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      transition: background-color 0.3s ease;
-  
-      &:hover {
-        background-color: #7a8a58;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h3 {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
       }
-    }
-  
-    h2 {
-      font-size: 1.5rem;
-      color: #3A2E2C;
-      margin-bottom: 1rem;
-    }
-  
-    .error {
-      color: #f44336;
-      font-size: 0.9rem;
-      text-align: center;
-      margin-top: 1rem;
-    }
-  
-    
-    .products-table {
-        width: 100%;
-        border-collapse: collapse;
+
+      p {
+        font-size: 1rem;
+        color: #555;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-start;
         margin-top: 1rem;
-      
-        th, td {
-          padding: 0.75rem;
-          text-align: left;
-          border: 1px solid #ddd;
-        }
-      
-        th {
-          background-color: #8A9B6E;
-          color: white;
-        }
-      
-        tr {
+
+        .edit-btn, .delete-btn {
+          padding: 0.5rem;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 1rem;
+          transition: background-color 0.3s ease;
+
           &:hover {
-            background-color: #f5f5f5;
+            background-color: #7a8a58;
           }
-      
-          
-          &:nth-child(odd) {
-            background-color: #f9f9f9;
+
+          &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
           }
-      
-          
-          &:nth-child(even) {
-            background-color: #f1f1f1; 
+        }
+
+        .delete-btn {
+          background-color: #f44336;
+          color: white;
+
+          &:hover {
+            background-color: #d32f2f;
           }
-      
-          button {
-            padding: 0.5rem;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 0.5rem;
-      
-            &:hover {
-              background-color: #45a049;
-            }
-      
-            &:disabled {
-              background-color: #ccc;
-              cursor: not-allowed;
-            }
+        }
+
+        .edit-btn {
+          background-color: #4caf50;
+          color: white;
+
+          &:hover {
+            background-color: #45a049;
           }
         }
       }
-  }
-  
- 
-  @media (min-width: 768px) {
-    .dashboard {
-      padding: 2rem;
-    }
-  
-    .products-table {
-      th, td {
-        padding: 1rem;
-      }
-  
-      button {
-        font-size: 1.1rem;
-        padding: 0.75rem 1.5rem;
-      }
     }
   }
-  
-  @media (min-width: 1024px) {
-    .dashboard {
-      padding: 2.5rem;
-    }
-  
-    .products-table {
-      width: 80%;
-      margin: 0 auto;
-    }
+
+  .error {
+    color: #f44336;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1rem;
   }
-  
+}

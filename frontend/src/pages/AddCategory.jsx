@@ -18,13 +18,14 @@ const AddCategory = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="add-category">
       <h1>Créer une nouvelle catégorie</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nom de la catégorie:</label>
+          <label htmlFor="name">Nom de la catégorie</label>
           <input
             type="text"
+            id="name"
             value={formData.name}
             onChange={(e) => setFormData({...formData, name: e.target.value})}
             required
@@ -32,8 +33,9 @@ const AddCategory = () => {
         </div>
 
         <div className="form-group">
-          <label>Description:</label>
+          <label htmlFor="description">Description</label>
           <textarea
+            id="description"
             value={formData.description}
             onChange={(e) => setFormData({...formData, description: e.target.value})}
           />
@@ -41,8 +43,12 @@ const AddCategory = () => {
 
         {error && <p className="error">{error}</p>}
         <div className="form-actions">
-          <button type="button" onClick={() => navigate('/dashboard')}>Annuler</button>
-          <button type="submit">Créer la catégorie</button>
+          <button type="button" className="cancel-btn" onClick={() => navigate('/dashboard')}>
+            Annuler
+          </button>
+          <button type="submit" className="submit-btn">
+            Créer la catégorie
+          </button>
         </div>
       </form>
     </div>

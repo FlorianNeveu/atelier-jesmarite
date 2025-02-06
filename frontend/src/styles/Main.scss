@@ -1,6 +1,9 @@
 @use './utils/_mixins';
 @use './base/_variables';
+
 @use './components/ProductCard.scss';
+@use './components/ContactForm.scss';
+@use './components/AddressForm.scss';
 
 @use './layouts/Footer.scss';
 @use './layouts/Header.scss';

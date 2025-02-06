@@ -52,11 +52,10 @@ const Dashboard = () => {
     <div className="dashboard">
       <h1>Tableau de bord Admin</h1>
 
-      {/* Section Produits */}
       <section className="management-section">
         <div className="section-header">
           <h2>Produits</h2>
-          <button onClick={() => navigate('/add-product')}>+ Nouveau produit</button>
+          <button onClick={() => navigate('/add-product')} className="add-button">+ Nouveau produit</button>
         </div>
         
         <div className="items-grid">
@@ -66,8 +65,9 @@ const Dashboard = () => {
               <p>{product.description}</p>
               <p>Prix : {product.price}€</p>
               <div className="actions">
-                <button onClick={() => navigate(`/edit-product/${product.id}`)}>✏️</button>
+                <button className="edit-btn" onClick={() => navigate(`/edit-product/${product.id}`)}>✏️</button>
                 <button 
+                  className="delete-btn"
                   onClick={() => handleDelete('products', product.id)}
                   disabled={deletingId === product.id}
                 >
@@ -79,11 +79,10 @@ const Dashboard = () => {
         </div>
       </section>
 
-      {/* Section Catégories */}
       <section className="management-section">
         <div className="section-header">
           <h2>Catégories</h2>
-          <button onClick={() => navigate('/add-category')}>+ Nouvelle catégorie</button>
+          <button onClick={() => navigate('/add-category')} className="add-button">+ Nouvelle catégorie</button>
         </div>
 
         <div className="items-grid">
@@ -92,8 +91,9 @@ const Dashboard = () => {
               <h3>{category.name}</h3>
               <p>{category.description}</p>
               <div className="actions">
-                <button onClick={() => navigate(`/edit-category/${category.id}`)}>✏️</button>
+                <button className="edit-btn" onClick={() => navigate(`/edit-category/${category.id}`)}>✏️</button>
                 <button 
+                  className="delete-btn"
                   onClick={() => handleDelete('categories', category.id)}
                   disabled={deletingId === category.id}
                 >

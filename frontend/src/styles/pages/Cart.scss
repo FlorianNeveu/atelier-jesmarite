@@ -1,4 +1,3 @@
-/* Styles globaux pour le panier */
 .cart {
     padding: 1rem;
     background-color: #f4f4f4;
@@ -8,11 +7,23 @@
       color: #3A2E2C;
       margin-bottom: 1rem;
     }
+
+    .checkout-section {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #ffffff;
+      padding: 1rem;
+
+      @media (min-width: 1024px) {
+        margin: 0 1.25rem 0 1.25rem;
+      }
+    }
   
     .cart-items {
       margin-top: 1rem;
     }
-  
+    
+
     .cart-item {
       display: flex;
       justify-content: space-between;
@@ -23,11 +34,11 @@
       margin-bottom: 1rem;
   
       &.even {
-        background-color: #f9f9f9;  // Ligne paire
+        background-color: #f9f9f9; 
       }
   
       &.odd {
-        background-color: #f1f1f1;  // Ligne impaire
+        background-color: #f1f1f1; 
       }
   
       .product-details {

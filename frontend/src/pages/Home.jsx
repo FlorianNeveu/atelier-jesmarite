@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import ContactForm from "../components/ContactForm";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -9,12 +10,11 @@ const Home = () => {
   const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
   const navigate = useNavigate();
   
-  // Ajout d'un drapeau pour vérifier si les produits sont déjà récupérés
   const [productsFetched, setProductsFetched] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      if (productsFetched) return; // Si les produits ont déjà été récupérés, on ne les récupère pas à nouveau
+      if (productsFetched) return; 
       
       try {
         const response = await axiosInstance.get("/products");
@@ -31,9 +31,9 @@ const Home = () => {
         };
 
         updateProducts();
-        setProductsFetched(true);  // Mettre à jour le drapeau pour indiquer que les produits ont été récupérés
+        setProductsFetched(true); 
 
-        // Écoute de l'événement resize
+        
         window.addEventListener('resize', updateProducts);
         return () => window.removeEventListener('resize', updateProducts);
       } catch (error) {
@@ -42,7 +42,7 @@ const Home = () => {
     };
 
     fetchProducts();
-  }, [productsFetched]); // Le useEffect se réexécutera seulement si productsFetched change
+  }, [productsFetched]);
 
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`); 
@@ -105,19 +105,7 @@ const Home = () => {
         <button className="learn-more-btn" onClick={handleLearnMore}>En savoir plus</button>
       </div>
 
-      <div className="contact-section">
-        <h3>Pour une commande personnalisée ou une question ? Contactez-nous</h3>
-        <form action="https://formspree.io/f/florian.neveu@3wa.io" method="POST">
-          <div className="left-column">
-            <input type="text" name="name" placeholder="Votre nom" required />
-            <input type="email" name="email" placeholder="Votre email" required />
-          </div>
-          <div className="right-column">
-            <textarea name="message" placeholder="Votre message" rows="5" required></textarea>
-            <button type="submit">Envoyer</button>
-          </div>
-        </form>
-      </div>
+      <ContactForm />
     </div>
   );
 };
