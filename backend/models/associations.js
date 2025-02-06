@@ -21,10 +21,12 @@ User.hasOne(ShoppingSession, { foreignKey: "user_id" });
 Admin.belongsTo(User, { foreignKey: "user_id" });
 
 // 📌 Relations pour les commandes et paiements
+OrderDetails.hasOne(UserAddress, { foreignKey: 'order_id', as: 'shipping_address' });
 OrderDetails.belongsTo(User, { foreignKey: "user_id" });
 OrderItems.belongsTo(OrderDetails, { foreignKey: "order_id" });
 OrderItems.belongsTo(Product, { foreignKey: "product_id" });
 PaymentDetails.belongsTo(OrderDetails, { foreignKey: "order_id" });
+UserAddress.belongsTo(OrderDetails, { foreignKey: "order_id" });
 
 // 📌 Relations pour les produits
 Product.belongsTo(ProductCategory, { foreignKey: "category_id", as: "category" });

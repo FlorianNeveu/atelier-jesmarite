@@ -52,7 +52,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const YOUR_DOMAIN = 'https://atelier-jesmarite.vercel.app';
 
 app.post('/create-checkout-session', async (req, res) => {
-  const { cartItems } = req.body; 
+  const { cartItems, shippingAddress } = req.body; 
 
   
   try {
@@ -70,8 +70,19 @@ app.post('/create-checkout-session', async (req, res) => {
         quantity: item.quantity,
       })),
       mode: 'payment',
+      shipping_address_collection: {
+        allowed_countries: ['FR', 'BE', 'LU'],
+      },
+      metadata: {
+        shippingAddress: JSON.stringify(shippingAddress),
+      },
       success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}/cancel`,
+    });
+
+    const address = await UserAddress.create({
+      ...shippingAddress,
+      session_id: session.id
     });
 
     res.json({ url: session.url });
@@ -81,7 +92,29 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-app.listen(5173, () => console.log('Running on port 5173'));
+app.get('/get-shipping-address/:sessionId', async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+    
+    const stripeAddress = session.shipping.address;
+    
+    const address = await UserAddress.findOne({ 
+      where: { session_id: session.id }
+    });
+    
+    await address.update({
+      address_line1: stripeAddress.line1,
+      address_line2: stripeAddress.line2,
+      city: stripeAddress.city,
+      postal_code: stripeAddress.postal_code,
+      country: stripeAddress.country
+    });
+
+    res.json(address);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 app.use('/users', userRoutes);

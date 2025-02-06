@@ -1,19 +1,9 @@
 const cloudinary = require('cloudinary').v2;
 const express = require('express');
 const Product = require('../models/Product');
-const ProductCategory = require('../models/ProductCategory');  // Because we have a product category
+const ProductCategory = require('../models/ProductCategory');
 const multer = require('multer');
 const path = require('path');
-
-// Commentaire sur multer classique
-/*const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/assets/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});*/
 
 // Multer + Cloudinary
 

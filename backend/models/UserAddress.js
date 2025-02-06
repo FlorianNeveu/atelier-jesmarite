@@ -37,6 +37,17 @@ const UserAddress = sequelize.define('UserAddress', {
       key: 'id',
     },
   },
+  session_id: {
+    type: DataTypes.STRING,
+    unique: true
+  },
+  order_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'order_details',
+      key: 'id',
+    },
+  },
 }, {
   tableName: 'user_address',
 });
