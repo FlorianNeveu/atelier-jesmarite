@@ -1,4 +1,3 @@
-// Success.jsx (version simplifiée)
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
