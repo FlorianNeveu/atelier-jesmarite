@@ -41,22 +41,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// **Récupérer un article du panier par ID**
-/*router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const cartItem = await CartItem.findByPk(id, {
-      include: Product,
-    });
-    if (!cartItem) {
-      return res.status(404).json({ error: 'Cart item not found' });
-    }
-    res.status(200).json(cartItem);
-  } catch (error) {
-    res.status(500).json({ error: 'Error when retrieving cart item' });
-  }
-});*/
-
 // Récupérer les articles du panier pour une session donnée
 router.get('/:session_id', async (req, res) => {
   const { session_id } = req.params;
@@ -81,36 +65,46 @@ router.get('/:session_id', async (req, res) => {
 
 
 // **Mettre à jour la quantité d'un article dans le panier**
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { quantity } = req.body;
+router.put('/:session_id/update', async (req, res) => {
+  const { session_id } = req.params;
+  const { product_id, quantity } = req.body;
 
   try {
-    const cartItem = await CartItem.findByPk(id);
+    let cartItem = await CartItem.findOne({
+      where: { product_id, session_id }
+    });
+
     if (!cartItem) {
-      return res.status(404).json({ error: 'Cart item not found' });
+      return res.status(404).json({ error: 'Produit non trouvé dans ce panier' });
     }
 
     cartItem.quantity = quantity;
     await cartItem.save();
     res.status(200).json(cartItem);
   } catch (error) {
-    res.status(500).json({ error: 'Error when updating cart item' });
+    console.error("Erreur lors de la mise à jour de la quantité :", error);
+    res.status(500).json({ error: 'Erreur lors de la mise à jour du panier' });
   }
 });
 
 // **Supprimer un article du panier**
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+router.delete('/:session_id/product/:product_id', async (req, res) => {
+  const { session_id, product_id } = req.params;
+
   try {
-    const cartItem = await CartItem.findByPk(id);
+    const cartItem = await CartItem.findOne({
+      where: { product_id, session_id }
+    });
+
     if (!cartItem) {
-      return res.status(404).json({ error: 'Cart item not found' });
+      return res.status(404).json({ error: 'Produit non trouvé dans ce panier' });
     }
+
     await cartItem.destroy();
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: 'Error when deleting cart item' });
+    console.error("Erreur lors de la suppression du produit :", error);
+    res.status(500).json({ error: 'Erreur lors de la suppression du produit' });
   }
 });
 
