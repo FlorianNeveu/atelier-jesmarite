@@ -1,8 +1,9 @@
-@use '../base/_variables.scss' as *;
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
 
 body {
   font-family: Arial, sans-serif;
-  font-size: $font-size-base;
+  font-size: vars.$font-size-base;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;

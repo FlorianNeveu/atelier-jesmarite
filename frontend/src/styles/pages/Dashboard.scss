@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .dashboard {
   padding: 2rem;
   font-family: Arial, sans-serif;
@@ -46,11 +49,11 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
 
-      @media (min-width: 768px) {
+      @include mixins.tablet {
         grid-template-columns: repeat(3, 1fr);
       }
 
-      @media (min-width: 1024px) {
+      @include mixins.desktop {
         grid-template-columns: repeat(4, 1fr);
       }
     }

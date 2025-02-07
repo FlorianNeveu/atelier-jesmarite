@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .login {
     display: flex;
     flex-direction: column;
@@ -78,8 +81,7 @@
     }
   }
   
-  /* Styles responsives */
-  @media (min-width: 768px) {
+  @include mixins.tablet {
   
     h1 {
       font-size: 2.5rem;

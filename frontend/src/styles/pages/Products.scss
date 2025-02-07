@@ -1,5 +1,6 @@
 @use 'sass:color';
-@use '../base/_variables.scss' as *;
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
 
 .products {
   padding: 0.5rem;
@@ -16,13 +17,13 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: 768px) {
+  @include mixins.tablet {
     .product-list {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (min-width: 1024px) {
+  @include mixins.desktop {
     .product-list {
       grid-template-columns: repeat(4, 1fr);
     }

@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .edit-product {
     display: flex;
     flex-direction: column;
@@ -85,15 +88,14 @@
       margin-top: 1rem;
     }
   
-    /* Responsive design */
-    @media (min-width: 768px) {
+    @include mixins.tablet {
       form {
         width: 50%;
         padding: 2.5rem;
       }
     }
   
-    @media (min-width: 1024px) {
+    @include mixins.desktop {
       form {
         width: 40%;
         padding: 3rem;

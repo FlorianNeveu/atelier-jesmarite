@@ -1,4 +1,6 @@
-/* Style global pour la page des Conditions Générales de Vente */
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .terms-of-service {
     padding: 2rem;
     font-family: Arial, sans-serif;
@@ -47,8 +49,7 @@
       margin-bottom: 2rem;
     }
   
-    /* Styles responsives */
-    @media (max-width: 768px) {
+    @include mixins.untilTablet {
       .terms-of-service {
         padding: 1rem;
       }

@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .contact-section {
     padding: 2rem;
     border-radius: 15px;
@@ -57,7 +60,7 @@
       background-color: #8c2d1f;
     }
   
-    @media (max-width: 768px) {
+    @include mixins.untilTablet{
       form {
         flex-direction: column;
       }

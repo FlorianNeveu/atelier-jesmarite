@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .about {
     padding: 2rem;
     font-family: Arial, sans-serif;
@@ -48,7 +51,7 @@
     }
   
    
-    @media (max-width: 768px) {
+    @include mixins.untilTablet {
       .content {
         flex-direction: column;
         text-align: center;

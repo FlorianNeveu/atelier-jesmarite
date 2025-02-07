@@ -1,4 +1,6 @@
 @use 'sass:color';
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
 
 .product-card {
   position: relative;
@@ -69,7 +71,7 @@
         background-color: color.scale(#8A9B6E, $lightness: -10%);
       }
 
-      @media (min-width: 768px) {
+      @include mixins.tablet {
         font-size: 1rem;
         padding: 0.9rem;
       }
@@ -84,7 +86,7 @@
     }
   }
 
-  @media (min-width: 768px) {
+  @include mixins.tablet {
     .product-info {
       h3 {
         font-size: 1.2rem;

@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .product-page {
     display: flex;
     flex-direction: column;
@@ -57,8 +60,7 @@
       }
     }
   
-    /* Mobile Styling */
-    @media (max-width: 768px) {
+    @include mixins.untilTablet {
       .product-page {
         padding: 1rem;
   
@@ -82,8 +84,7 @@
       }
     }
   
-    /* Desktop Styling */
-    @media (min-width: 1024px) {
+    @include mixins.desktop{
       .product-page {
         padding: 2rem;
         max-width: 1200px;

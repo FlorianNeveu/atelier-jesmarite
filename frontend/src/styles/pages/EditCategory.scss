@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .edit-category {
     padding: 2rem;
     font-family: Arial, sans-serif;

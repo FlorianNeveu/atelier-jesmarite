@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .cart {
     padding: 1rem;
     background-color: #f4f4f4;
@@ -14,7 +17,7 @@
       background-color: #ffffff;
       padding: 1rem;
 
-      @media (min-width: 1024px) {
+      @include mixins.desktop {
         margin: 0 1.25rem 0 1.25rem;
       }
     }
@@ -141,8 +144,8 @@
     }
   }
   
-  /* Mobile-first */
-  @media (min-width: 768px) {
+
+  @include mixins.tablet {
     .cart-item {
       flex-direction: row;
       justify-content: flex-start;
@@ -158,8 +161,8 @@
     }
   }
   
-  /* Desktop */
-  @media (min-width: 1024px) {
+
+  @include mixins.desktop {
     .cart-item {
       width: 95%;
       margin: 0 auto;

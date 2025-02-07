@@ -1,3 +1,6 @@
+@use '../base/_variables.scss' as vars;
+@use '../utils/_mixins.scss' as mixins;
+
 .shipping-form {
     background-color: #ffffff;
     padding: 1rem;
@@ -36,7 +39,7 @@
           width: 85%; 
         }
 
-        @media (min-width: 768px) {
+        @include mixins.tablet {
             input {
                 width: 40.25%;
             }
