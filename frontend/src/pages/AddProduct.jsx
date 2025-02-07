@@ -1,3 +1,5 @@
+// Page d'ajout de produit accessible depuis le dashboard
+
 import React, { useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";

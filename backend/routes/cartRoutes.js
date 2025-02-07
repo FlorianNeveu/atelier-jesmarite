@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
       res.status(201).json(cartItem);
     }
   } catch (error) {
-    console.error("❌ Erreur lors de l'ajout au panier :", error);
+    console.error("Erreur lors de l'ajout au panier :", error);
     res.status(500).json({ error: "Erreur lors de l'ajout au panier" });
   }
 });
@@ -60,7 +60,7 @@ router.get('/:session_id', async (req, res) => {
 
     res.status(200).json(cartItems);
   } catch (error) {
-    console.error("❌ Erreur lors de la récupération du panier :", error);
+    console.error("Erreur lors de la récupération du panier :", error);
     res.status(500).json({ error: "Erreur lors de la récupération du panier" });
   }
 });

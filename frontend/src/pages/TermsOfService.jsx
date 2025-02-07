@@ -1,3 +1,5 @@
+// Page de conditions de vente
+
 import React from 'react';
 
 const TermsOfService = () => {

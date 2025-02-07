@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(session);
   } catch (error) {
-    console.error("❌ Erreur lors de la création de la session :", error);
+    console.error("Erreur lors de la création de la session :", error);
     res.status(500).json({ error: 'Error when creating shopping session' });
   }
 });

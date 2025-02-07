@@ -1,3 +1,5 @@
+// Page d'accueil
+
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +21,7 @@ const Home = () => {
       try {
         const response = await axiosInstance.get("/products");
         setProducts(response.data);
-
+        // Tri des produits par ordre aléatoire et en affiche un certain nombre selon l'écran
         const updateProducts = () => {
           const selectedProducts = [...response.data].sort(() => Math.random() - 0.5);
           const getProductsPerView = () => {

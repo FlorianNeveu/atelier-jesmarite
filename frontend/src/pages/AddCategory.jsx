@@ -1,3 +1,5 @@
+// Page d'ajout de catégories accessible depuis le dashboard
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';

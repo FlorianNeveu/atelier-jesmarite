@@ -30,8 +30,8 @@ const shoppingSessionRoutes = require('./routes/shoppingSessionRoutes');
 const userPaymentRoutes = require('./routes/userPaymentRoutes');
 const authRoutes = require('./routes/authRoutes');
 
+// Configurer CORS
 const allowedOrigins = ['http://localhost:5173', 'https://atelier-jesmarite-production.up.railway.app', 'https://atelier-jesmarite.vercel.app', 'https://atelier-jesmarite-production.up.railway.app/create-checkout-session', 'https://atelier-jesmarite.vercel.app/create-checkout-session', 'https://checkout.stripe.com'];
-
 app.use(cors({
   origin: function(origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('https://checkout.stripe.com/')) {
@@ -71,7 +71,7 @@ app.post('/create-checkout-session', async (req, res) => {
       },
       quantity: item.quantity,
     }));
-
+    // Création de la session Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items,
@@ -118,51 +118,6 @@ app.get('/get-shipping-address/:sessionId', async (req, res) => {
   }
 });
 
-/*app.get('/verify-payment/', async (req, res) => {
-  const sessionId = req.query.session_id;
-  
-  if (!sessionId) {
-    return res.status(400).json({ error: 'Session ID manquant' });
-  }
-  try {
-    const session = await stripe.checkout.sessions.retrieve(
-      req.params.sessionId,
-      { expand: ['line_items.data.price.product'] }
-    );
-
-    const order = await Order.findOne({ 
-      where: { stripe_session_id: session.id },
-      include: [Address, OrderItem]
-    });
-
-    if (!order) {
-      return res.status(404).json({ error: 'Commande non trouvée' });
-    }
-
-    res.json({
-      order: {
-        id: order.id,
-        total: order.total_amount,
-        items: order.OrderItems.map(item => ({
-          Product: {
-            id: item.product_id,
-            name: item.Product.name,
-            price: item.price_at_purchase,
-            image: item.Product.image
-          },
-          quantity: item.quantity
-        })),
-        shippingAddress: order.Address
-      }
-    });
-
-  } catch (error) {
-    console.error('Erreur de vérification:', error);
-    res.status(500).json({ error: 'Échec de la vérification' });
-  }
-});*/
-
-
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
@@ -185,7 +140,7 @@ app.listen(port, () => {
     console.log(`Le serveur fonctionne normalement sur le port : ${port}`);
 });
 
-
+// Synchronisation des tables
 sequelize.sync({ alter: true })
   .then(() => {
     console.log('Les tables ont été créées avec succès.');

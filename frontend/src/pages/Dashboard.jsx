@@ -1,3 +1,5 @@
+// Page du dashboard accessible uniquement si connecté en tant qu'admin.
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig';
@@ -10,6 +12,7 @@ const Dashboard = () => {
   const [deletingId, setDeletingId] = useState(null);
   const navigate = useNavigate();
 
+  // Recupere les produits et les catégories
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,6 +31,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  // Fonction de suppression
   const handleDelete = async (type, id) => {
     if (!window.confirm('Confirmer la suppression ?')) return;
     setDeletingId(id);

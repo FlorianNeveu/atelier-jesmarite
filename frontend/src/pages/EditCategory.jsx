@@ -1,3 +1,5 @@
+// Page d'edition de catégories
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
@@ -9,6 +11,7 @@ const EditCategory = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Recupere la catégorie spécifique
   useEffect(() => {
     const fetchCategory = async () => {
       try {

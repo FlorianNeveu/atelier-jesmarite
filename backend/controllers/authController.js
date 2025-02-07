@@ -15,7 +15,7 @@ const register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: "Cet email est déjà utilisé." });
     }
-
+    // Utilisation de bcrypt pour hacher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       first_name,
@@ -24,7 +24,6 @@ const register = async (req, res) => {
       password: hashedPassword,
       telephone
     });
-
     const { password: _, ...userWithoutPassword } = user.toJSON();
     res.status(201).json({ message: "Utilisateur enregistré avec succès", user });
   } catch (error) {
@@ -41,12 +40,12 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "L'adresse email n'a pas été trouvée" });
     }
-
+    // Utilisation de bcrypt pour comparer le mot de passe
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ error: "Mot de passe incorrect" });
     }
-    
+    // Création du token
     const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1h" });
 
     const { password: _, ...userWithoutPassword } = user.toJSON();
@@ -73,6 +72,7 @@ const login = async (req, res) => {
   }
 };
 
+// Pour obtenir les informations de l'utilisateur connecté
 const me = async (req, res) => {
   const user = req.user;
 

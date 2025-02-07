@@ -1,3 +1,5 @@
+// Page répertoriant toutes les collections.
+
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
@@ -6,6 +8,7 @@ const Collections = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
+  // Recupere toutes les collections
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -19,6 +22,7 @@ const Collections = () => {
     fetchCategories();
   }, []);
 
+  // Redirige vers la page de la collection choisie
   const handleCollectionClick = (categoryId) => {
     navigate(`/collections/${categoryId}`);
   };

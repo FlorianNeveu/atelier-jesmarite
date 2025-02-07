@@ -1,3 +1,5 @@
+// Affiche la page de la collection spécifique avec les produits liés
+
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,6 +13,7 @@ const CollectionsDetail = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // Recupere la collection et les produits liés
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {

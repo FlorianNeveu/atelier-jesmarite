@@ -1,3 +1,5 @@
+// Page d'edition de produit
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
@@ -10,7 +12,7 @@ const EditProduct = () => {
   const [newImage, setNewImage] = useState(null);
   const navigate = useNavigate();
 
-
+  // Recupere le produit specifique
   useEffect(() => {
     const fetchProduct = async () => {
       try {

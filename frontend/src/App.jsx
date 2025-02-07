@@ -1,3 +1,5 @@
+// Mise en place du Lazy loading
+
 import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axiosInstance from "./axiosConfig";
@@ -24,6 +26,7 @@ const AddCategory = lazy(() => import('./pages/AddCategory'));
 const EditCategory = lazy(() => import('./pages/EditCategory'));
 const Success = lazy(() => import('./pages/Success'));
 
+// Composant principal
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,6 +47,7 @@ const App = () => {
     }
   };
 
+  // Vérifier l'authentification de l'utilisateur et son role
   const checkAdminStatus = async () => {
     try {
       const response = await axiosInstance.get('/auth/me', { withCredentials: true }); // Appelle /auth/me pour récupérer l'utilisateur

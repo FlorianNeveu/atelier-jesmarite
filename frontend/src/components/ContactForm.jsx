@@ -1,3 +1,5 @@
+// Composant pour le formulaire de contact repris dans Home et Contact
+
 import React from "react";
 
 const ContactForm = () => {

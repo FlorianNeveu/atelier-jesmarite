@@ -1,3 +1,5 @@
+// Composant pour la product card repris dans CollectionsDetails et Products
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosConfig'; 

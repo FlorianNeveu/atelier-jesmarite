@@ -1,3 +1,5 @@
+// Page de tous les produits
+
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import ProductCard from "../components/ProductCard";
@@ -8,6 +10,7 @@ const Products = () => {
   const [error, setError] = useState(null);
   const API_URL = import.meta.env.API_URL || 'https://atelier-jesmarite-production.up.railway.app';
 
+  // Recupere tous les produits
   useEffect(() => {
     const fetchProducts = async () => {
       try {

@@ -1,3 +1,5 @@
+// La page du panier
+
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from 'react-router-dom';
@@ -17,13 +19,14 @@ const Cart = () => {
   const sessionId = localStorage.getItem("sessionId");
   const navigate = useNavigate();
 
+  // Fonction de mise à jour du panier
   useEffect(() => {
     const fetchCartItems = async () => {
       if (!sessionId) {
         console.warn("⚠️ Pas de sessionId disponible !");
         return;
       }
-
+      // Récupérer les éléments du panier depuis l'API
       try {
         const response = await axiosInstance.get(`/carts/${sessionId}`);
         setCartItems(Array.isArray(response.data) ? response.data : []);
@@ -36,12 +39,14 @@ const Cart = () => {
     fetchCartItems();
   }, [sessionId]);
 
+  // Calcul du montant total
   const calculateTotalAmount = () => {
     return cartItems.reduce((total, item) => (
       item.Product?.price ? total + (item.quantity * item.Product.price) : total
     ), 0);
   };
 
+  // Fonction de mise à jour de la quantité
   const handleQuantityChange = async (productId, newQuantity) => {
     if (isNaN(newQuantity) || newQuantity < 0) {
       alert("Quantité invalide (minimum 1)");
@@ -78,7 +83,7 @@ const Cart = () => {
     }
   };
   
-
+  // Fonction de suppression de produit
   const handleRemoveProduct = async (productId) => {
     if (!window.confirm('Confirmer la suppression ?')) return;
 
@@ -90,6 +95,7 @@ const Cart = () => {
     }
   };
 
+  // Fonction de validation des champs
   const validateInputs = () => {
     const postalCodeRegex = /^[0-9]{5,6}$/; 
     const phoneRegex = /^[0-9]{10,15}$/;  
@@ -107,6 +113,7 @@ const Cart = () => {
     return true;
   };
 
+  // Fonction de traitement du paiement
   const handleCheckout = async () => {
 
     if (!validateInputs()) return;

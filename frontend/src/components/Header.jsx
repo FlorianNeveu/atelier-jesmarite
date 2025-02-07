@@ -1,3 +1,5 @@
+// Composant pour le Header avec vérification Admin ou non
+
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";

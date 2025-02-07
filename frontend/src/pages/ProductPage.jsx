@@ -1,3 +1,5 @@
+// Page d'affichage d'un produit
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
@@ -24,6 +26,7 @@ const ProductPage = () => {
     fetchProduct();
   }, [productId]);
 
+  // Fonction d'ajout au panier
   const handleAddToCart = async (productId) => {
     const sessionId = localStorage.getItem("sessionId");
 

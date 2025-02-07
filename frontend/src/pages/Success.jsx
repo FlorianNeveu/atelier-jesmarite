@@ -1,3 +1,5 @@
+// Page de succès d'achat
+
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 

@@ -1,3 +1,5 @@
+// Page de politique de confidentialité 
+
 import React from 'react';
 
 const PrivacyPolicy = () => {

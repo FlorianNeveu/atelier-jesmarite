@@ -1,3 +1,5 @@
+// Composants pour le formulaire d'adresse dans le panier
+
 import React from "react";
 const cleanInput = (input) => {
   return input.replace(/[<&{}>]/g, '');

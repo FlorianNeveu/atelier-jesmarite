@@ -1,3 +1,5 @@
+// Page de création de compte
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";

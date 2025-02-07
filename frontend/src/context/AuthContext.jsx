@@ -1,8 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
-import Cookies from "js-cookie"; 
 
 export const AuthContext = createContext();
-
+// Contexte d'authentification pour maintenir le statut d'authentification et d'admin
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);

@@ -25,6 +25,7 @@ const verifyToken = async (req, res, next) => {
     }
 }
 
+// Vérifier si l'utilisateur qui fait la demande est un admin
 const isAdmin = (req, res, next) => {
     if (req.user.role !== 'admin') {
       return res.status(403).json({ error: "Accès refusé : réservé aux administrateurs" });

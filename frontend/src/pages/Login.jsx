@@ -1,3 +1,5 @@
+// Page de connexion
+
 import React, { useState, useContext } from "react";
 import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +26,7 @@ const Login = () => {
     });
   };
 
+  // Validation des inputs et mesure de sécurité
   const validateInputs = () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(formData.email)) {
