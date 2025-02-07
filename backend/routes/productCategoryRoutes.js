@@ -4,8 +4,7 @@ const ProductCategory = require('../models/ProductCategory');
 const router = express.Router();
 
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
-router.use(verifyToken);
-router.use(isAdmin); 
+
 
 // **CRUD - Create**
 
@@ -21,7 +20,7 @@ router.post('/', verifyToken, isAdmin, async (req, res) => {
 
 // **CRUD - Read (All Categories)**
 
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const categories = await ProductCategory.findAll();
     res.status(200).json(categories);
@@ -32,7 +31,7 @@ router.get('/', verifyToken, async (req, res) => {
 
 // **CRUD - Read (One Category)**
 
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const category = await ProductCategory.findByPk(id);

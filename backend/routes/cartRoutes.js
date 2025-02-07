@@ -6,8 +6,7 @@ const ShoppingSession = require("../models/ShoppingSession");
 const router = express.Router();
 
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
-router.use(verifyToken);
-router.use(isAdmin); 
+
 
 // **Ajouter un produit au panier (Créer ou Mettre à jour)**
 router.post("/", verifyToken, async (req, res) => {

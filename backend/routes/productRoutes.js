@@ -7,8 +7,6 @@ const path = require('path');
 const router = express.Router();
 
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
-router.use(verifyToken);
-router.use(isAdmin); 
 
 
 // Multer + Cloudinary

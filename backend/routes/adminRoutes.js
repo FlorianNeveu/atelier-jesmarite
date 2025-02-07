@@ -3,9 +3,7 @@ const router = express.Router();
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
 const Product = require('../models/Product'); 
 const Admin = require('../models/Admin');  
-
-router.use(verifyToken);
-router.use(isAdmin); 
+ 
 
 // **CRUD - Create (Créer un produit)**
 router.post('/products', async (req, res) => {

@@ -3,8 +3,6 @@ const User = require('../models/User');
 const { verify } = require('jsonwebtoken');
 const router = express.Router();
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
-router.use(verifyToken);
-router.use(isAdmin); 
 
 // **CRUD - Create**
 

@@ -5,8 +5,7 @@ const router = express.Router();
 
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
 const { verify } = require('jsonwebtoken');
-router.use(verifyToken);
-router.use(isAdmin); 
+
 
 // **CRUD - Create**
 router.post('/', verifyToken, async (req, res) => {

@@ -4,8 +4,7 @@ const UserPayment = require('../models/UserPayment');
 const router = express.Router();
 
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
-router.use(verifyToken);
-router.use(isAdmin); 
+ 
 
 // **CRUD - Create**
 router.post('/', verifyToken, async (req, res) => {
