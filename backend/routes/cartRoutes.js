@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 
 
 // **Récupérer tous les articles du panier**
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const cartItems = await CartItem.findAll({
       include: Product, // Inclure les détails des produits
@@ -45,7 +45,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // Récupérer les articles du panier pour une session donnée
-router.get('/:session_id', verifyToken, async (req, res) => {
+router.get('/:session_id', async (req, res) => {
   const { session_id } = req.params;
   console.log(`requete pour le panier de la session : ${session_id}`);
   try {
