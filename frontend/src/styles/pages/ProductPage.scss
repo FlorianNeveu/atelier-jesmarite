@@ -41,7 +41,7 @@
   
     button {
       padding: 1rem 2rem;
-      background-color: #8A9B6E;
+      background-color: vars.$color-btn;;
       color: white;
       border: none;
       border-radius: 8px;
@@ -51,7 +51,7 @@
       transition: background-color 0.3s ease;
   
       &:hover {
-        background-color: #7a8a58;
+        background-color: vars.$hv-color-btn;;
       }
   
       &:disabled {

@@ -59,7 +59,7 @@
     button {
       width: 100%;
       padding: 0.50rem;
-      background-color: #8A9B6E;
+      background-color: vars.$color-btn;;
       color: white;
       border: none;
       border-radius: 8px;
@@ -68,7 +68,7 @@
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: color.scale(#8A9B6E, $lightness: -10%);
+        background-color: color.scale(vars.$hv-color-btn, $lightness: -10%);
       }
 
       @include mixins.tablet {

@@ -43,7 +43,7 @@
   }
   
   .explore-btn {
-    background-color: #b4604f;
+    background-color: vars.$color-btn;
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -54,7 +54,7 @@
   }
   
   .explore-btn:hover {
-    background-color: #8c2d1f;
+    background-color: vars.$hv-color-btn;
   }
   
   .instagram-btn {
@@ -171,7 +171,7 @@
   }
   
   .learn-more-btn {
-    background-color: #b4604f; 
+    background-color: vars.$color-btn;; 
     color: white;
     padding: 12px 24px;
     font-size: 1rem;
@@ -183,7 +183,7 @@
   }
   
   .learn-more-btn:hover {
-    background-color: #8c2d1f; 
+    background-color: vars.$hv-color-btn;; 
   }  
 
   

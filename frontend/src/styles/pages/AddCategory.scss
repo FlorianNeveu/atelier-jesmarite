@@ -72,20 +72,20 @@
           font-weight: bold;
   
           &.cancel-btn {
-            background-color: #f44336;
+            background-color: vars.$color-btn;;
             color: white;
   
             &:hover {
-              background-color: #d32f2f;
+              background-color: vars.$hv-color-btn;;
             }
           }
   
           &.submit-btn {
-            background-color: #8A9B6E;
+            background-color: vars.$color-btn;;
             color: white;
   
             &:hover {
-              background-color: #7a8a58;
+              background-color: vars.$hv-color-btn;;
             }
           }
   

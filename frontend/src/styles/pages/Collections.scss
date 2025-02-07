@@ -11,7 +11,7 @@
   }
 
   .view-all-btn {
-    background-color: vars.$primary-color; 
+    background-color: vars.$color-btn;; 
     color: white;
     padding: 12px 24px;
     font-size: 1rem;
@@ -22,7 +22,7 @@
     text-decoration: none;
 
     &:hover {
-      background-color: #8c2d1f;
+      background-color: vars.$hv-color-btn;
     }
   }
 

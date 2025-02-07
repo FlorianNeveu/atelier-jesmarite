@@ -46,7 +46,7 @@
     }
   
     button {
-      background-color: #B4604F;
+      background-color: vars.$color-btn;;
       color: white;
       padding: 12px 24px;
       border: none;
@@ -57,7 +57,7 @@
     }
   
     button:hover {
-      background-color: #8c2d1f;
+      background-color: vars.$hv-color-btn;;
     }
   
     @include mixins.untilTablet{

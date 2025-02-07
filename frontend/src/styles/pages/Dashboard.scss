@@ -30,7 +30,7 @@
 
       .add-button {
         padding: 0.5rem 1rem;
-        background-color: #8a9b6e;
+        background-color: vars.$color-btn;;
         color: white;
         border: none;
         border-radius: 8px;
@@ -39,7 +39,7 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: #7a8a58;
+          background-color: vars.$hv-color-btn;;
         }
       }
     }
@@ -100,7 +100,7 @@
           transition: background-color 0.3s ease;
 
           &:hover {
-            background-color: #7a8a58;
+            background-color: vars.$hv-color-btn;;
           }
 
           &:disabled {
@@ -119,11 +119,11 @@
         }
 
         .edit-btn {
-          background-color: #4caf50;
+          background-color: vars.$color-btn;;
           color: white;
 
           &:hover {
-            background-color: #45a049;
+            background-color: vars.$hv-color-btn;;
           }
         }
       }
