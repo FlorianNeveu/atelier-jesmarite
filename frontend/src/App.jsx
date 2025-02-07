@@ -38,7 +38,6 @@ const App = () => {
         const response = await axiosInstance.post("/sessions", { user_id });
         sessionId = response.data.id;
         localStorage.setItem("sessionId", sessionId);
-        console.log("Nouvelle session créée :", sessionId);
       } catch (error) {
         console.error("Erreur lors de la création de la session :", error);
       }

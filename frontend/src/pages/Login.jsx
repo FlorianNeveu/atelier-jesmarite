@@ -43,7 +43,6 @@ const Login = () => {
       const sessionId = localStorage.getItem("sessionId");
       if (sessionId) {
         await axiosInstance.put(`/sessions/${sessionId}`, { user_id: user.id });
-        console.log("Session mise à jour");
       }
   
       setIsAuthenticated(true);

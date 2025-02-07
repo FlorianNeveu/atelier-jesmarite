@@ -74,10 +74,6 @@ const Cart = () => {
   };
 
   const handleCheckout = async () => {
-    console.log('Données envoyées au serveur:', { 
-      cartItems, 
-      shippingAddress 
-    });
     if (!shippingAddress.address_line1 || !shippingAddress.city || !shippingAddress.postal_code) {
       alert('Veuillez remplir les champs obligatoires (*)');
       return;
