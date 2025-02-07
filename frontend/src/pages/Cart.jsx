@@ -73,7 +73,27 @@ const Cart = () => {
     }
   };
 
+  const validateInputs = () => {
+    const postalCodeRegex = /^[0-9]{5,6}$/; 
+    const phoneRegex = /^[0-9]{10,15}$/;  
+  
+    if (!postalCodeRegex.test(shippingAddress.postal_code)) {
+      alert("Veuillez entrer un code postal valide.");
+      return false;
+    }
+  
+    if (!phoneRegex.test(shippingAddress.mobile)) {
+      alert("Veuillez entrer un numéro de téléphone valide.");
+      return false;
+    }
+  
+    return true;
+  };
+
   const handleCheckout = async () => {
+
+    if (!validateInputs()) return;
+    
     if (!shippingAddress.address_line1 || !shippingAddress.city || !shippingAddress.postal_code) {
       alert('Veuillez remplir les champs obligatoires (*)');
       return;

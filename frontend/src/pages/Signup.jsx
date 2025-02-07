@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
 
+const cleanInput = (input) => {
+  return input.replace(/[<&{}>]/g, '');
+};
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -22,10 +26,40 @@ const Signup = () => {
     });
   };
 
+  const validateInputs = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage("Veuillez entrer un email valide.");
+      return false;
+    }
+
+    if (formData.password.length < 8) {
+      setErrorMessage("Le mot de passe doit comporter au moins 6 caractères.");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const cleanedFirstName = cleanInput(formData.first_name);
+    const cleanedLastName = cleanInput(formData.last_name);
+    const cleanedEmail = cleanInput(formData.email);
+    const cleanedPassword = cleanInput(formData.password);
+    const cleanedTelephone = cleanInput(formData.telephone);
+
+    if (!validateInputs()) return;
+
     try {
-      const response = await axiosInstance.post("/auth/register", formData);
+      const response = await axiosInstance.post("/auth/register", {
+        first_name: cleanedFirstName,
+        last_name: cleanedLastName,
+        email: cleanedEmail,
+        password: cleanedPassword,
+        telephone: cleanedTelephone,
+      });
       setSuccessMessage(response.data.message);
       setErrorMessage("");
 

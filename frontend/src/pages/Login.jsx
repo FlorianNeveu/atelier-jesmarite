@@ -3,6 +3,10 @@ import axiosInstance from "../axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
+const cleanInput = (input) => {
+  return input.replace(/[<&{}>]/g, '');
+};
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -20,47 +24,73 @@ const Login = () => {
     });
   };
 
+  const validateInputs = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage("Veuillez entrer un email valide.");
+      return false;
+    }
+
+    if (formData.password.length < 6) {
+      setErrorMessage("Le mot de passe doit comporter au moins 6 caractères.");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const cleanedEmail = cleanInput(formData.email);
+    const cleanedPassword = cleanInput(formData.password);
+
+    if (!validateInputs()) return;
+
     try {
-      const response = await axiosInstance.post("/auth/login", formData, {
+      const response = await axiosInstance.post("/auth/login", {
+        email: cleanedEmail,
+        password: cleanedPassword,
+      }, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        withCredentials: true
+        withCredentials: true,
       });
 
       const { user } = response.data;
-  
-      // Validation de la réponse
-      if (!user?.id ) {
+
+      if (!user?.id) {
         throw new Error("Réponse serveur invalide");
       }
-      
+
       localStorage.setItem("userId", user.id);
-      // Mise à jour de session
+
       const sessionId = localStorage.getItem("sessionId");
       if (sessionId) {
         await axiosInstance.put(`/sessions/${sessionId}`, { user_id: user.id });
       }
-  
+
+
       setIsAuthenticated(true);
       setIsAdmin(user.role === "admin");
-      
-      navigate("/");
+
+
       if (user.role === "admin") {
         window.location.reload();
         navigate("/dashboard");
+      } else {
+        navigate("/"); 
       }
-  
+
     } catch (error) {
       console.error("Erreur technique :", {
         message: error.message,
         response: error.response?.data,
         code: error.code
       });
-      
+
       setErrorMessage(
         error.response?.data?.message || 
         "Erreur technique lors de la connexion"

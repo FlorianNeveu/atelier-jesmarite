@@ -1,4 +1,7 @@
 import React from "react";
+const cleanInput = (input) => {
+  return input.replace(/[<&{}>]/g, '');
+};
 
 const AddressForm = ({ 
     shippingAddress, 
@@ -14,7 +17,7 @@ const AddressForm = ({
           value={shippingAddress.address_line1}
           onChange={(e) => setShippingAddress(prev => ({
             ...prev, 
-            address_line1: e.target.value
+            address_line1: cleanInput(e.target.value)
           }))}
           required
         />
@@ -26,7 +29,7 @@ const AddressForm = ({
           value={shippingAddress.address_line2}
           onChange={(e) => setShippingAddress(prev => ({
             ...prev, 
-            address_line2: e.target.value
+            address_line2: cleanInput(e.target.value)
           }))}
         />
       </div>
@@ -37,7 +40,7 @@ const AddressForm = ({
           value={shippingAddress.postal_code}
           onChange={(e) => setShippingAddress(prev => ({
             ...prev, 
-            postal_code: e.target.value
+            postal_code: cleanInput(e.target.value)
           }))}
           required
         />
@@ -47,7 +50,7 @@ const AddressForm = ({
           value={shippingAddress.city}
           onChange={(e) => setShippingAddress(prev => ({
             ...prev, 
-            city: e.target.value
+            city: cleanInput(e.target.value)
           }))}
           required
         />
@@ -59,7 +62,7 @@ const AddressForm = ({
           value={shippingAddress.mobile}
           onChange={(e) => setShippingAddress(prev => ({
             ...prev, 
-            mobile: e.target.value
+            mobile: cleanInput(e.target.value)
           }))}
         />
       </div>
