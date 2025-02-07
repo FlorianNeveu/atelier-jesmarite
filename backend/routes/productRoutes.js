@@ -147,12 +147,37 @@ router.put('/:id', verifyToken, isAdmin, upload.single('image'), async (req, res
     product.price = price || product.price;
     product.quantity = quantity || product.quantity;
     product.category_id = category_id || product.category_id;
-    if (imageUrl) product.image = imageUrl;  // Si une nouvelle image est fournie, on la met à jour
+    if (imageUrl) product.image = imageUrl;
 
     await product.save();
     res.status(200).json({ message: 'Produit mis à jour avec succès', product });
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la mise à jour du produit' });
+  }
+});
+
+// **CRUD - Update inventaire d'un produit**
+router.put('/:id/update-quantity', verifyToken, isAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { quantity } = req.body;  
+
+  try {
+    const product = await Product.findByPk(id);
+    if (!product) {
+      return res.status(404).json({ error: 'Produit non trouvé' });
+    }
+
+    if (product.quantity < quantity) {
+      return res.status(400).json({ error: 'Quantité en stock insuffisante' });
+    }
+
+    product.quantity -= quantity; 
+
+    await product.save();
+
+    res.status(200).json({ message: 'Quantité mise à jour avec succès', product });
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la mise à jour de la quantité' });
   }
 });
 
