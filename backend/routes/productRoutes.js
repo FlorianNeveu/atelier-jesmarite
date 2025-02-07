@@ -4,6 +4,7 @@ const Product = require('../models/Product');
 const ProductCategory = require('../models/ProductCategory');
 const multer = require('multer');
 const path = require('path');
+const router = express.Router();
 
 const { verifyToken, isAdmin } = require('../middleware/auth'); 
 router.use(verifyToken);
@@ -21,7 +22,6 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const router = express.Router();
 
 // **CRUD - Create**
 
