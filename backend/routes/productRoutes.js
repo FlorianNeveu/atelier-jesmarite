@@ -157,7 +157,7 @@ router.put('/:id', verifyToken, isAdmin, upload.single('image'), async (req, res
 });
 
 // **CRUD - Update inventaire d'un produit**
-router.put('/:id/update-quantity', verifyToken, isAdmin, async (req, res) => {
+router.put('/:id/update-quantity', async (req, res) => {
   const { id } = req.params;
   const { quantity } = req.body;  
 
