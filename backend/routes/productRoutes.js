@@ -156,10 +156,9 @@ router.put('/:id', verifyToken, isAdmin, upload.single('image'), async (req, res
   }
 });
 
-// **CRUD - Update inventaire d'un produit**
 router.put('/:id/update-quantity', async (req, res) => {
   const { id } = req.params;
-  const { quantity } = req.body;  
+  const { quantity, oldQuantity } = req.body; 
 
   try {
     const product = await Product.findByPk(id);
@@ -167,11 +166,13 @@ router.put('/:id/update-quantity', async (req, res) => {
       return res.status(404).json({ error: 'Produit non trouvé' });
     }
 
-    if (product.quantity < quantity) {
+    const quantityDifference = quantity - oldQuantity;
+
+    if (product.quantity < -quantityDifference) {
       return res.status(400).json({ error: 'Quantité en stock insuffisante' });
     }
 
-    product.quantity -= quantity; 
+    product.quantity -= quantityDifference;
 
     await product.save();
 
