@@ -49,6 +49,14 @@ const Cart = () => {
     }
   
     const currentQuantity = cartItems.find(item => item.Product.id === productId).quantity;
+
+    const product = cartItems.find(item => item.Product.id === productId).Product;
+    const availableQuantity = product.quantity;
+
+    if (newQuantity > availableQuantity) {
+      alert(`Pas assez de stock. Quantité disponible : ${availableQuantity}`);
+      return;
+    }
   
     try {
       const response = await axiosInstance.put(`/carts/${sessionId}/update`, {
