@@ -3,7 +3,6 @@ const Order = require('../models/OrderDetails');
 const OrderItem = require('../models/OrderItems');
 const User = require('../models/User');
 const Payment = require('../models/PaymentDetails');
-const { verifyToken } = require('../middleware/auth');
 
 const router = express.Router();
 
