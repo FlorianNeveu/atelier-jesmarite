@@ -178,7 +178,7 @@ app.use('/auth', authRoutes);
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/', (req, res) => {
-    res.send("Bienvenue sur l'atelier de Jesmarite !");
+    res.send("Bienvenue sur l'Atelier de Jesmarite !");
 });
 
 app.listen(port, () => {

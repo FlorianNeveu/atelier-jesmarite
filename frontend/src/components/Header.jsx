@@ -80,7 +80,7 @@ const Header = () => {
             <button onClick={() => {handleLogout();closeMenu();}}>Se déconnecter</button>
             </li>
             <li>
-            <Link to="/cart" onClick={closeMenu}>panier</Link>
+            <Link to="/cart" onClick={closeMenu}>Panier</Link>
             </li>
           </ul>
         ) : (
@@ -95,7 +95,7 @@ const Header = () => {
             <Link to="/collections" onClick={closeMenu}>Collections</Link>
             </li>
             <li>
-            <Link to="/cart" onClick={closeMenu}>panier</Link>
+            <Link to="/cart" onClick={closeMenu}>Panier</Link>
             </li>
           </ul>
         )}

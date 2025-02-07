@@ -1,9 +1,5 @@
 import React from "react";
 
-const cleanInput = (input) => {
-  return input.replace(/[<&{}>]/g, '');
-};
-
 const ContactForm = () => {
   return (
     <div className="contact-section">

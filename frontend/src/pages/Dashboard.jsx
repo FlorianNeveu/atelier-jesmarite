@@ -62,6 +62,7 @@ const Dashboard = () => {
           {products.map((product) => (
             <div key={product.id} className="item-card">
               <h3>{product.name}</h3>
+              <img src={product.image} alt={product.name} loading="lazy" />
               <p>{product.description}</p>
               <p>Prix : {product.price}€</p>
               <div className="actions">

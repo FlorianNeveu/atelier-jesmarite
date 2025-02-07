@@ -48,11 +48,19 @@ const Cart = () => {
       return;
     }
   
+    const currentQuantity = cartItems.find(item => item.Product.id === productId).quantity;
+  
     try {
       const response = await axiosInstance.put(`/carts/${sessionId}/update`, {
         product_id: productId,
-        quantity: newQuantity
+        quantity: newQuantity,
       });
+  
+      await axiosInstance.put(`/products/${productId}/update-quantity`, {
+        quantity: newQuantity,
+        oldQuantity: currentQuantity
+      });
+  
       setCartItems(prev => prev.map(item => 
         item.Product.id === productId ? response.data : item
       ));
@@ -61,6 +69,7 @@ const Cart = () => {
       alert("Erreur lors de la mise à jour");
     }
   };
+  
 
   const handleRemoveProduct = async (productId) => {
     if (!window.confirm('Confirmer la suppression ?')) return;

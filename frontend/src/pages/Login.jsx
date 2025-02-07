@@ -32,7 +32,7 @@ const Login = () => {
     }
 
     if (formData.password.length < 6) {
-      setErrorMessage("Le mot de passe doit comporter au moins 6 caractères.");
+      setErrorMessage("Le mot de passe doit comporter au moins 6 caractères. Et être composé de lettres et chiffres.");
       return false;
     }
 
@@ -78,8 +78,8 @@ const Login = () => {
 
 
       if (user.role === "admin") {
+        navigate("/");
         window.location.reload();
-        navigate("/dashboard");
       } else {
         navigate("/"); 
       }

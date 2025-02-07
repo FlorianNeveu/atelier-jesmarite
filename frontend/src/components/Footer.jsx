@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <footer>
-      <p>&copy; 2024 L'atelier de Jesmarite</p>
+      <p>&copy; 2024 L'Atelier de Jesmarite</p>
       <nav>
         <ul>
           <li>
