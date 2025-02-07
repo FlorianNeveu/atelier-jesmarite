@@ -43,7 +43,7 @@ const Cart = () => {
   };
 
   const handleQuantityChange = async (productId, newQuantity) => {
-    if (isNaN(newQuantity) || newQuantity < 1) {
+    if (isNaN(newQuantity) || newQuantity < 0) {
       alert("Quantité invalide (minimum 1)");
       return;
     }
@@ -155,7 +155,7 @@ const Cart = () => {
                       <input 
                         type="number" 
                         value={item.quantity} 
-                        min="1"
+                        min="0"
                         onChange={(e) => handleQuantityChange(item.Product.id, parseInt(e.target.value))}
                       />
                     </p>
