@@ -35,6 +35,11 @@ const User = sequelize.define('User', {
   defaultScope: {
     attributes: { exclude: ['password'] },
   },
+  scopes: {
+    withPassword: {
+      attributes: { include: ['password'] },
+    },
+  }
 });
 
 module.exports = User;
