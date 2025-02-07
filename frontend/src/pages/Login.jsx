@@ -50,7 +50,10 @@ const Login = () => {
       setIsAdmin(user.role === "admin");
       
       navigate("/");
-      window.location.reload();
+      if (user.role === "admin") {
+        window.location.reload();
+        navigate("/dashboard");
+      }
   
     } catch (error) {
       console.error("Erreur technique :", {

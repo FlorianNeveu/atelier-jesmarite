@@ -9,7 +9,7 @@ const { verifyToken, isAdmin } = require('../middleware/auth');
 
 
 // **Ajouter un produit au panier (Créer ou Mettre à jour)**
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const { quantity, product_id, session_id } = req.body;
 
   try {
