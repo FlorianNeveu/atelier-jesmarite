@@ -3,9 +3,13 @@ const ProductCategory = require('../models/ProductCategory');
 
 const router = express.Router();
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
+
 // **CRUD - Create**
 
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, isAdmin, async (req, res) => {
   const { name, description } = req.body;
   try {
     const newCategory = await ProductCategory.create({ name, description });
@@ -17,7 +21,7 @@ router.post('/', async (req, res) => {
 
 // **CRUD - Read (All Categories)**
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const categories = await ProductCategory.findAll();
     res.status(200).json(categories);
@@ -28,7 +32,7 @@ router.get('/', async (req, res) => {
 
 // **CRUD - Read (One Category)**
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const category = await ProductCategory.findByPk(id);
@@ -43,7 +47,7 @@ router.get('/:id', async (req, res) => {
 
 // **CRUD - Update**
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
   try {
@@ -62,7 +66,7 @@ router.put('/:id', async (req, res) => {
 
 // **CRUD - Delete**
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {
     const category = await ProductCategory.findByPk(id);

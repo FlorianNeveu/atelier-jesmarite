@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 require("dotenv").config();
 
+
+/*Verifie si un token est valide, si l'utilisateur existe et si l'utilisateur est un admin*/
 const verifyToken = async (req, res, next) => {
     const token = req.cookies.token;
 

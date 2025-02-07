@@ -8,8 +8,8 @@ const { verifyToken, isAdmin } = require("../middleware/auth");
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", verifyToken, logout);
-router.get("/users", verifyToken, getAll);
-router.get("/me", verifyToken, me);
+router.get("/users", verifyToken, isAdmin, getAll);
+router.get("/me", verifyToken, isAdmin, me);
 
 module.exports = router;
 

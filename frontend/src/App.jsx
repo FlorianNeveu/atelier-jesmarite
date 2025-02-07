@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axiosInstance from "./axiosConfig";
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import Signup from './pages/Signup';
-import Login from "./pages/Login";
-import Cart from "./pages/Cart";
-import ProductPage from "./pages/ProductPage";
-import Dashboard from './pages/Dashboard';
-import EditProduct from './pages/EditProducts';
-import AddProduct from './pages/AddProduct';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import Collections from "./pages/Collections";
-import CollectionsDetail from './pages/CollectionsDetail';
-import AddCategory from './pages/AddCategory';
-import EditCategory from './pages/EditCategory';
-import Success from './pages/Success';
+
+
+const Home=lazy(() => import('./pages/Home'));
+const Products=lazy(() => import('./pages/Products'));
+const Signup = lazy(() => import('./pages/Signup'));
+const Login=lazy(() => import('./pages/Login'));
+const Cart=lazy(() => import('./pages/Cart'));
+const ProductPage=lazy(() => import('./pages/ProductPage'));
+const Dashboard=lazy(() => import('./pages/Dashboard'));
+const EditProduct = lazy(() => import('./pages/EditProducts'));
+const AddProduct = lazy(() => import('./pages/AddProduct'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const Contact = lazy(() => import('./pages/Contact'));
+const About = lazy(() => import('./pages/About'));
+const Collections = lazy(() => import('./pages/Collections'));
+const CollectionsDetail = lazy(() => import('./pages/CollectionsDetail'));
+const AddCategory = lazy(() => import('./pages/AddCategory'));
+const EditCategory = lazy(() => import('./pages/EditCategory'));
+const Success = lazy(() => import('./pages/Success'));
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -75,6 +77,7 @@ const App = () => {
     <Router>
       <Header />
       <main>
+      <Suspense fallback={<div>Chargement...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
@@ -95,6 +98,7 @@ const App = () => {
           <Route path="/edit-category/:categoryId" element={isAdmin ? <EditCategory /> : <Navigate to="/" replace />} />
           <Route path="/success" element={<Success />} />
         </Routes>
+      </Suspense>
       </main>
       <Footer />
     </Router>

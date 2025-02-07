@@ -3,12 +3,17 @@ const Order = require('../models/OrderDetails');
 const OrderItem = require('../models/OrderItems');
 const User = require('../models/User');
 const Payment = require('../models/PaymentDetails');
+const { verifyToken } = require('../middleware/auth');
 
 const router = express.Router();
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
+
 // **CRUD - Create**
 
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const { user_id, total, payment_id } = req.body;
   try {
     const newOrder = await Order.create({ user_id, total, payment_id });
@@ -20,7 +25,7 @@ router.post('/', async (req, res) => {
 
 // **CRUD - Read (All Orders)**
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, isAdmin, async (req, res) => {
   try {
     const orders = await Order.findAll({
       include: [User, Payment, OrderItem],  // Including related models
@@ -33,7 +38,7 @@ router.get('/', async (req, res) => {
 
 // **CRUD - Read (One Order)**
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {
     const order = await Order.findByPk(id, {
@@ -50,7 +55,7 @@ router.get('/:id', async (req, res) => {
 
 // **CRUD - Update**
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   const { user_id, total, payment_id } = req.body;
   try {
@@ -70,7 +75,7 @@ router.put('/:id', async (req, res) => {
 
 // **CRUD - Delete**
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {
     const order = await Order.findByPk(id);

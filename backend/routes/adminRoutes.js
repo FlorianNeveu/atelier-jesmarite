@@ -98,8 +98,7 @@ router.delete('/products/:id', async (req, res) => {
   }
 });
 
-// **CRUD - Create (Ajouter un admin) - OPTIONNEL (si nécessaire pour gérer les admins)**
-// Cette route est pour ajouter un nouvel administrateur (par exemple via un super-admin).
+// Cette route est pour ajouter un nouvel administrateur.
 router.post('/admins', async (req, res) => {
   const { user_id, permissions } = req.body;
 

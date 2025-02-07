@@ -3,8 +3,12 @@ const UserPayment = require('../models/UserPayment');
 
 const router = express.Router();
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
+
 // **CRUD - Create**
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const { user_id, payment_type, provider, account_token } = req.body;
   try {
     const newUserPayment = await UserPayment.create({ user_id, payment_type, provider, account_token });
@@ -15,7 +19,7 @@ router.post('/', async (req, res) => {
 });
 
 // **CRUD - Read (All User Payments)**
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const userPayments = await UserPayment.findAll();
     res.status(200).json(userPayments);
@@ -25,7 +29,7 @@ router.get('/', async (req, res) => {
 });
 
 // **CRUD - Read (One User Payment)**
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const userPayment = await UserPayment.findByPk(id);
@@ -39,7 +43,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // **CRUD - Update**
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   const { user_id, payment_type, provider, account_token } = req.body;
   try {
@@ -59,7 +63,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // **CRUD - Delete**
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const userPayment = await UserPayment.findByPk(id);

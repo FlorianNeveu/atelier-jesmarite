@@ -1,5 +1,10 @@
 const express = require('express');
 const User = require('../models/User'); 
+const { verify } = require('jsonwebtoken');
+
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
 
 const router = express.Router();
 
@@ -18,7 +23,7 @@ router.post('/', async (req, res) => {
 
 // **CRUD - Read (All Users)**
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const users = await User.findAll();  
     res.status(200).json(users);
@@ -29,7 +34,7 @@ router.get('/', async (req, res) => {
 
 // **CRUD - Read (One User)**
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findByPk(id);  
@@ -45,7 +50,7 @@ router.get('/:id', async (req, res) => {
 
 // **CRUD - Update**
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   const { email,  password, first_name, last_name, telephone } = req.body;
   try {
@@ -58,8 +63,8 @@ router.put('/:id', async (req, res) => {
     user.first_name = first_name;
     user.last_name = last_name;
     user.telephone = telephone;
-    await user.save();  // save changes
-    res.status(200).json(user);  // return update user
+    await user.save();
+    res.status(200).json(user); 
   } catch (error) {
     console.log('Error details:', error);
     res.status(500).json({ error: 'Error when user update' });
@@ -68,15 +73,15 @@ router.put('/:id', async (req, res) => {
 
 // **CRUD - Delete**
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    await user.destroy();  // delete user
-    res.status(204).send();  // 204 No Content
+    await user.destroy(); 
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: 'Error when user suppresion' });
   }

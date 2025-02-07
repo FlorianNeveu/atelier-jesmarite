@@ -5,6 +5,11 @@ const ProductCategory = require('../models/ProductCategory');
 const multer = require('multer');
 const path = require('path');
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
+
+
 // Multer + Cloudinary
 
 cloudinary.config({
@@ -20,7 +25,7 @@ const router = express.Router();
 
 // **CRUD - Create**
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', verifyToken, isAdmin, upload.single('image'), async (req, res) => {
   const { name, description, price, quantity, category_id } = req.body;
   let imageUrl = null;
 
@@ -113,7 +118,7 @@ router.get('/:id', async (req, res) => {
 
 // **CRUD - Update**
 
-router.put('/:id', upload.single('image'), async (req, res) => {
+router.put('/:id', verifyToken, isAdmin, upload.single('image'), async (req, res) => {
   const { id } = req.params;
   const { name, description, price, quantity, category_id } = req.body;
   let imageUrl = null;
@@ -155,15 +160,15 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 
 // **CRUD - Delete**
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {
     const product = await Product.findByPk(id);
     if (!product) {
       return res.status(404).json({ error: 'Product not found for deletion' });
     }
-    await product.destroy();  // delete product
-    res.status(204).send();  // 204 No Content
+    await product.destroy();
+    res.status(204).send(); 
   } catch (error) {
     res.status(500).json({ error: 'Error when product suppresion' });
   }

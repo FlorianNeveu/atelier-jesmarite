@@ -3,8 +3,13 @@ const UserAddress = require('../models/UserAddress');
 
 const router = express.Router();
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+const { verify } = require('jsonwebtoken');
+router.use(verifyToken);
+router.use(isAdmin); 
+
 // **CRUD - Create**
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   const { user_id, address_line1, address_line2, city, postal_code, country, mobile } = req.body;
   try {
     const newUserAddress = await UserAddress.create({ user_id, address_line1, address_line2, city, postal_code, country, mobile });
@@ -15,7 +20,7 @@ router.post('/', async (req, res) => {
 });
 
 // **CRUD - Read (All User Addresses)**
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const userAddresses = await UserAddress.findAll();
     res.status(200).json(userAddresses);
@@ -25,7 +30,7 @@ router.get('/', async (req, res) => {
 });
 
 // **CRUD - Read (One User Address)**
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const userAddress = await UserAddress.findByPk(id);
@@ -39,7 +44,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // **CRUD - Update**
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   const { user_id, address_line1, address_line2, city, postal_code, country, mobile } = req.body;
   try {
@@ -62,7 +67,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // **CRUD - Delete**
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const userAddress = await UserAddress.findByPk(id);

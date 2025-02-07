@@ -5,8 +5,12 @@ const ShoppingSession = require("../models/ShoppingSession");
 
 const router = express.Router();
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
+
 // **Ajouter un produit au panier (Créer ou Mettre à jour)**
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const { quantity, product_id, session_id } = req.body;
 
   try {
@@ -30,7 +34,7 @@ router.post("/", async (req, res) => {
 
 
 // **Récupérer tous les articles du panier**
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const cartItems = await CartItem.findAll({
       include: Product, // Inclure les détails des produits
@@ -42,7 +46,7 @@ router.get('/', async (req, res) => {
 });
 
 // Récupérer les articles du panier pour une session donnée
-router.get('/:session_id', async (req, res) => {
+router.get('/:session_id', verifyToken, async (req, res) => {
   const { session_id } = req.params;
   console.log(`requete pour le panier de la session : ${session_id}`);
   try {
@@ -65,7 +69,7 @@ router.get('/:session_id', async (req, res) => {
 
 
 // **Mettre à jour la quantité d'un article dans le panier**
-router.put('/:session_id/update', async (req, res) => {
+router.put('/:session_id/update', verifyToken, async (req, res) => {
   const { session_id } = req.params;
   const { product_id, quantity } = req.body;
 
@@ -106,7 +110,7 @@ router.put('/:session_id/update', async (req, res) => {
 });
 
 // **Supprimer un article du panier**
-router.delete('/:session_id/product/:product_id', async (req, res) => {
+router.delete('/:session_id/product/:product_id', verifyToken, async (req, res) => {
   const { session_id, product_id } = req.params;
 
   try {

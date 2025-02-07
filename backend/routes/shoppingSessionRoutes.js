@@ -3,6 +3,10 @@ const ShoppingSession = require('../models/ShoppingSession');
 
 const router = express.Router();
 
+const { verifyToken, isAdmin } = require('../middleware/auth'); 
+router.use(verifyToken);
+router.use(isAdmin); 
+
 // **CRUD - Create**
 router.post('/', async (req, res) => {
   const { user_id } = req.body;
@@ -37,7 +41,7 @@ router.post('/', async (req, res) => {
 });
 
 // **CRUD - Read (All Sessions)**
-router.get('/', async (req, res) => {
+router.get('/',verifyToken, async (req, res) => {
   try {
     const sessions = await ShoppingSession.findAll();
     res.status(200).json(sessions);
@@ -47,7 +51,7 @@ router.get('/', async (req, res) => {
 });
 
 // **CRUD - Read (One Session)**
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     const session = await ShoppingSession.findByPk(id);
