@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 
 // **CRUD - Read (All Users)**
 
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', verifyToken, isAdmin, async (req, res) => {
   try {
     const users = await User.findAll();  
     res.status(200).json(users);

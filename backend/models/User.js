@@ -32,6 +32,9 @@ const User = sequelize.define('User', {
   tableName: 'user',
   timestamps: true,
   freezeTableName: true,
+  defaultScope: {
+    attributes: { exclude: ['password'] },
+  },
 });
 
 module.exports = User;
