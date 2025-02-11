@@ -1,8 +1,10 @@
 @use '../base/_variables.scss' as vars;
 @use '../utils/_mixins.scss' as mixins;
+@use '../utils/fonts';
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: lighter;
   font-size: vars.$font-size-base;
   margin: 0;
   padding: 0;
